@@ -1,135 +1,129 @@
-# Grade Calculator - Reusable Tilda Component
+# Tilda Components Library
 
-This grade calculator can be easily reused across multiple Tilda pages by separating the code into external files.
+A collection of reusable components for Tilda websites, hosted on GitHub Pages for easy integration.
 
-## Setup Instructions
+## 📁 Project Structure
 
-### Step 1: Host External Files
-
-Upload these files to your hosting (or Tilda file manager):
-- `grade-calculator.css` - All styling
-- `grade-calculator.js` - All functionality
-
-**Recommended paths:**
 ```
-https://yourdomain.com/assets/grade-calculator.css
-https://yourdomain.com/assets/grade-calculator.js
+/
+├── grade_calc/                 # Grade Calculator Component
+│   ├── css/
+│   │   └── grade-calculator.css
+│   ├── js/
+│   │   └── grade-calculator.js
+│   ├── templates/
+│   │   └── grade-calculator-template.html
+│   ├── all-in-one-example.html
+│   └── README.md
+├── smooth_scrolling/           # Smooth Scrolling Component
+│   ├── css/
+│   │   └── smooth-scrolling.css
+│   ├── js/
+│   │   └── smooth-scrolling.js
+│   ├── templates/
+│   │   └── smooth-scrolling-template.html
+│   ├── all-in-one-example.html
+│   └── README.md
+├── future_project/             # Future Component
+│   ├── css/
+│   ├── js/
+│   └── templates/
+└── README.md                   # This file
 ```
 
-### Step 2: Implementation Methods
+## 🚀 Live URLs
 
-## Method A: T123 HTML Block (Recommended)
+### Grade Calculator
+- **CSS**: `https://your-username.github.io/your-repo-name/grade_calc/css/grade-calculator.css`
+- **JavaScript**: `https://your-username.github.io/your-repo-name/grade_calc/js/grade-calculator.js`
 
-1. **Add a T123 block** to any page where you want the calculator
-2. **Add external files** in the block header:
+### Smooth Scrolling  
+- **CSS**: `https://your-username.github.io/your-repo-name/smooth_scrolling/css/smooth-scrolling.css`
+- **JavaScript**: `https://your-username.github.io/your-repo-name/smooth_scrolling/js/smooth-scrolling.js`
 
+## 📋 Components Overview
+
+### 🧮 **Grade Calculator**
+Interactive calculator that determines student grades and program eligibility based on birth date and academic year.
+
+**Features:**
+- Auto-population from main forms
+- Real-time grade calculation
+- Program availability by year
+- Clickable program links
+- Popup integration
+
+### 🖱️ **Smooth Scrolling**
+Intelligent smooth scrolling that adapts to input devices (mouse vs trackpad) with Tilda popup support.
+
+**Features:**
+- Adaptive scrolling behavior
+- Mouse/trackpad detection
+- Popup scroll management
+- Anchor link enhancement
+- Performance optimized
+
+## 📋 How to Use in Tilda
+
+### Method 1: T123 Block with External Files
 ```html
-<link rel="stylesheet" href="https://yourdomain.com/assets/grade-calculator.css">
-<script src="https://yourdomain.com/assets/grade-calculator.js"></script>
+<!-- Grade Calculator -->
+<link rel="stylesheet" href="https://your-username.github.io/your-repo-name/grade_calc/css/grade-calculator.css">
+<script src="https://your-username.github.io/your-repo-name/grade_calc/js/grade-calculator.js"></script>
+
+<!-- Smooth Scrolling (requires Lenis) -->
+<link rel="stylesheet" href="https://unpkg.com/lenis@1.3.3/dist/lenis.css">
+<script src="https://unpkg.com/lenis@1.3.3/dist/lenis.min.js"></script>
+<link rel="stylesheet" href="https://your-username.github.io/your-repo-name/smooth_scrolling/css/smooth-scrolling.css">
+<script src="https://your-username.github.io/your-repo-name/smooth_scrolling/js/smooth-scrolling.js"></script>
+
+<!-- Copy content from respective templates/ folders -->
 ```
 
-3. **Copy the HTML template** from `grade-calculator-template.html` into the T123 content area
+### Method 2: All-in-One T123 Blocks
+Copy the complete code from each component's `all-in-one-example.html` file.
 
-## Method B: Site-wide Implementation
+## 🔧 Development
 
-1. **In Tilda Site Settings** → **Other settings** → **Add code to <head>**:
-```html
-<link rel="stylesheet" href="https://yourdomain.com/assets/grade-calculator.css">
-```
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/your-username/your-repo-name.git
+   cd your-repo-name
+   ```
 
-2. **Add to footer before </body>**:
-```html
-<script src="https://yourdomain.com/assets/grade-calculator.js"></script>
-```
+2. **Make changes to any component**
+   ```bash
+   # Edit files in component folders
+   git add .
+   git commit -m "Update component logic"
+   git push origin main
+   ```
 
-3. **Use T120 HTML block** on any page and just paste the HTML template
+3. **Changes are live immediately** on GitHub Pages
 
-## Method C: CDN/External Hosting
+## ➕ Adding New Components
 
-Use services like:
-- **Dropbox/Google Drive** (get direct links)
-- **GitHub Pages** (free hosting)
-- **JSDelivr** or **unpkg** for package distribution
+1. Create a new folder: `new_component/`
+2. Add the same structure: `css/`, `js/`, `templates/`
+3. Create component README.md
+4. Add all-in-one-example.html
+5. Update this main README with new URLs
+6. Push to GitHub
 
-Example with GitHub:
-```html
-<link rel="stylesheet" href="https://your-username.github.io/your-repo/grade-calculator.css">
-<script src="https://your-username.github.io/your-repo/grade-calculator.js"></script>
-```
+## 🌟 Benefits
 
-## Benefits of This Approach
+- ✅ **Single Repository**: Manage all components in one place
+- ✅ **Organized Structure**: Clear separation of components
+- ✅ **Easy URLs**: Predictable paths for each component
+- ✅ **Version Control**: Track all component changes
+- ✅ **Free Hosting**: GitHub Pages handles everything
+- ✅ **Reusable**: Use across multiple Tilda sites
+- ✅ **Maintainable**: Update once, deploy everywhere
 
-✅ **Easy Updates**: Change logic once, updates everywhere  
-✅ **Faster Loading**: Browser caches files across pages  
-✅ **Cleaner Code**: No duplicate CSS/JS on every page  
-✅ **Version Control**: Track changes easily  
-✅ **Maintenance**: Single source of truth  
+## 📖 Documentation
 
-## Customization
+Each component has its own detailed README:
+- [`grade_calc/README.md`](grade_calc/README.md) - Grade Calculator documentation
+- [`smooth_scrolling/README.md`](smooth_scrolling/README.md) - Smooth Scrolling documentation
 
-### Change Academic Years
-Edit the `academicConfig` object in `grade-calculator.js`:
-
-```javascript
-const academicConfig = {
-  2025: { cutoffMonth: 8, exceptions: {...}, maxGrade: 12 },
-  2026: { cutoffMonth: 8, exceptions: {...}, maxGrade: 12 }
-};
-```
-
-### Modify Program Rules
-Update `programRules` in `grade-calculator.js`:
-
-```javascript
-const programRules = {
-  '4': year => ['IB', 'Waldorf'], // No Montessori for grade 4
-  // ... other grades
-};
-```
-
-### Style Changes
-Modify variables in `grade-calculator.css`:
-
-```css
-.grade-calculator {
-  --primary-color: #ffffff;
-  --accent-color: #ea5f00;
-  --border-radius: 100px;
-}
-```
-
-## Integration with Forms
-
-The calculator automatically integrates with any form containing `input[name="DOB"]`. When users click a link with `href="#popup:gradecalc"`, it will:
-
-1. Auto-populate the calculator with the main form's DOB
-2. Calculate grades immediately
-3. Display results in the popup
-
-## API Reference
-
-The component exposes a global `GradeCalculator` object:
-
-```javascript
-// Manual initialization (if needed)
-GradeCalculator.init();
-
-// Force update grades
-GradeCalculator.updateGrades();
-```
-
-## Troubleshooting
-
-**Calculator not working?**
-- Check browser console for errors
-- Verify file paths are correct
-- Ensure HTML IDs match (`gradecalc-dob`, `grade2024`, etc.)
-
-**Styles not loading?**
-- Check CSS file path
-- Verify CORS headers if hosting externally
-- Ensure CSS loads before HTML
-
-**Updates not reflecting?**
-- Clear browser cache
-- Add version parameter: `grade-calculator.js?v=1.1` 
+For deployment instructions, see [`DEPLOYMENT.md`](DEPLOYMENT.md).

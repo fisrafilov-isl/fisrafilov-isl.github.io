@@ -1,0 +1,6 @@
+/* ===== SMOOTH SCROLLING COMPONENT STYLES ===== */
+
+/* Reset default scroll behavior to let Lenis handle it */
+html {
+    scroll-behavior: initial !important;
+} 
