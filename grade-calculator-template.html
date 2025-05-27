@@ -1,0 +1,65 @@
+<!-- GRADE CALCULATOR - REUSABLE TEMPLATE -->
+<div id="gradeCalcBlock" class="grade-calculator r t-rec t-rec_pt_90 t-rec_pb_90">
+  <div class="grade-calculator__container t-container" id="GradeCalcDiv">
+    <header class="grade-calculator__header">
+      <h2 class="grade-calculator__heading">GRADES AND PROGRAMS</h2>
+      <p class="grade-calculator__description">
+        What grade will your child enter in the<br>
+        Academic Years 2024-2025 &amp; 2025-2026?
+      </p>
+    </header>
+
+    <form id="gradeCalcForm" class="grade-calculator__form t-form">
+      <div class="date-input-group t-input-group t-input-group_da">
+        <label for="gradecalc-dob" class="date-input-label t-input-title t-descr t-descr_md">
+          Child's date of birth:
+        </label>
+        <div class="date-input-wrapper t-input-block">
+          <div class="t-datepicker__wrapper">
+            <input type="date"
+                   name="birthdate"
+                   id="gradecalc-dob"
+                   class="date-input t-input"
+                   autocomplete="off"
+                   min="2007-01-01"
+                   max="2022-12-31"
+                   value="2007-01-01">
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <div class="grade-results__wrapper">
+      <table class="grade-results" id="resultTable">
+        <thead>
+          <tr>
+            <th>Academic Year</th>
+            <th>Grade</th>
+            <th>Programs</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>2024-2025</td>
+            <td id="grade2024">—</td>
+            <td id="program2024">—</td>
+          </tr>
+          <tr>
+            <td>2025-2026</td>
+            <td id="grade2025">—</td>
+            <td id="program2025">—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="t-form__submit">
+      <a href="#popup:generalapplication" 
+         class="back-to-form-btn t-submit"
+         role="button" 
+         aria-haspopup="dialog">
+        GO BACK TO FORM
+      </a>
+    </div>
+  </div>
+</div> 

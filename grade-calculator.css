@@ -1,0 +1,233 @@
+/* ===== LINK "HERE" IN GENERAL APPLICATION ===== */
+
+/* Initial State */
+.t-text[field^="li_text__"] a[href="#popup:gradecalc"] {
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: inline-block;
+    color: #ff8530 !important;
+    background-color: transparent !important;
+    border-bottom: 2px solid #ff8530 !important;
+    text-decoration: none !important;
+}
+
+/* Hover State */
+@media (hover: hover) {
+    .t-text[field^="li_text__"] a[href="#popup:gradecalc"]:hover {
+        color: #ffffff !important;
+        background-color: #ea5f00 !important;
+        border-bottom-color: transparent !important;
+        box-shadow: 0 2px 8px rgba(234, 95, 0, 0.3);
+        transform: translateY(-2px);
+    }
+}
+
+/* Active State for mobile feedback */
+.t-text[field^="li_text__"] a[href="#popup:gradecalc"]:active {
+    transition: none;
+    transform: translateY(0px);
+}
+
+/* ===== GRADE CALCULATOR ===== */
+
+/* ===== Base Styles ===== */
+.grade-calculator {
+  --primary-color: #ffffff;
+  --accent-color: #ea5f00;
+  --border-radius: 100px;
+  --font-stack: 'Quicksand', 'Font', Arial, sans-serif;
+  
+  padding: 40px 45px;
+  color: var(--primary-color);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  font-family: var(--font-stack);
+}
+
+/* ===== Container & Layout ===== */
+.grade-calculator__container {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* ===== Typography ===== */
+.grade-calculator__heading {
+  font-weight: 700;
+  font-size: 1.8rem;
+  margin: 0 0 20px;
+}
+
+.grade-calculator__description {
+  font-weight: 500;
+  font-size: 1.2rem;
+  margin: 0 0 20px;
+  line-height: 1.4;
+}
+
+/* ===== Form Elements ===== */
+.grade-calculator__form {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.date-input-group {
+  margin-bottom: 20px;
+}
+
+.date-input-label {
+  display: block;
+  color: var(--primary-color);
+  margin-bottom: 20px;
+  opacity: 1;
+}
+
+.date-input-wrapper {
+  position: relative;
+  border-radius: var(--border-radius);
+}
+
+.date-input {
+  width: 100%;
+  border-radius: var(--border-radius);
+  color: var(--accent-color);
+  font-weight: 500;
+  border: 1px solid #f0f0f0;
+  padding: 12px 40px 12px 20px;
+  font-family: var(--font-stack);
+}
+
+/* ===== Results Table ===== */
+.grade-results {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+.grade-results th,
+.grade-results td {
+  padding: 12px;
+  text-align: center;
+  font-size: 1.1rem;
+}
+
+.grade-results th {
+  font-weight: 500;
+}
+
+.grade-results td {
+  width: 33%;
+}
+
+/* ===== Program Links Styling ===== */
+.program-link {
+    color: #FB7F37 !important;
+    background-color: #ffffff !important;
+    border-bottom: 2px solid #FB7F37;
+    text-decoration: none !important;
+    padding: 2px 4px;
+    border-radius: 4px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: inline-block;
+    margin-top: 0;
+    margin-right: 6px;
+    margin-bottom: 0;
+    margin-left: 2px;
+    position: relative;
+}
+
+.program-link:last-child {
+    margin-right: 0;
+}
+
+.program-link:hover {
+    color: #ffffff !important;
+    background-color: #E35B1E !important;
+    border-bottom-color: transparent;
+    box-shadow: 0 2px 8px rgba(227, 91, 30, 0.3);
+    transform: translateY(-2px);
+}
+
+.program-link:active {
+    box-shadow: none;
+    transition: none;
+    transform: translateY(0px);
+}
+
+/* Mobile hover fallback */
+@media (hover: none) {
+    .program-link {
+        border-bottom: 2px solid transparent;
+        transform: translateY(-2px);
+    }
+}
+
+/* ===== Buttons ===== */
+/* ===== Back Button Styles ===== */
+.back-to-form-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ffffff;
+    color: #ff8530 !important;
+    border-radius: 100px;
+    font-family: 'Font', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin: 17px 28px;
+    padding: 1px 60px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    position: relative;
+}
+
+/* Smooth hover animation for modern browsers */
+@media (hover: hover) {
+    .back-to-form-btn:hover {
+        color: #ffffff !important;
+        background-color: #ea5f00 !important;
+        box-shadow: 0 4px 12px rgba(234, 95, 0, 0.25);
+        transform: translateY(-2px);
+    }
+}
+
+/* Active State - Matches HERE link behavior */
+.back-to-form-btn:active {
+    color: #ffffff !important;
+    background-color: #ea5f00 !important;
+    box-shadow: none;
+    transition: none;
+    transform: translateY(0px);
+}
+
+/* Touch feedback for mobile */
+.back-to-form-btn:active::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: inherit;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+/* ===== Responsive Design ===== */
+@media (max-width: 480px) {
+  .grade-calculator {
+    padding: 30px 20px;
+  }
+  
+  .grade-calculator__heading {
+    font-size: 1.5rem;
+  }
+  
+  .grade-calculator__description {
+    font-size: 1rem;
+  }
+  
+  .date-input {
+    padding: 10px 35px 10px 15px;
+  }
+} 
