@@ -10,11 +10,11 @@ An intelligent smooth scrolling component for Tilda websites that automatically 
 
 ## 🌐 GitHub Pages URLs
 
-Replace `YOUR-USERNAME` and `YOUR-REPO-NAME` with your actual GitHub details:
+**Live URLs:**
 
 ```
-https://YOUR-USERNAME.github.io/YOUR-REPO-NAME/smooth_scrolling/css/smooth-scrolling.css
-https://YOUR-USERNAME.github.io/YOUR-REPO-NAME/smooth_scrolling/js/smooth-scrolling.js
+https://fisrafilov-isl.github.io/smooth_scrolling/css/smooth-scrolling.css
+https://fisrafilov-isl.github.io/smooth_scrolling/js/smooth-scrolling.js
 ```
 
 ## 📋 Implementation in Tilda
@@ -29,8 +29,8 @@ Add this to your site's `<head>` section or T123 block:
 <script src="https://unpkg.com/lenis@1.3.3/dist/lenis.min.js"></script>
 
 <!-- Component files -->
-<link rel="stylesheet" href="https://YOUR-USERNAME.github.io/YOUR-REPO-NAME/smooth_scrolling/css/smooth-scrolling.css">
-<script src="https://YOUR-USERNAME.github.io/YOUR-REPO-NAME/smooth_scrolling/js/smooth-scrolling.js"></script>
+<link rel="stylesheet" href="https://fisrafilov-isl.github.io/smooth_scrolling/css/smooth-scrolling.css">
+<script src="https://fisrafilov-isl.github.io/smooth_scrolling/js/smooth-scrolling.js"></script>
 ```
 
 ### Method 2: All-in-One Block

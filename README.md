@@ -34,12 +34,12 @@ A collection of reusable components for Tilda websites, hosted on GitHub Pages f
 ## 🚀 Live URLs
 
 ### Grade Calculator
-- **CSS**: `https://your-username.github.io/your-repo-name/grade_calc/css/grade-calculator.css`
-- **JavaScript**: `https://your-username.github.io/your-repo-name/grade_calc/js/grade-calculator.js`
+- **CSS**: `https://fisrafilov-isl.github.io/grade_calc/css/grade-calculator.css`
+- **JavaScript**: `https://fisrafilov-isl.github.io/grade_calc/js/grade-calculator.js`
 
 ### Smooth Scrolling  
-- **CSS**: `https://your-username.github.io/your-repo-name/smooth_scrolling/css/smooth-scrolling.css`
-- **JavaScript**: `https://your-username.github.io/your-repo-name/smooth_scrolling/js/smooth-scrolling.js`
+- **CSS**: `https://fisrafilov-isl.github.io/smooth_scrolling/css/smooth-scrolling.css`
+- **JavaScript**: `https://fisrafilov-isl.github.io/smooth_scrolling/js/smooth-scrolling.js`
 
 ## 📋 Components Overview
 
@@ -68,14 +68,14 @@ Intelligent smooth scrolling that adapts to input devices (mouse vs trackpad) wi
 ### Method 1: T123 Block with External Files
 ```html
 <!-- Grade Calculator -->
-<link rel="stylesheet" href="https://your-username.github.io/your-repo-name/grade_calc/css/grade-calculator.css">
-<script src="https://your-username.github.io/your-repo-name/grade_calc/js/grade-calculator.js"></script>
+<link rel="stylesheet" href="https://fisrafilov-isl.github.io/grade_calc/css/grade-calculator.css">
+<script src="https://fisrafilov-isl.github.io/grade_calc/js/grade-calculator.js"></script>
 
 <!-- Smooth Scrolling (requires Lenis) -->
 <link rel="stylesheet" href="https://unpkg.com/lenis@1.3.3/dist/lenis.css">
 <script src="https://unpkg.com/lenis@1.3.3/dist/lenis.min.js"></script>
-<link rel="stylesheet" href="https://your-username.github.io/your-repo-name/smooth_scrolling/css/smooth-scrolling.css">
-<script src="https://your-username.github.io/your-repo-name/smooth_scrolling/js/smooth-scrolling.js"></script>
+<link rel="stylesheet" href="https://fisrafilov-isl.github.io/smooth_scrolling/css/smooth-scrolling.css">
+<script src="https://fisrafilov-isl.github.io/smooth_scrolling/js/smooth-scrolling.js"></script>
 
 <!-- Copy content from respective templates/ folders -->
 ```
@@ -87,8 +87,8 @@ Copy the complete code from each component's `all-in-one-example.html` file.
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/your-username/your-repo-name.git
-   cd your-repo-name
+   git clone https://github.com/fisrafilov-isl/fisrafilov-isl.github.io.git
+   cd fisrafilov-isl.github.io
    ```
 
 2. **Make changes to any component**
@@ -127,3 +127,5 @@ Each component has its own detailed README:
 - [`smooth_scrolling/README.md`](smooth_scrolling/README.md) - Smooth Scrolling documentation
 
 For deployment instructions, see [`DEPLOYMENT.md`](DEPLOYMENT.md).
+
+For production-ready links, see [`PRODUCTION-LINKS.md`](PRODUCTION-LINKS.md).

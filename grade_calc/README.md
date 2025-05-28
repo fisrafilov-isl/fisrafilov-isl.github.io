@@ -10,11 +10,11 @@ A reusable grade calculator for Tilda websites that calculates student grades an
 
 ## 🌐 GitHub Pages URLs
 
-Replace `YOUR-USERNAME` and `YOUR-REPO-NAME` with your actual GitHub details:
+**Live URLs:**
 
 ```
-https://YOUR-USERNAME.github.io/YOUR-REPO-NAME/grade_calc/css/grade-calculator.css
-https://YOUR-USERNAME.github.io/YOUR-REPO-NAME/grade_calc/js/grade-calculator.js
+https://fisrafilov-isl.github.io/grade_calc/css/grade-calculator.css
+https://fisrafilov-isl.github.io/grade_calc/js/grade-calculator.js
 ```
 
 ## 📋 Implementation in Tilda
@@ -24,8 +24,8 @@ https://YOUR-USERNAME.github.io/YOUR-REPO-NAME/grade_calc/js/grade-calculator.js
 Add this to your T123 block:
 
 ```html
-<link rel="stylesheet" href="https://YOUR-USERNAME.github.io/YOUR-REPO-NAME/grade_calc/css/grade-calculator.css">
-<script src="https://YOUR-USERNAME.github.io/YOUR-REPO-NAME/grade_calc/js/grade-calculator.js"></script>
+<link rel="stylesheet" href="https://fisrafilov-isl.github.io/grade_calc/css/grade-calculator.css">
+<script src="https://fisrafilov-isl.github.io/grade_calc/js/grade-calculator.js"></script>
 
 <!-- GRADE CALCULATOR - REUSABLE TEMPLATE -->
 <div id="gradeCalcBlock" class="grade-calculator r t-rec t-rec_pt_90 t-rec_pb_90">
@@ -96,7 +96,7 @@ Add this to your T123 block:
 
 ### Method 2: All-in-One Block
 
-Copy all CSS, HTML, and JavaScript into a single T123 block (see `templates/` folder).
+Copy all CSS, HTML, and JavaScript into a single T123 block (see `all-in-one-example.html`).
 
 ## ⚙️ Features
 

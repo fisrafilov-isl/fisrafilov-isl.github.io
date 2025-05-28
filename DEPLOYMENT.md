@@ -7,19 +7,19 @@
 # Initialize repository if not already done
 git init
 git add .
-git commit -m "Initial commit: Grade Calculator component"
+git commit -m "Initial commit: Tilda Components Library"
 ```
 
 ### 2. Connect to GitHub
 ```bash
 # Add your GitHub repository as origin
-git remote add origin https://github.com/YOUR-USERNAME/YOUR-REPO-NAME.git
+git remote add origin https://github.com/fisrafilov-isl/fisrafilov-isl.github.io.git
 git branch -M main
 git push -u origin main
 ```
 
 ### 3. Enable GitHub Pages
-1. Go to your repository on GitHub
+1. Go to your repository on GitHub: `https://github.com/fisrafilov-isl/fisrafilov-isl.github.io`
 2. Click **Settings** tab
 3. Scroll down to **Pages** section
 4. Under **Source**, select **Deploy from a branch**
@@ -31,17 +31,19 @@ git push -u origin main
 After deployment, your files will be available at:
 
 ```
-https://YOUR-USERNAME.github.io/YOUR-REPO-NAME/grade_calc/css/grade-calculator.css
-https://YOUR-USERNAME.github.io/YOUR-REPO-NAME/grade_calc/js/grade-calculator.js
+https://fisrafilov-isl.github.io/grade_calc/css/grade-calculator.css
+https://fisrafilov-isl.github.io/grade_calc/js/grade-calculator.js
+https://fisrafilov-isl.github.io/smooth_scrolling/css/smooth-scrolling.css
+https://fisrafilov-isl.github.io/smooth_scrolling/js/smooth-scrolling.js
 ```
 
 ## 🔄 Making Updates
 
 ### Update Component Logic
 ```bash
-# Edit files in grade_calc/ folder
+# Edit files in component folders
 git add .
-git commit -m "Update grade calculator logic"
+git commit -m "Update component logic"
 git push origin main
 ```
 
@@ -72,18 +74,18 @@ Changes will be live within **1-2 minutes** of pushing to GitHub.
 
 ### Method 1: External Files
 ```html
-<link rel="stylesheet" href="https://YOUR-USERNAME.github.io/YOUR-REPO-NAME/grade_calc/css/grade-calculator.css">
-<script src="https://YOUR-USERNAME.github.io/YOUR-REPO-NAME/grade_calc/js/grade-calculator.js"></script>
+<link rel="stylesheet" href="https://fisrafilov-isl.github.io/grade_calc/css/grade-calculator.css">
+<script src="https://fisrafilov-isl.github.io/grade_calc/js/grade-calculator.js"></script>
 
 <!-- HTML template content here -->
 ```
 
 ### Method 2: All-in-One
-Copy contents from `grade_calc/all-in-one-example.html` into T123 block.
+Copy contents from each component's `all-in-one-example.html` into T123 block.
 
 ## 🎯 Testing
 
 1. **Test locally**: Open HTML files in browser
 2. **Test GitHub URLs**: Wait for deployment, then test URLs
 3. **Test in Tilda**: Add T123 block with external files
-4. **Verify functionality**: Check if calculator works properly 
+4. **Verify functionality**: Check if components work properly 
