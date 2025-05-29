@@ -16,13 +16,13 @@
                 const absY = Math.abs(deltaY);
                 const absX = Math.abs(deltaX);
 
-                // More aggressive mouse detection for immediate response
-                if (absY > 50 || (absX === 0 && absY > 20)) method = 'mouse';
-                else if (absX > 2) method = 'trackpad';
-                else if (absY < 15 && e.deltaMode === 0) method = 'trackpad';
-                else method = absY > 30 ? 'mouse' : 'trackpad';
+                // Less aggressive detection to prevent constant switching
+                if (absY > 80 || (absX === 0 && absY > 40)) method = 'mouse';
+                else if (absX > 5) method = 'trackpad';
+                else if (absY < 10 && e.deltaMode === 0) method = 'trackpad';
+                else method = absY > 50 ? 'mouse' : 'trackpad';
 
-                // Update current mode immediately
+                // Only update if there's a significant change to prevent flickering
                 currentInputMode = method;
             } else if (e.type.startsWith('pointer')) {
                 method = e.pointerType === 'mouse' ? 'mouse' : 'touch';
@@ -32,9 +32,13 @@
                 currentInputMode = method;
             }
 
+            // Add debouncing to prevent rapid switching
             if (method !== 'unknown' && method !== lastInput) {
-                lastInput = method;
-                this.update(method);
+                clearTimeout(this.debounceTimer);
+                this.debounceTimer = setTimeout(() => {
+                    lastInput = method;
+                    this.update(method);
+                }, 50);
             }
         },
 
@@ -48,30 +52,40 @@
 
             if (!controller.stoppedByPopup && controller.lenis) {
                 if (shouldSmooth) {
-                    // More responsive settings for mouse to reduce bounce
-                    controller.lenis.options.lerp = 0.08; // Balanced response
+                    // More responsive settings for mouse with higher lerp
+                    controller.lenis.options.lerp = 0.12; // Increased for more responsiveness
                     controller.lenis.options.smoothWheel = true;
+                    controller.lenis.options.wheelMultiplier = 1;
                 } else {
-                    // Instant for trackpad
-                    controller.lenis.options.lerp = 1;
-                    controller.lenis.options.smoothWheel = false;
+                    // Keep some smoothing even for trackpad but make it very responsive
+                    controller.lenis.options.lerp = 0.8; // Much higher for near-instant response
+                    controller.lenis.options.smoothWheel = true;
+                    controller.lenis.options.wheelMultiplier = 1.2;
                 }
             }
             controller.updatePopups();
         },
 
         init() {
-            document.addEventListener('wheel', e => this.detect(e), { passive: true });
+            // Use passive: false to allow preventDefault if needed
+            document.addEventListener('wheel', e => {
+                // Prevent any potential conflicts with native scrolling
+                if (smoothEnabled) {
+                    e.preventDefault();
+                }
+                this.detect(e);
+            }, { passive: false });
             document.addEventListener('pointerdown', e => this.detect(e), { passive: true });
             document.addEventListener('touchstart', e => this.detect(e), { passive: true });
         }
     };
 
     const config = {
-        lerp: 0.08,
+        lerp: 0.12,
         smoothWheel: true,
         syncTouch: false,
         touchMultiplier: 0,
+        wheelMultiplier: 1,
         infinite: false
     };
 
@@ -122,10 +136,22 @@
         }
 
         setupEvents() {
+            // Use capture phase to intercept anchor clicks before other handlers
             document.body.addEventListener('click', (e) => {
                 this.handleAnchor(e);
                 this.handlePopupTrigger(e);
-            }, true);
+            }, { capture: true });
+            
+            // Also prevent default anchor behavior on mousedown for extra safety
+            document.body.addEventListener('mousedown', (e) => {
+                const anchor = this.findAnchor(e.target);
+                if (anchor) {
+                    const href = anchor.getAttribute('href');
+                    if (href && href.startsWith('#')) {
+                        e.preventDefault();
+                    }
+                }
+            }, { capture: true });
         }
 
         handleAnchor(e) {
@@ -135,12 +161,22 @@
             const href = anchor.getAttribute('href');
             if (!href) return;
 
-            if (href === '#') {
+            // Prevent default behavior immediately for all hash links
+            if (href.startsWith('#')) {
                 e.preventDefault();
+                e.stopPropagation();
+            }
+
+            if (href === '#') {
                 this.lenis?.scrollTo(0);
-                window.location.hash = '';
+                // Don't update hash immediately to prevent jump
+                setTimeout(() => {
+                    if (window.location.hash !== '') {
+                        history.replaceState(null, null, window.location.pathname + window.location.search);
+                    }
+                }, 100);
             } else if (href.startsWith('#') && href.length > 1) {
-                this.scrollToAnchor(e, href);
+                this.scrollToAnchor(href);
             }
         }
 
@@ -152,8 +188,7 @@
             return wrapper?.querySelector(selectors.anchors);
         }
 
-        scrollToAnchor(e, href) {
-            e.preventDefault();
+        scrollToAnchor(href) {
             const name = href.substring(1);
             let target = document.querySelector(href) || document.querySelector(`a[name="${name}"]`);
             
@@ -164,9 +199,29 @@
                 if (popup) return;
             }
 
-            if (target) {
-                this.lenis?.scrollTo(target);
-                window.location.hash = href;
+            if (target && this.lenis) {
+                // Ensure smooth scrolling is active
+                if (this.stoppedByPopup) {
+                    this.lenis.start();
+                }
+                
+                // Scroll smoothly to target
+                this.lenis.scrollTo(target, {
+                    offset: 0,
+                    duration: smoothEnabled ? 1.2 : 0,
+                    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+                    onComplete: () => {
+                        // Update hash only after scroll is complete
+                        if (window.location.hash !== href) {
+                            history.replaceState(null, null, window.location.pathname + window.location.search + href);
+                        }
+                        
+                        // Resume popup state if needed
+                        if (this.stoppedByPopup && this.popups.size > 0) {
+                            this.lenis.stop();
+                        }
+                    }
+                });
             }
         }
 
@@ -211,8 +266,9 @@
                 if (scrollable) {
                     const options = { 
                         ...config, 
-                        lerp: smoothEnabled ? 0.08 : 1, // Balanced lerp for mouse
-                        smoothWheel: smoothEnabled 
+                        lerp: smoothEnabled ? 0.12 : 0.8, // Use improved lerp values
+                        smoothWheel: true, // Always keep smooth wheel enabled
+                        wheelMultiplier: smoothEnabled ? 1 : 1.2
                     };
                     const instance = new Lenis({ wrapper: scrollable, content: scrollable, ...options });
                     this.popups.set(scrollable, instance);
@@ -246,8 +302,9 @@
         updatePopups() {
             this.popups.forEach(instance => {
                 if (instance?.options) {
-                    instance.options.lerp = smoothEnabled ? 0.08 : 1; // Balanced lerp
-                    instance.options.smoothWheel = smoothEnabled;
+                    instance.options.lerp = smoothEnabled ? 0.12 : 0.8; // Use improved lerp values
+                    instance.options.smoothWheel = true; // Always keep smooth wheel enabled
+                    instance.options.wheelMultiplier = smoothEnabled ? 1 : 1.2;
                 }
             });
         }
