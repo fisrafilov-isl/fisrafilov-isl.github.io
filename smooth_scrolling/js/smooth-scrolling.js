@@ -218,8 +218,13 @@
                 if (this.hasPopup(popup)) return;
                 const scrollable = this.findScrollable(popup);
                 if (scrollable) {
-                    // Use the same config as main Lenis instance
-                    const instance = new Lenis({ wrapper: scrollable, content: scrollable, ...config });
+                    const options = { 
+                        ...config, 
+                        lerp: smoothEnabled ? 0.12 : 1, // Dynamic lerp based on device
+                        smoothWheel: smoothEnabled,
+                        wheelMultiplier: smoothEnabled ? 1 : 1.2
+                    };
+                    const instance = new Lenis({ wrapper: scrollable, content: scrollable, ...options });
                     this.popups.set(scrollable, instance);
                 }
             });
@@ -246,6 +251,16 @@
 
         hasPopup(popup) {
             return Array.from(this.popups.keys()).some(el => el === popup || popup.contains(el));
+        }
+
+        updatePopups() {
+            this.popups.forEach(instance => {
+                if (instance?.options) {
+                    instance.options.lerp = smoothEnabled ? 0.12 : 1;
+                    instance.options.smoothWheel = smoothEnabled;
+                    instance.options.wheelMultiplier = smoothEnabled ? 1 : 1.2;
+                }
+            });
         }
 
         manageGlobal() {
