@@ -1,5 +1,11 @@
-// Smooth Scrolling Component with Lenis
-// Provides smooth scrolling for desktop devices, disabled for touch devices
+<link rel="stylesheet" href="https://unpkg.com/lenis@1.3.3/dist/lenis.css">
+<script src="https://unpkg.com/lenis@1.3.3/dist/lenis.min.js"></script>
+<style>
+  html {
+    scroll-behavior: initial !important;
+  }
+</style>
+<script>
 (function() {
     'use strict';
 
@@ -35,11 +41,10 @@
     deviceDetector.init();
 
     const config = {
-        lerp: smoothEnabled ? 0.12 : 1,
+        lerp: smoothEnabled ? 0.08 : 1,
         smoothWheel: smoothEnabled,
         syncTouch: false,
         touchMultiplier: 0,
-        wheelMultiplier: 1,
         infinite: false
     };
 
@@ -179,7 +184,7 @@
                 if (scrollable) {
                     const options = { 
                         ...config, 
-                        lerp: smoothEnabled ? 0.12 : 1, // Use device-appropriate lerp
+                        lerp: smoothEnabled ? 0.08 : 1, // Use device-appropriate lerp
                         smoothWheel: smoothEnabled 
                     };
                     const instance = new Lenis({ wrapper: scrollable, content: scrollable, ...options });
@@ -214,7 +219,7 @@
         updatePopups() {
             this.popups.forEach(instance => {
                 if (instance?.options) {
-                    instance.options.lerp = smoothEnabled ? 0.12 : 1; // Use device-appropriate lerp
+                    instance.options.lerp = smoothEnabled ? 0.08 : 1; // Use device-appropriate lerp
                     instance.options.smoothWheel = smoothEnabled;
                 }
             });
@@ -239,14 +244,13 @@
             this.observer?.disconnect();
         }
     }
-
+    
     const controller = new TildaController();
     window.TildaController = {
         destroy: () => controller?.destroy(),
         getInstance: () => controller
     };
 
-    // Cleanup on page unload
     window.addEventListener('beforeunload', () => controller?.destroy());
-
-})(); 
+})();
+</script> 
