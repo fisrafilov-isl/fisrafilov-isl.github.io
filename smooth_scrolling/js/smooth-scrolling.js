@@ -1,88 +1,42 @@
 // Smooth Scrolling Component with Lenis
-// Provides adaptive smooth scrolling that adjusts based on input device
+// Provides smooth scrolling for desktop devices, disabled for touch devices
 (function() {
     'use strict';
 
-    let smoothEnabled = true;
-    let lastInput = 'mouse';
-    let currentInputMode = 'mouse'; // Track current mode for immediate prevention
+    let smoothEnabled = false;
 
-    const detector = {
-        detect(e) {
-            let method = 'unknown';
+    // Device detection - determine once at initialization
+    const deviceDetector = {
+        isTouchDevice() {
+            // Check for touch capability
+            const hasTouch = 'ontouchstart' in window || 
+                           navigator.maxTouchPoints > 0 || 
+                           navigator.msMaxTouchPoints > 0;
             
-            if (e.type === 'wheel') {
-                const { deltaX, deltaY } = e;
-                const absY = Math.abs(deltaY);
-                const absX = Math.abs(deltaX);
-
-                // Less aggressive detection to prevent constant switching
-                if (absY > 80 || (absX === 0 && absY > 40)) method = 'mouse';
-                else if (absX > 5) method = 'trackpad';
-                else if (absY < 10 && e.deltaMode === 0) method = 'trackpad';
-                else method = absY > 50 ? 'mouse' : 'trackpad';
-
-                // Only update if there's a significant change to prevent flickering
-                currentInputMode = method;
-            } else if (e.type.startsWith('pointer')) {
-                method = e.pointerType === 'mouse' ? 'mouse' : 'touch';
-                currentInputMode = method;
-            } else if (e.type.startsWith('touch')) {
-                method = 'touch';
-                currentInputMode = method;
-            }
-
-            // Add debouncing to prevent rapid switching
-            if (method !== 'unknown' && method !== lastInput) {
-                clearTimeout(this.debounceTimer);
-                this.debounceTimer = setTimeout(() => {
-                    lastInput = method;
-                    this.update(method);
-                }, 50);
-            }
-        },
-
-        update(method) {
-            const shouldSmooth = method === 'mouse';
-            if (shouldSmooth === smoothEnabled) return;
+            // Check user agent for mobile/tablet indicators
+            const userAgent = navigator.userAgent.toLowerCase();
+            const isMobileUA = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent);
             
-            smoothEnabled = shouldSmooth;
-            const controller = window.TildaController?.getInstance();
-            if (!controller) return;
-
-            if (!controller.stoppedByPopup && controller.lenis) {
-                if (shouldSmooth) {
-                    // More responsive settings for mouse with higher lerp
-                    controller.lenis.options.lerp = 0.12; // Increased for more responsiveness
-                    controller.lenis.options.smoothWheel = true;
-                    controller.lenis.options.wheelMultiplier = 1;
-                } else {
-                    // Keep some smoothing even for trackpad but make it very responsive
-                    controller.lenis.options.lerp = 0.8; // Much higher for near-instant response
-                    controller.lenis.options.smoothWheel = true;
-                    controller.lenis.options.wheelMultiplier = 1.2;
-                }
-            }
-            controller.updatePopups();
+            // Check screen size (tablets/mobile typically have smaller screens)
+            const isSmallScreen = window.innerWidth <= 1024;
+            
+            // If any touch indicators are present, consider it a touch device
+            return hasTouch || isMobileUA || (hasTouch && isSmallScreen);
         },
 
         init() {
-            // Use passive: false to allow preventDefault if needed
-            document.addEventListener('wheel', e => {
-                // Prevent any potential conflicts with native scrolling
-                if (smoothEnabled) {
-                    e.preventDefault();
-                }
-                this.detect(e);
-            }, { passive: false });
-            document.addEventListener('pointerdown', e => this.detect(e), { passive: true });
-            document.addEventListener('touchstart', e => this.detect(e), { passive: true });
+            // Set smooth scrolling based on device type
+            smoothEnabled = !this.isTouchDevice();
+            console.log(`Smooth scrolling ${smoothEnabled ? 'enabled' : 'disabled'} for ${this.isTouchDevice() ? 'touch' : 'desktop'} device`);
         }
     };
 
+    // Initialize device detection first
+    deviceDetector.init();
+
     const config = {
-        lerp: 0.12,
-        smoothWheel: true,
+        lerp: smoothEnabled ? 0.12 : 1,
+        smoothWheel: smoothEnabled,
         syncTouch: false,
         touchMultiplier: 0,
         wheelMultiplier: 1,
@@ -264,13 +218,8 @@
                 if (this.hasPopup(popup)) return;
                 const scrollable = this.findScrollable(popup);
                 if (scrollable) {
-                    const options = { 
-                        ...config, 
-                        lerp: smoothEnabled ? 0.12 : 0.8, // Use improved lerp values
-                        smoothWheel: true, // Always keep smooth wheel enabled
-                        wheelMultiplier: smoothEnabled ? 1 : 1.2
-                    };
-                    const instance = new Lenis({ wrapper: scrollable, content: scrollable, ...options });
+                    // Use the same config as main Lenis instance
+                    const instance = new Lenis({ wrapper: scrollable, content: scrollable, ...config });
                     this.popups.set(scrollable, instance);
                 }
             });
@@ -299,16 +248,6 @@
             return Array.from(this.popups.keys()).some(el => el === popup || popup.contains(el));
         }
 
-        updatePopups() {
-            this.popups.forEach(instance => {
-                if (instance?.options) {
-                    instance.options.lerp = smoothEnabled ? 0.12 : 0.8; // Use improved lerp values
-                    instance.options.smoothWheel = true; // Always keep smooth wheel enabled
-                    instance.options.wheelMultiplier = smoothEnabled ? 1 : 1.2;
-                }
-            });
-        }
-
         manageGlobal() {
             const hasPopups = this.popups.size > 0;
             if (hasPopups && !this.stoppedByPopup) {
@@ -329,9 +268,6 @@
         }
     }
 
-    // Initialize input detector and controller
-    detector.init();
-    
     const controller = new TildaController();
     window.TildaController = {
         destroy: () => controller?.destroy(),
