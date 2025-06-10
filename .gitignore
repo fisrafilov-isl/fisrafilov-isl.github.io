@@ -1,31 +1,59 @@
-# System Files
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
+      
+# This .gitignore uses an "ignore everything by default" strategy.
+# It starts by ignoring all files and directories, then explicitly unignores
+# specific paths, and finally re-ignores common build outputs, system files,
+# and temporary files that might appear even within the unignored paths.
 
-# IDE Files
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
+# Ignore everything by default
+*
+
+# Explicitly include specific files in the root directory
+!DEPLOYMENT.md
+!PRODUCTION-LINKS.md
+!README.md
+
+# Explicitly include the 'grade_calc' directory and all its contents
+# !grade_calc/ is needed to ensure the directory itself is tracked,
+# even if empty, or if Git needs to know about it before its contents are added.
+# !grade_calc/** unignores all files and subdirectories recursively within 'grade_calc'.
+!grade_calc/
+!grade_calc/**
+
+# Explicitly include the 'smooth_scrolling' directory and all its contents
+# Similar logic as above.
+!smooth_scrolling/
+!smooth_scrolling/**
+
+# Re-ignore common files that might be present even within explicitly included directories
+# These rules apply globally and override any previous '!' inclusions for these specific patterns.
+
+# System Files (macOS, Windows, general)
+.DS_Store           # macOS directory service store
+._*                 # macOS resource forks
+.Spotlight-V100     # macOS Spotlight index
+.Trashes            # macOS Trashes
+ehthumbs.db         # Windows media cache
+Thumbs.db           # Windows thumbnail cache
+
+# IDE / Editor Files
+.vscode/            # Visual Studio Code settings
+.idea/              # IntelliJ IDEA project files
+*.swp               # Vim swap files
+*.swo               # Vim swap files
+*~                  # Backup files created by many editors
 
 # Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+logs/               # Directory for logs
+*.log               # All files ending with .log
+npm-debug.log*      # npm debug logs (including rotated ones like .log.1)
+yarn-debug.log*     # Yarn debug logs
+yarn-error.log*     # Yarn error logs
 
-# Node modules (if using any build tools)
-node_modules/
-dist/
-.cache/
+# Node modules / Build outputs / Cache
+node_modules/       # Node.js dependencies
+dist/               # Common build output directory
+.cache/             # Common cache directory
 
 # Temporary files
-*.tmp
-*.temp 
+*.tmp               # Temporary files
+*.temp              # Temporary files

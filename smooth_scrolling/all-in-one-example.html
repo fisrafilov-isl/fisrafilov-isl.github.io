@@ -15,79 +15,47 @@ html {
 
 <script>
 // Smooth Scrolling Component with Lenis
-// Provides adaptive smooth scrolling that adjusts based on input device
+// Provides smooth scrolling for desktop devices, disabled for touch devices
 (function() {
     'use strict';
 
-    let smoothEnabled = true;
-    let lastInput = 'mouse';
-    let currentInputMode = 'mouse'; // Track current mode for immediate prevention
+    let smoothEnabled = false;
 
-    const detector = {
-        detect(e) {
-            let method = 'unknown';
+    // Device detection - determine once at initialization
+    const deviceDetector = {
+        isTouchDevice() {
+            // Check for touch capability
+            const hasTouch = 'ontouchstart' in window || 
+                           navigator.maxTouchPoints > 0 || 
+                           navigator.msMaxTouchPoints > 0;
             
-            if (e.type === 'wheel') {
-                const { deltaX, deltaY } = e;
-                const absY = Math.abs(deltaY);
-                const absX = Math.abs(deltaX);
-
-                // More aggressive mouse detection for immediate response
-                if (absY > 50 || (absX === 0 && absY > 20)) method = 'mouse';
-                else if (absX > 2) method = 'trackpad';
-                else if (absY < 15 && e.deltaMode === 0) method = 'trackpad';
-                else method = absY > 30 ? 'mouse' : 'trackpad';
-
-                // Update current mode immediately
-                currentInputMode = method;
-            } else if (e.type.startsWith('pointer')) {
-                method = e.pointerType === 'mouse' ? 'mouse' : 'touch';
-                currentInputMode = method;
-            } else if (e.type.startsWith('touch')) {
-                method = 'touch';
-                currentInputMode = method;
-            }
-
-            if (method !== 'unknown' && method !== lastInput) {
-                lastInput = method;
-                this.update(method);
-            }
-        },
-
-        update(method) {
-            const shouldSmooth = method === 'mouse';
-            if (shouldSmooth === smoothEnabled) return;
+            // Check user agent for mobile/tablet indicators
+            const userAgent = navigator.userAgent.toLowerCase();
+            const isMobileUA = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent);
             
-            smoothEnabled = shouldSmooth;
-            const controller = window.TildaController?.getInstance();
-            if (!controller) return;
-
-            if (!controller.stoppedByPopup && controller.lenis) {
-                if (shouldSmooth) {
-                    // More responsive settings for mouse to reduce bounce
-                    controller.lenis.options.lerp = 0.08; // Balanced response
-                    controller.lenis.options.smoothWheel = true;
-                } else {
-                    // Instant for trackpad
-                    controller.lenis.options.lerp = 1;
-                    controller.lenis.options.smoothWheel = false;
-                }
-            }
-            controller.updatePopups();
+            // Check screen size (tablets/mobile typically have smaller screens)
+            const isSmallScreen = window.innerWidth <= 1024;
+            
+            // If any touch indicators are present, consider it a touch device
+            return hasTouch || isMobileUA || (hasTouch && isSmallScreen);
         },
 
         init() {
-            document.addEventListener('wheel', e => this.detect(e), { passive: true });
-            document.addEventListener('pointerdown', e => this.detect(e), { passive: true });
-            document.addEventListener('touchstart', e => this.detect(e), { passive: true });
+            // Set smooth scrolling based on device type
+            smoothEnabled = !this.isTouchDevice();
+            console.log(`Smooth scrolling ${smoothEnabled ? 'enabled' : 'disabled'} for ${this.isTouchDevice() ? 'touch' : 'desktop'} device`);
         }
     };
 
+    // Initialize device detection first
+    deviceDetector.init();
+
     const config = {
-        lerp: 0.08,
-        smoothWheel: true,
+        lerp: smoothEnabled ? 0.12 : 1,
+        smoothWheel: smoothEnabled,
         syncTouch: false,
         touchMultiplier: 0,
+        wheelMultiplier: 1,
         infinite: false
     };
 
@@ -227,7 +195,7 @@ html {
                 if (scrollable) {
                     const options = { 
                         ...config, 
-                        lerp: smoothEnabled ? 0.08 : 1, // Balanced lerp for mouse
+                        lerp: smoothEnabled ? 0.12 : 1, // Use device-appropriate lerp
                         smoothWheel: smoothEnabled 
                     };
                     const instance = new Lenis({ wrapper: scrollable, content: scrollable, ...options });
@@ -262,7 +230,7 @@ html {
         updatePopups() {
             this.popups.forEach(instance => {
                 if (instance?.options) {
-                    instance.options.lerp = smoothEnabled ? 0.08 : 1; // Balanced lerp
+                    instance.options.lerp = smoothEnabled ? 0.12 : 1; // Use device-appropriate lerp
                     instance.options.smoothWheel = smoothEnabled;
                 }
             });
@@ -288,9 +256,6 @@ html {
         }
     }
 
-    // Initialize input detector and controller
-    detector.init();
-    
     const controller = new TildaController();
     window.TildaController = {
         destroy: () => controller?.destroy(),
