@@ -69,9 +69,9 @@
             padding: 2rem 0;
             overflow-y: auto;
             position: sticky;
-            top: 0;
+            top: 7rem;
             align-self: flex-start;
-            max-height: 100vh;
+            max-height: calc(100vh - 7rem);
         }
         .sidebar h3 {
             padding: 0 1.5rem;
@@ -660,8 +660,8 @@ graph TD
                 panZoomInstance = svgPanZoom(diagram, {
                     zoomEnabled: true,
                     controlIconsEnabled: false,
-                    fit: true,
-                    center: true,
+                    fit: false,
+                    center: false,
                     minZoom: 0.1,
                     maxZoom: 10,
                     zoomScaleSensitivity: 0.3
