@@ -256,29 +256,29 @@ graph TD
     classDef todoItem fill:#f1f8e9,stroke:#689f38,stroke-width:2px,color:#000,min-width:400px
     classDef docItem fill:#fff3e0,stroke:#f57c00,stroke-width:2px,color:#000,min-width:400px
 
-    ITEM_1{"<b>1 - Submit Registration of Interest</b><br/>---<br/>Type: Form<br/>Status: Required<br/>Form: Registration of Interest<br/>Statuses: Pending, Admitted, Place offered<br/>---<br/><b>Conditions:</b><br/>HS Students 2024-2025 Does not<br/>equal Yes AND REE 2025-2026 Does<br/>not equal Yes"}:::formItem
-    ITEM_3{"<b>3 - Submit Form for Learning Support (IB)</b><br/>---<br/>Type: Form<br/>Status: Required<br/>Form: Learning Support form (IB / Mo<br/>Statuses: Pending, Admitted, Place offered<br/>---<br/><b>Conditions:</b><br/>IB Programme Y/N Equals Yes AND IB<br/>Tracks Does not equal IB:<br/>Technology Leaders Scholarship AND<br/>REE 2025-2026 Does not equal Yes"}:::formItem
-    ITEM_6["<b>6 - Receive Decision from Admission Team</b><br/>---<br/>Type: To Do<br/>Status: Required<br/>Statuses: Pending, Admitted, Place offered<br/>---<br/><b>Conditions:</b><br/>Completed Checklist Equals Submit<br/>Form for Learning Support (IB)"]:::todoItem
-    ITEM_7{"<b>7 - Submit Student Health Questionnaire for Parents</b><br/>---<br/>Type: Form<br/>Status: Required<br/>Form: Student Health Questionnaire f<br/>Statuses: Pending, Admitted, Place offered +1<br/>---<br/><b>Conditions:</b><br/>Completed Checklist Equals Submit<br/>Registration of Interest AND IB<br/>Tracks Equals IB: Technology<br/>Leaders Scholarship"}:::formItem
-    ITEM_9{"<b>9 - Submit Enrolment Form for Academic Year 2025-2026</b><br/>---<br/>Type: Form<br/>Status: Required<br/>Form: Enrolment Form (2025-2026)<br/>Statuses: Pending, Admitted, Place offered +1<br/>---<br/><b>Conditions:</b><br/>Completed Checklist Equals Receive<br/>Decision from Admission Team AND<br/>Enrollment Year Equals 2025-2026<br/>Academic Year AND IB Tracks Does<br/>not equal IB: Technology Leaders<br/>Scholarship"}:::formItem
-    ITEM_12["<b>12 - E-Sign Your Enrolment / Re-Enrolment Form 2025-202</b><br/>---<br/>Type: To Do<br/>Status: Required<br/>Statuses: Pending, Admitted, Place offered +1<br/>---<br/><b>Conditions:</b><br/>Completed Checklist Equals Submit<br/>Enrolment Form (2024-2025)<br/>REE 2025-2026 Equals Yes"]:::todoItem
-    ITEM_13["<b>13 - School Received E-Signature for 2025-2026 Enrolmen</b><br/>---<br/>Type: To Do<br/>Status: Required<br/>Statuses: Pending, Admitted, Place offered +1<br/>---<br/><b>Conditions:</b><br/>Completed Checklist Equals Submit<br/>Enrolment Form for Academic Year<br/>2025-2026<br/>REE 2025-2026 Equals Yes"]:::todoItem
+    ITEM_1{"<b>1 - Submit Registration of Interest</b><br/>---<br/>Type: Form<br/>Status: Required<br/>Form: Registration of Interest<br/>Statuses: Pending, Admitted, Place offered<br/>---<br/><b>Conditions:</b><br/>• HS Students 2024-2025 <i>Does not<br/>equal</i> <b>Yes</b> <i>AND</i> REE<br/>2025-2026 <i>Does not equal</i><br/><b>Yes</b>"}:::formItem
+    ITEM_3{"<b>3 - Submit Form for Learning Support (IB)</b><br/>---<br/>Type: Form<br/>Status: Required<br/>Form: Learning Support form (IB / Mo<br/>Statuses: Pending, Admitted, Place offered<br/>---<br/><b>Conditions:</b><br/>• IB Programme Y/N <i>Equals</i><br/><b>Yes</b> <i>AND</i> IB Tracks<br/><i>Does not equal</i> <b>IB:<br/>Technology Leaders Scholarship</b><br/><i>AND</i> REE 2025-2026 <i>Does<br/>not equal</i> <b>Yes</b>"}:::formItem
+    ITEM_6["<b>6 - Receive Decision from Admission Team</b><br/>---<br/>Type: To Do<br/>Status: Required<br/>Statuses: Pending, Admitted, Place offered<br/>---<br/><b>Conditions:</b><br/>• Completed Checklist <i>Equals</i><br/><b>Submit Form for Learning Support<br/>(IB)</b>"]:::todoItem
+    ITEM_7{"<b>7 - Submit Student Health Questionnaire for Parents</b><br/>---<br/>Type: Form<br/>Status: Required<br/>Form: Student Health Questionnaire f<br/>Statuses: Pending, Admitted, Place offered +1<br/>---<br/><b>Conditions:</b><br/>• Completed Checklist <i>Equals</i><br/><b>Submit Registration of<br/>Interest</b> <i>AND</i> IB Tracks<br/><i>Equals</i> <b>IB: Technology<br/>Leaders Scholarship</b>"}:::formItem
+    ITEM_9{"<b>9 - Submit Enrolment Form for Academic Year 2025-2026</b><br/>---<br/>Type: Form<br/>Status: Required<br/>Form: Enrolment Form (2025-2026)<br/>Statuses: Pending, Admitted, Place offered +1<br/>---<br/><b>Conditions:</b><br/>• Completed Checklist <i>Equals</i><br/><b>Receive Decision from Admission<br/>Team</b> <i>AND</i> Enrollment Year<br/><i>Equals</i> <b>2025-2026 Academic<br/>Year</b> <i>AND</i> IB Tracks<br/><i>Does not equal</i> <b>IB:<br/>Technology Leaders Scholarship</b>"}:::formItem
+    ITEM_12["<b>12 - E-Sign Your Enrolment / Re-Enrolment Form 2025-202</b><br/>---<br/>Type: To Do<br/>Status: Required<br/>Statuses: Pending, Admitted, Place offered +1<br/>---<br/><b>Conditions:</b><br/>• Completed Checklist <i>Equals</i><br/><b>Submit Enrolment Form<br/>(2024-2025)</b><br/><i>OR</i><br/>• REE 2025-2026 <i>Equals</i> <b>Yes</b>"]:::todoItem
+    ITEM_13["<b>13 - School Received E-Signature for 2025-2026 Enrolmen</b><br/>---<br/>Type: To Do<br/>Status: Required<br/>Statuses: Pending, Admitted, Place offered +1<br/>---<br/><b>Conditions:</b><br/>• Completed Checklist <i>Equals</i><br/><b>Submit Enrolment Form for<br/>Academic Year 2025-2026</b><br/><i>OR</i><br/>• REE 2025-2026 <i>Equals</i> <b>Yes</b>"]:::todoItem
     ITEM_14{"<b>14 - Submit Participation of Students in Excursions and</b><br/>---<br/>Type: Form<br/>Status: Required<br/>Form: Participation of Students in E<br/>Statuses: Pending, Admitted, Place offered +1"}:::formItem
-    ITEM_15[["<b>15 - Submit Child's Birth Certificate</b><br/>---<br/>Type: Document Submission<br/>Status: Required<br/>Statuses: Pending, Admitted, Place offered +1<br/>Categories: General, Legal, Wellbeing<br/>---<br/><b>Conditions:</b><br/>Completed Checklist Equals Receive<br/>Decision from Admission Team<br/>HS Students 2024-2025 Equals Yes<br/>Enrollment Year Equals 2023-2024<br/>Academic Year<br/>REE 2025-2026 Equals Yes AND REE<br/>Missing Checklist Items Contains<br/>Submit Child's Birth Certificate<br/>Completed Checklist Equals Submit<br/>Registration of Interest AND IB<br/>Tracks Equals IB: Technology<br/>Leaders Scholarship"]]:::docItem
-    ITEM_16[["<b>16 - Submit Child’s Passport or ID Card</b><br/>---<br/>Type: Document Submission<br/>Status: Required<br/>Statuses: Pending, Admitted, Place offered +1<br/>Categories: General, Legal<br/>---<br/><b>Conditions:</b><br/>Completed Checklist Equals Receive<br/>Decision from Admission Team<br/>HS Students 2024-2025 Equals Yes<br/>Enrollment Year Equals 2023-2024<br/>Academic Year<br/>REE 2025-2026 Equals Yes AND REE<br/>Missing Checklist Items Contains<br/>Submit Child’s Passport or ID Card<br/>Completed Checklist Equals Submit<br/>Registration of Interest AND IB<br/>Tracks Equals IB: Technology<br/>Leaders Scholarship"]]:::docItem
-    ITEM_17[["<b>17 - Submit Certificate of a Clean Criminal Record</b><br/>---<br/>Type: Document Submission<br/>Status: Required<br/>Statuses: Pending, Admitted, Place offered<br/>Categories: General<br/>---<br/><b>Conditions:</b><br/>Completed Checklist Equals Submit<br/>Registration of Interest AND IB<br/>Tracks Equals IB: Technology<br/>Leaders Scholarship"]]:::docItem
-    ITEM_18[["<b>18 - Submit Parent’s Consent Letter</b><br/>---<br/>Type: Document Submission<br/>Status: Required<br/>Statuses: Pending, Admitted, Place offered<br/>Categories: General<br/>---<br/><b>Conditions:</b><br/>Completed Checklist Equals Submit<br/>Registration of Interest AND IB<br/>Tracks Equals IB: Technology<br/>Leaders Scholarship"]]:::docItem
-    ITEM_19[["<b>19 - Submit Original Medical Examinations from the Coun</b><br/>---<br/>Type: Document Submission<br/>Status: Required<br/>Statuses: Pending, Admitted, Place offered<br/>Categories: General, Medical<br/>---<br/><b>Conditions:</b><br/>Completed Checklist Equals Submit<br/>Registration of Interest AND IB<br/>Tracks Equals IB: Technology<br/>Leaders Scholarship"]]:::docItem
-    ITEM_20[["<b>20 - Submit E-Signed and Completed Scholarship Agreemen</b><br/>---<br/>Type: Document Submission<br/>Status: Required<br/>Statuses: Pending, Admitted, Place offered<br/>Categories: General, Legal<br/>---<br/><b>Conditions:</b><br/>Completed Checklist Equals Submit<br/>Registration of Interest AND IB<br/>Tracks Equals IB: Technology<br/>Leaders Scholarship"]]:::docItem
-    ITEM_21[["<b>21 - Submit Parents'/Guardians' Passports or ID Cards</b><br/>---<br/>Type: Document Submission<br/>Status: Required<br/>Statuses: Pending, Admitted, Place offered +1<br/>Categories: General, Legal<br/>---<br/><b>Conditions:</b><br/>Completed Checklist Equals Receive<br/>Decision from Admission Team<br/>HS Students 2024-2025 Equals Yes<br/>Enrollment Year Equals 2023-2024<br/>Academic Year<br/>REE 2025-2026 Equals Yes AND REE<br/>Missing Checklist Items Contains<br/>Submit Parents'/Guardians'<br/>Passports or ID Cards"]]:::docItem
-    ITEM_22[["<b>22 - Submit Proof of Residence</b><br/>---<br/>Type: Document Submission<br/>Status: Required<br/>Statuses: Pending, Admitted, Place offered +1<br/>Categories: General<br/>---<br/><b>Conditions:</b><br/>Completed Checklist Equals Receive<br/>Decision from Admission Team<br/>HS Students 2024-2025 Equals Yes<br/>Enrollment Year Equals 2023-2024<br/>Academic Year<br/>REE 2025-2026 Equals Yes AND REE<br/>Missing Checklist Items Contains<br/>Submit Proof of Residence"]]:::docItem
-    ITEM_23[["<b>23 - Submit Child's Health Certificate</b><br/>---<br/>Type: Document Submission<br/>Status: Required<br/>Statuses: Pending, Admitted, Place offered +1<br/>Categories: General, Medical<br/>---<br/><b>Conditions:</b><br/>Completed Checklist Equals Receive<br/>Decision from Admission Team<br/>HS Students 2024-2025 Equals Yes<br/>Enrollment Year Equals 2023-2024<br/>Academic Year<br/>REE 2025-2026 Equals Yes AND REE<br/>Missing Checklist Items Contains<br/>Submit Child's Health Certificate"]]:::docItem
-    ITEM_24[["<b>24 - Submit Vaccination Coverage Certificate or Vaccina</b><br/>---<br/>Type: Document Submission<br/>Status: Required<br/>Statuses: Pending, Admitted, Place offered +1<br/>Categories: General, Medical<br/>---<br/><b>Conditions:</b><br/>Completed Checklist Equals Receive<br/>Decision from Admission Team<br/>HS Students 2024-2025 Equals Yes<br/>Enrollment Year Equals 2023-2024<br/>Academic Year<br/>REE 2025-2026 Equals Yes AND REE<br/>Missing Checklist Items Contains<br/>Submit Vaccination Coverage<br/>Certificate or Vaccination Refusal"]]:::docItem
-    ITEM_25[["<b>25 - Submit Medical Report</b><br/>---<br/>Type: Document Submission<br/>Status: Required<br/>Statuses: Pending, Admitted, Place offered +1<br/>Categories: General, Learning Support, Medical<br/>---<br/><b>Conditions:</b><br/>Completed Checklist Equals Submit<br/>Enrolment Form (2024-2025) AND<br/>Special Educational Needs Y/N<br/>Equals Yes<br/>HS Students 2024-2025 Equals Yes<br/>AND Special Educational Needs Y/N<br/>Equals Yes<br/>Enrollment Year Equals 2023-2024<br/>Academic Year AND Special<br/>Educational Needs Y/N Equals Yes<br/>Completed Checklist Equals Submit<br/>Enrolment Form for Academic Year<br/>2025-2026 AND Special Educational<br/>Needs Y/N Equals Yes<br/>REE 2025-2026 Equals Yes AND REE<br/>Missing Checklist Items Contains<br/>Submit Medical Report AND Special<br/>Educational Needs Y/N Equals Yes"]]:::docItem
-    ITEM_26[["<b>26 - Submit Student's Photo</b><br/>---<br/>Type: Document Submission<br/>Status: Required<br/>Statuses: Pending, Admitted, Place offered +1<br/>Categories: General, Academic<br/>---<br/><b>Conditions:</b><br/>Completed Checklist Equals Receive<br/>Decision from Admission Team<br/>HS Students 2024-2025 Equals Yes<br/>Enrollment Year Equals 2023-2024<br/>Academic Year<br/>REE 2025-2026 Equals Yes AND REE<br/>Missing Checklist Items Contains<br/>Submit Student's Photo"]]:::docItem
-    ITEM_27["<b>27 - Receive Invoice from Accounting Team</b><br/>---<br/>Type: To Do<br/>Status: Required<br/>Statuses: Admitted, Place offered, Enrolled<br/>---<br/><b>Conditions:</b><br/>Completed Checklist Equals Receive<br/>Decision from Admission Team<br/>Enrollment Year Equals 2023-2024<br/>Academic Year<br/>HS Students 2024-2025 Equals Yes<br/>REE 2025-2026 Equals Yes"]:::todoItem
-    ITEM_36[["<b>36 - Upload proof of achievements (Optional)</b><br/>---<br/>Type: Document Submission<br/>Status: Optional<br/>Statuses: Pending<br/>Categories: General<br/>---<br/><b>Conditions:</b><br/>Completed Checklist Equals Submit<br/>Registration of Interest AND IB<br/>Tracks Equals IB: Technology<br/>Leaders Scholarship"]]:::docItem
-    ITEM_37[["<b>37 - Upload Portfolio with personal projects (Optional)</b><br/>---<br/>Type: Document Submission<br/>Status: Optional<br/>Statuses: Pending<br/>Categories: General<br/>---<br/><b>Conditions:</b><br/>Completed Checklist Equals Submit<br/>Registration of Interest AND IB<br/>Tracks Equals IB: Technology<br/>Leaders Scholarship"]]:::docItem
+    ITEM_15[["<b>15 - Submit Child's Birth Certificate</b><br/>---<br/>Type: Document Submission<br/>Status: Required<br/>Statuses: Pending, Admitted, Place offered +1<br/>Categories: General, Legal, Wellbeing<br/>---<br/><b>Conditions:</b><br/>• Completed Checklist <i>Equals</i><br/><b>Receive Decision from Admission<br/>Team</b><br/><i>OR</i><br/>• HS Students 2024-2025<br/><i>Equals</i> <b>Yes</b><br/><i>OR</i><br/>• Enrollment Year <i>Equals</i><br/><b>2023-2024 Academic Year</b><br/><i>OR</i><br/>• REE 2025-2026 <i>Equals</i><br/><b>Yes</b> <i>AND</i> REE Missing<br/>Checklist Items <i>Contains</i><br/><b>Submit Child's Birth<br/>Certificate</b><br/><i>OR</i><br/>• Completed Checklist <i>Equals</i><br/><b>Submit Registration of<br/>Interest</b> <i>AND</i> IB Tracks<br/><i>Equals</i> <b>IB: Technology<br/>Leaders Scholarship</b>"]]:::docItem
+    ITEM_16[["<b>16 - Submit Child’s Passport or ID Card</b><br/>---<br/>Type: Document Submission<br/>Status: Required<br/>Statuses: Pending, Admitted, Place offered +1<br/>Categories: General, Legal<br/>---<br/><b>Conditions:</b><br/>• Completed Checklist <i>Equals</i><br/><b>Receive Decision from Admission<br/>Team</b><br/><i>OR</i><br/>• HS Students 2024-2025<br/><i>Equals</i> <b>Yes</b><br/><i>OR</i><br/>• Enrollment Year <i>Equals</i><br/><b>2023-2024 Academic Year</b><br/><i>OR</i><br/>• REE 2025-2026 <i>Equals</i><br/><b>Yes</b> <i>AND</i> REE Missing<br/>Checklist Items <i>Contains</i><br/><b>Submit Child’s Passport or ID<br/>Card</b><br/><i>OR</i><br/>• Completed Checklist <i>Equals</i><br/><b>Submit Registration of<br/>Interest</b> <i>AND</i> IB Tracks<br/><i>Equals</i> <b>IB: Technology<br/>Leaders Scholarship</b>"]]:::docItem
+    ITEM_17[["<b>17 - Submit Certificate of a Clean Criminal Record</b><br/>---<br/>Type: Document Submission<br/>Status: Required<br/>Statuses: Pending, Admitted, Place offered<br/>Categories: General<br/>---<br/><b>Conditions:</b><br/>• Completed Checklist <i>Equals</i><br/><b>Submit Registration of<br/>Interest</b> <i>AND</i> IB Tracks<br/><i>Equals</i> <b>IB: Technology<br/>Leaders Scholarship</b>"]]:::docItem
+    ITEM_18[["<b>18 - Submit Parent’s Consent Letter</b><br/>---<br/>Type: Document Submission<br/>Status: Required<br/>Statuses: Pending, Admitted, Place offered<br/>Categories: General<br/>---<br/><b>Conditions:</b><br/>• Completed Checklist <i>Equals</i><br/><b>Submit Registration of<br/>Interest</b> <i>AND</i> IB Tracks<br/><i>Equals</i> <b>IB: Technology<br/>Leaders Scholarship</b>"]]:::docItem
+    ITEM_19[["<b>19 - Submit Original Medical Examinations from the Coun</b><br/>---<br/>Type: Document Submission<br/>Status: Required<br/>Statuses: Pending, Admitted, Place offered<br/>Categories: General, Medical<br/>---<br/><b>Conditions:</b><br/>• Completed Checklist <i>Equals</i><br/><b>Submit Registration of<br/>Interest</b> <i>AND</i> IB Tracks<br/><i>Equals</i> <b>IB: Technology<br/>Leaders Scholarship</b>"]]:::docItem
+    ITEM_20[["<b>20 - Submit E-Signed and Completed Scholarship Agreemen</b><br/>---<br/>Type: Document Submission<br/>Status: Required<br/>Statuses: Pending, Admitted, Place offered<br/>Categories: General, Legal<br/>---<br/><b>Conditions:</b><br/>• Completed Checklist <i>Equals</i><br/><b>Submit Registration of<br/>Interest</b> <i>AND</i> IB Tracks<br/><i>Equals</i> <b>IB: Technology<br/>Leaders Scholarship</b>"]]:::docItem
+    ITEM_21[["<b>21 - Submit Parents'/Guardians' Passports or ID Cards</b><br/>---<br/>Type: Document Submission<br/>Status: Required<br/>Statuses: Pending, Admitted, Place offered +1<br/>Categories: General, Legal<br/>---<br/><b>Conditions:</b><br/>• Completed Checklist <i>Equals</i><br/><b>Receive Decision from Admission<br/>Team</b><br/><i>OR</i><br/>• HS Students 2024-2025<br/><i>Equals</i> <b>Yes</b><br/><i>OR</i><br/>• Enrollment Year <i>Equals</i><br/><b>2023-2024 Academic Year</b><br/><i>OR</i><br/>• REE 2025-2026 <i>Equals</i><br/><b>Yes</b> <i>AND</i> REE Missing<br/>Checklist Items <i>Contains</i><br/><b>Submit Parents'/Guardians'<br/>Passports or ID Cards</b>"]]:::docItem
+    ITEM_22[["<b>22 - Submit Proof of Residence</b><br/>---<br/>Type: Document Submission<br/>Status: Required<br/>Statuses: Pending, Admitted, Place offered +1<br/>Categories: General<br/>---<br/><b>Conditions:</b><br/>• Completed Checklist <i>Equals</i><br/><b>Receive Decision from Admission<br/>Team</b><br/><i>OR</i><br/>• HS Students 2024-2025<br/><i>Equals</i> <b>Yes</b><br/><i>OR</i><br/>• Enrollment Year <i>Equals</i><br/><b>2023-2024 Academic Year</b><br/><i>OR</i><br/>• REE 2025-2026 <i>Equals</i><br/><b>Yes</b> <i>AND</i> REE Missing<br/>Checklist Items <i>Contains</i><br/><b>Submit Proof of Residence</b>"]]:::docItem
+    ITEM_23[["<b>23 - Submit Child's Health Certificate</b><br/>---<br/>Type: Document Submission<br/>Status: Required<br/>Statuses: Pending, Admitted, Place offered +1<br/>Categories: General, Medical<br/>---<br/><b>Conditions:</b><br/>• Completed Checklist <i>Equals</i><br/><b>Receive Decision from Admission<br/>Team</b><br/><i>OR</i><br/>• HS Students 2024-2025<br/><i>Equals</i> <b>Yes</b><br/><i>OR</i><br/>• Enrollment Year <i>Equals</i><br/><b>2023-2024 Academic Year</b><br/><i>OR</i><br/>• REE 2025-2026 <i>Equals</i><br/><b>Yes</b> <i>AND</i> REE Missing<br/>Checklist Items <i>Contains</i><br/><b>Submit Child's Health<br/>Certificate</b>"]]:::docItem
+    ITEM_24[["<b>24 - Submit Vaccination Coverage Certificate or Vaccina</b><br/>---<br/>Type: Document Submission<br/>Status: Required<br/>Statuses: Pending, Admitted, Place offered +1<br/>Categories: General, Medical<br/>---<br/><b>Conditions:</b><br/>• Completed Checklist <i>Equals</i><br/><b>Receive Decision from Admission<br/>Team</b><br/><i>OR</i><br/>• HS Students 2024-2025<br/><i>Equals</i> <b>Yes</b><br/><i>OR</i><br/>• Enrollment Year <i>Equals</i><br/><b>2023-2024 Academic Year</b><br/><i>OR</i><br/>• REE 2025-2026 <i>Equals</i><br/><b>Yes</b> <i>AND</i> REE Missing<br/>Checklist Items <i>Contains</i><br/><b>Submit Vaccination Coverage<br/>Certificate or Vaccination<br/>Refusal</b>"]]:::docItem
+    ITEM_25[["<b>25 - Submit Medical Report</b><br/>---<br/>Type: Document Submission<br/>Status: Required<br/>Statuses: Pending, Admitted, Place offered +1<br/>Categories: General, Learning Support, Medical<br/>---<br/><b>Conditions:</b><br/>• Completed Checklist <i>Equals</i><br/><b>Submit Enrolment Form<br/>(2024-2025)</b> <i>AND</i> Special<br/>Educational Needs Y/N <i>Equals</i><br/><b>Yes</b><br/><i>OR</i><br/>• HS Students 2024-2025<br/><i>Equals</i> <b>Yes</b> <i>AND</i><br/>Special Educational Needs Y/N<br/><i>Equals</i> <b>Yes</b><br/><i>OR</i><br/>• Enrollment Year <i>Equals</i><br/><b>2023-2024 Academic Year</b><br/><i>AND</i> Special Educational<br/>Needs Y/N <i>Equals</i> <b>Yes</b><br/><i>OR</i><br/>• Completed Checklist <i>Equals</i><br/><b>Submit Enrolment Form for<br/>Academic Year 2025-2026</b><br/><i>AND</i> Special Educational<br/>Needs Y/N <i>Equals</i> <b>Yes</b><br/><i>OR</i><br/>• REE 2025-2026 <i>Equals</i><br/><b>Yes</b> <i>AND</i> REE Missing<br/>Checklist Items <i>Contains</i><br/><b>Submit Medical Report</b><br/><i>AND</i> Special Educational<br/>Needs Y/N <i>Equals</i> <b>Yes</b>"]]:::docItem
+    ITEM_26[["<b>26 - Submit Student's Photo</b><br/>---<br/>Type: Document Submission<br/>Status: Required<br/>Statuses: Pending, Admitted, Place offered +1<br/>Categories: General, Academic<br/>---<br/><b>Conditions:</b><br/>• Completed Checklist <i>Equals</i><br/><b>Receive Decision from Admission<br/>Team</b><br/><i>OR</i><br/>• HS Students 2024-2025<br/><i>Equals</i> <b>Yes</b><br/><i>OR</i><br/>• Enrollment Year <i>Equals</i><br/><b>2023-2024 Academic Year</b><br/><i>OR</i><br/>• REE 2025-2026 <i>Equals</i><br/><b>Yes</b> <i>AND</i> REE Missing<br/>Checklist Items <i>Contains</i><br/><b>Submit Student's Photo</b>"]]:::docItem
+    ITEM_27["<b>27 - Receive Invoice from Accounting Team</b><br/>---<br/>Type: To Do<br/>Status: Required<br/>Statuses: Admitted, Place offered, Enrolled<br/>---<br/><b>Conditions:</b><br/>• Completed Checklist <i>Equals</i><br/><b>Receive Decision from Admission<br/>Team</b><br/><i>OR</i><br/>• Enrollment Year <i>Equals</i><br/><b>2023-2024 Academic Year</b><br/><i>OR</i><br/>• HS Students 2024-2025<br/><i>Equals</i> <b>Yes</b><br/><i>OR</i><br/>• REE 2025-2026 <i>Equals</i> <b>Yes</b>"]:::todoItem
+    ITEM_36[["<b>36 - Upload proof of achievements (Optional)</b><br/>---<br/>Type: Document Submission<br/>Status: Optional<br/>Statuses: Pending<br/>Categories: General<br/>---<br/><b>Conditions:</b><br/>• Completed Checklist <i>Equals</i><br/><b>Submit Registration of<br/>Interest</b> <i>AND</i> IB Tracks<br/><i>Equals</i> <b>IB: Technology<br/>Leaders Scholarship</b>"]]:::docItem
+    ITEM_37[["<b>37 - Upload Portfolio with personal projects (Optional)</b><br/>---<br/>Type: Document Submission<br/>Status: Optional<br/>Statuses: Pending<br/>Categories: General<br/>---<br/><b>Conditions:</b><br/>• Completed Checklist <i>Equals</i><br/><b>Submit Registration of<br/>Interest</b> <i>AND</i> IB Tracks<br/><i>Equals</i> <b>IB: Technology<br/>Leaders Scholarship</b>"]]:::docItem
 
     ITEM_3 --> ITEM_6
     ITEM_1 --> ITEM_7
@@ -317,7 +317,7 @@ graph TD
                 </div>
                 <div class="conditions">
                     <strong>Conditions:</strong>
-                    HS Students 2024-2025 Does not equal Yes AND REE 2025-2026 Does not equal Yes<br>
+                    HS Students 2024-2025 <i>Does not equal</i> <b>Yes</b> <i>AND</i> REE 2025-2026 <i>Does not equal</i> <b>Yes</b><br>
                 </div>
             </div>
 
@@ -331,7 +331,7 @@ graph TD
                 </div>
                 <div class="conditions">
                     <strong>Conditions:</strong>
-                    IB Programme Y/N Equals Yes AND IB Tracks Does not equal IB: Technology Leaders Scholarship AND REE 2025-2026 Does not equal Yes<br>
+                    IB Programme Y/N <i>Equals</i> <b>Yes</b> <i>AND</i> IB Tracks <i>Does not equal</i> <b>IB: Technology Leaders Scholarship</b> <i>AND</i> REE 2025-2026 <i>Does not equal</i> <b>Yes</b><br>
                 </div>
             </div>
 
@@ -348,7 +348,7 @@ graph TD
                 </div>
                 <div class="conditions">
                     <strong>Conditions:</strong>
-                    Completed Checklist Equals Submit Form for Learning Support (IB)<br>
+                    Completed Checklist <i>Equals</i> <b>Submit Form for Learning Support (IB)</b><br>
                 </div>
             </div>
 
@@ -362,7 +362,7 @@ graph TD
                 </div>
                 <div class="conditions">
                     <strong>Conditions:</strong>
-                    Completed Checklist Equals Submit Registration of Interest AND IB Tracks Equals IB: Technology Leaders Scholarship<br>
+                    Completed Checklist <i>Equals</i> <b>Submit Registration of Interest</b> <i>AND</i> IB Tracks <i>Equals</i> <b>IB: Technology Leaders Scholarship</b><br>
                 </div>
             </div>
 
@@ -376,7 +376,7 @@ graph TD
                 </div>
                 <div class="conditions">
                     <strong>Conditions:</strong>
-                    Completed Checklist Equals Receive Decision from Admission Team AND Enrollment Year Equals 2025-2026 Academic Year AND IB Tracks Does not equal IB: Technology Leaders Scholarship<br>
+                    Completed Checklist <i>Equals</i> <b>Receive Decision from Admission Team</b> <i>AND</i> Enrollment Year <i>Equals</i> <b>2025-2026 Academic Year</b> <i>AND</i> IB Tracks <i>Does not equal</i> <b>IB: Technology Leaders Scholarship</b><br>
                 </div>
             </div>
 
@@ -393,8 +393,8 @@ graph TD
                 </div>
                 <div class="conditions">
                     <strong>Conditions:</strong>
-                    Completed Checklist Equals Submit Enrolment Form (2024-2025)<br>
-                    REE 2025-2026 Equals Yes<br>
+                    Completed Checklist <i>Equals</i> <b>Submit Enrolment Form (2024-2025)</b><br>
+                    REE 2025-2026 <i>Equals</i> <b>Yes</b><br>
                 </div>
             </div>
 
@@ -411,8 +411,8 @@ graph TD
                 </div>
                 <div class="conditions">
                     <strong>Conditions:</strong>
-                    Completed Checklist Equals Submit Enrolment Form for Academic Year 2025-2026<br>
-                    REE 2025-2026 Equals Yes<br>
+                    Completed Checklist <i>Equals</i> <b>Submit Enrolment Form for Academic Year 2025-2026</b><br>
+                    REE 2025-2026 <i>Equals</i> <b>Yes</b><br>
                 </div>
             </div>
 
@@ -436,11 +436,11 @@ graph TD
                 </div>
                 <div class="conditions">
                     <strong>Conditions:</strong>
-                    Completed Checklist Equals Receive Decision from Admission Team<br>
-                    HS Students 2024-2025 Equals Yes<br>
-                    Enrollment Year Equals 2023-2024 Academic Year<br>
-                    REE 2025-2026 Equals Yes AND REE Missing Checklist Items Contains Submit Child's Birth Certificate<br>
-                    Completed Checklist Equals Submit Registration of Interest AND IB Tracks Equals IB: Technology Leaders Scholarship<br>
+                    Completed Checklist <i>Equals</i> <b>Receive Decision from Admission Team</b><br>
+                    HS Students 2024-2025 <i>Equals</i> <b>Yes</b><br>
+                    Enrollment Year <i>Equals</i> <b>2023-2024 Academic Year</b><br>
+                    REE 2025-2026 <i>Equals</i> <b>Yes</b> <i>AND</i> REE Missing Checklist Items <i>Contains</i> <b>Submit Child's Birth Certificate</b><br>
+                    Completed Checklist <i>Equals</i> <b>Submit Registration of Interest</b> <i>AND</i> IB Tracks <i>Equals</i> <b>IB: Technology Leaders Scholarship</b><br>
                 </div>
             </div>
 
@@ -458,11 +458,11 @@ graph TD
                 </div>
                 <div class="conditions">
                     <strong>Conditions:</strong>
-                    Completed Checklist Equals Receive Decision from Admission Team<br>
-                    HS Students 2024-2025 Equals Yes<br>
-                    Enrollment Year Equals 2023-2024 Academic Year<br>
-                    REE 2025-2026 Equals Yes AND REE Missing Checklist Items Contains Submit Child’s Passport or ID Card<br>
-                    Completed Checklist Equals Submit Registration of Interest AND IB Tracks Equals IB: Technology Leaders Scholarship<br>
+                    Completed Checklist <i>Equals</i> <b>Receive Decision from Admission Team</b><br>
+                    HS Students 2024-2025 <i>Equals</i> <b>Yes</b><br>
+                    Enrollment Year <i>Equals</i> <b>2023-2024 Academic Year</b><br>
+                    REE 2025-2026 <i>Equals</i> <b>Yes</b> <i>AND</i> REE Missing Checklist Items <i>Contains</i> <b>Submit Child’s Passport or ID Card</b><br>
+                    Completed Checklist <i>Equals</i> <b>Submit Registration of Interest</b> <i>AND</i> IB Tracks <i>Equals</i> <b>IB: Technology Leaders Scholarship</b><br>
                 </div>
             </div>
 
@@ -480,7 +480,7 @@ graph TD
                 </div>
                 <div class="conditions">
                     <strong>Conditions:</strong>
-                    Completed Checklist Equals Submit Registration of Interest AND IB Tracks Equals IB: Technology Leaders Scholarship<br>
+                    Completed Checklist <i>Equals</i> <b>Submit Registration of Interest</b> <i>AND</i> IB Tracks <i>Equals</i> <b>IB: Technology Leaders Scholarship</b><br>
                 </div>
             </div>
 
@@ -498,7 +498,7 @@ graph TD
                 </div>
                 <div class="conditions">
                     <strong>Conditions:</strong>
-                    Completed Checklist Equals Submit Registration of Interest AND IB Tracks Equals IB: Technology Leaders Scholarship<br>
+                    Completed Checklist <i>Equals</i> <b>Submit Registration of Interest</b> <i>AND</i> IB Tracks <i>Equals</i> <b>IB: Technology Leaders Scholarship</b><br>
                 </div>
             </div>
 
@@ -521,7 +521,7 @@ All documents should be apostilized and translated.
                 </div>
                 <div class="conditions">
                     <strong>Conditions:</strong>
-                    Completed Checklist Equals Submit Registration of Interest AND IB Tracks Equals IB: Technology Leaders Scholarship<br>
+                    Completed Checklist <i>Equals</i> <b>Submit Registration of Interest</b> <i>AND</i> IB Tracks <i>Equals</i> <b>IB: Technology Leaders Scholarship</b><br>
                 </div>
             </div>
 
@@ -535,7 +535,7 @@ All documents should be apostilized and translated.
                 </div>
                 <div class="conditions">
                     <strong>Conditions:</strong>
-                    Completed Checklist Equals Submit Registration of Interest AND IB Tracks Equals IB: Technology Leaders Scholarship<br>
+                    Completed Checklist <i>Equals</i> <b>Submit Registration of Interest</b> <i>AND</i> IB Tracks <i>Equals</i> <b>IB: Technology Leaders Scholarship</b><br>
                 </div>
             </div>
 
@@ -553,10 +553,10 @@ All documents should be apostilized and translated.
                 </div>
                 <div class="conditions">
                     <strong>Conditions:</strong>
-                    Completed Checklist Equals Receive Decision from Admission Team<br>
-                    HS Students 2024-2025 Equals Yes<br>
-                    Enrollment Year Equals 2023-2024 Academic Year<br>
-                    REE 2025-2026 Equals Yes AND REE Missing Checklist Items Contains Submit Parents'/Guardians' Passports or ID Cards<br>
+                    Completed Checklist <i>Equals</i> <b>Receive Decision from Admission Team</b><br>
+                    HS Students 2024-2025 <i>Equals</i> <b>Yes</b><br>
+                    Enrollment Year <i>Equals</i> <b>2023-2024 Academic Year</b><br>
+                    REE 2025-2026 <i>Equals</i> <b>Yes</b> <i>AND</i> REE Missing Checklist Items <i>Contains</i> <b>Submit Parents'/Guardians' Passports or ID Cards</b><br>
                 </div>
             </div>
 
@@ -574,10 +574,10 @@ All documents should be apostilized and translated.
                 </div>
                 <div class="conditions">
                     <strong>Conditions:</strong>
-                    Completed Checklist Equals Receive Decision from Admission Team<br>
-                    HS Students 2024-2025 Equals Yes<br>
-                    Enrollment Year Equals 2023-2024 Academic Year<br>
-                    REE 2025-2026 Equals Yes AND REE Missing Checklist Items Contains Submit Proof of Residence<br>
+                    Completed Checklist <i>Equals</i> <b>Receive Decision from Admission Team</b><br>
+                    HS Students 2024-2025 <i>Equals</i> <b>Yes</b><br>
+                    Enrollment Year <i>Equals</i> <b>2023-2024 Academic Year</b><br>
+                    REE 2025-2026 <i>Equals</i> <b>Yes</b> <i>AND</i> REE Missing Checklist Items <i>Contains</i> <b>Submit Proof of Residence</b><br>
                 </div>
             </div>
 
@@ -595,10 +595,10 @@ All documents should be apostilized and translated.
                 </div>
                 <div class="conditions">
                     <strong>Conditions:</strong>
-                    Completed Checklist Equals Receive Decision from Admission Team<br>
-                    HS Students 2024-2025 Equals Yes<br>
-                    Enrollment Year Equals 2023-2024 Academic Year<br>
-                    REE 2025-2026 Equals Yes AND REE Missing Checklist Items Contains Submit Child's Health Certificate<br>
+                    Completed Checklist <i>Equals</i> <b>Receive Decision from Admission Team</b><br>
+                    HS Students 2024-2025 <i>Equals</i> <b>Yes</b><br>
+                    Enrollment Year <i>Equals</i> <b>2023-2024 Academic Year</b><br>
+                    REE 2025-2026 <i>Equals</i> <b>Yes</b> <i>AND</i> REE Missing Checklist Items <i>Contains</i> <b>Submit Child's Health Certificate</b><br>
                 </div>
             </div>
 
@@ -616,10 +616,10 @@ All documents should be apostilized and translated.
                 </div>
                 <div class="conditions">
                     <strong>Conditions:</strong>
-                    Completed Checklist Equals Receive Decision from Admission Team<br>
-                    HS Students 2024-2025 Equals Yes<br>
-                    Enrollment Year Equals 2023-2024 Academic Year<br>
-                    REE 2025-2026 Equals Yes AND REE Missing Checklist Items Contains Submit Vaccination Coverage Certificate or Vaccination Refusal<br>
+                    Completed Checklist <i>Equals</i> <b>Receive Decision from Admission Team</b><br>
+                    HS Students 2024-2025 <i>Equals</i> <b>Yes</b><br>
+                    Enrollment Year <i>Equals</i> <b>2023-2024 Academic Year</b><br>
+                    REE 2025-2026 <i>Equals</i> <b>Yes</b> <i>AND</i> REE Missing Checklist Items <i>Contains</i> <b>Submit Vaccination Coverage Certificate or Vaccination Refusal</b><br>
                 </div>
             </div>
 
@@ -637,11 +637,11 @@ All documents should be apostilized and translated.
                 </div>
                 <div class="conditions">
                     <strong>Conditions:</strong>
-                    Completed Checklist Equals Submit Enrolment Form (2024-2025) AND Special Educational Needs Y/N Equals Yes<br>
-                    HS Students 2024-2025 Equals Yes AND Special Educational Needs Y/N Equals Yes<br>
-                    Enrollment Year Equals 2023-2024 Academic Year AND Special Educational Needs Y/N Equals Yes<br>
-                    Completed Checklist Equals Submit Enrolment Form for Academic Year 2025-2026 AND Special Educational Needs Y/N Equals Yes<br>
-                    REE 2025-2026 Equals Yes AND REE Missing Checklist Items Contains Submit Medical Report AND Special Educational Needs Y/N Equals Yes<br>
+                    Completed Checklist <i>Equals</i> <b>Submit Enrolment Form (2024-2025)</b> <i>AND</i> Special Educational Needs Y/N <i>Equals</i> <b>Yes</b><br>
+                    HS Students 2024-2025 <i>Equals</i> <b>Yes</b> <i>AND</i> Special Educational Needs Y/N <i>Equals</i> <b>Yes</b><br>
+                    Enrollment Year <i>Equals</i> <b>2023-2024 Academic Year</b> <i>AND</i> Special Educational Needs Y/N <i>Equals</i> <b>Yes</b><br>
+                    Completed Checklist <i>Equals</i> <b>Submit Enrolment Form for Academic Year 2025-2026</b> <i>AND</i> Special Educational Needs Y/N <i>Equals</i> <b>Yes</b><br>
+                    REE 2025-2026 <i>Equals</i> <b>Yes</b> <i>AND</i> REE Missing Checklist Items <i>Contains</i> <b>Submit Medical Report</b> <i>AND</i> Special Educational Needs Y/N <i>Equals</i> <b>Yes</b><br>
                 </div>
             </div>
 
@@ -659,10 +659,10 @@ All documents should be apostilized and translated.
                 </div>
                 <div class="conditions">
                     <strong>Conditions:</strong>
-                    Completed Checklist Equals Receive Decision from Admission Team<br>
-                    HS Students 2024-2025 Equals Yes<br>
-                    Enrollment Year Equals 2023-2024 Academic Year<br>
-                    REE 2025-2026 Equals Yes AND REE Missing Checklist Items Contains Submit Student's Photo<br>
+                    Completed Checklist <i>Equals</i> <b>Receive Decision from Admission Team</b><br>
+                    HS Students 2024-2025 <i>Equals</i> <b>Yes</b><br>
+                    Enrollment Year <i>Equals</i> <b>2023-2024 Academic Year</b><br>
+                    REE 2025-2026 <i>Equals</i> <b>Yes</b> <i>AND</i> REE Missing Checklist Items <i>Contains</i> <b>Submit Student's Photo</b><br>
                 </div>
             </div>
 
@@ -679,10 +679,10 @@ All documents should be apostilized and translated.
                 </div>
                 <div class="conditions">
                     <strong>Conditions:</strong>
-                    Completed Checklist Equals Receive Decision from Admission Team<br>
-                    Enrollment Year Equals 2023-2024 Academic Year<br>
-                    HS Students 2024-2025 Equals Yes<br>
-                    REE 2025-2026 Equals Yes<br>
+                    Completed Checklist <i>Equals</i> <b>Receive Decision from Admission Team</b><br>
+                    Enrollment Year <i>Equals</i> <b>2023-2024 Academic Year</b><br>
+                    HS Students 2024-2025 <i>Equals</i> <b>Yes</b><br>
+                    REE 2025-2026 <i>Equals</i> <b>Yes</b><br>
                 </div>
             </div>
 
@@ -700,7 +700,7 @@ All documents should be apostilized and translated.
                 </div>
                 <div class="conditions">
                     <strong>Conditions:</strong>
-                    Completed Checklist Equals Submit Registration of Interest AND IB Tracks Equals IB: Technology Leaders Scholarship<br>
+                    Completed Checklist <i>Equals</i> <b>Submit Registration of Interest</b> <i>AND</i> IB Tracks <i>Equals</i> <b>IB: Technology Leaders Scholarship</b><br>
                 </div>
             </div>
 
@@ -718,7 +718,7 @@ All documents should be apostilized and translated.
                 </div>
                 <div class="conditions">
                     <strong>Conditions:</strong>
-                    Completed Checklist Equals Submit Registration of Interest AND IB Tracks Equals IB: Technology Leaders Scholarship<br>
+                    Completed Checklist <i>Equals</i> <b>Submit Registration of Interest</b> <i>AND</i> IB Tracks <i>Equals</i> <b>IB: Technology Leaders Scholarship</b><br>
                 </div>
             </div>
 
