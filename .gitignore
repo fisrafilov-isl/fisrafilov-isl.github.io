@@ -24,6 +24,11 @@
 !smooth_scrolling/
 !smooth_scrolling/**
 
+# Explicitly include the 'checklists' directory and all its contents
+# Similar logic as above.
+!checklists/
+!checklists/**
+
 # Re-ignore common files that might be present even within explicitly included directories
 # These rules apply globally and override any previous '!' inclusions for these specific patterns.
 
