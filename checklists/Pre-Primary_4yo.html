@@ -70,7 +70,8 @@
             overflow-y: auto;
             position: sticky;
             top: 0;
-            height: 100vh;
+            align-self: flex-start;
+            max-height: 100vh;
         }
         .sidebar h3 {
             padding: 0 1.5rem;
@@ -251,7 +252,47 @@
                 <button class="zoom-btn" onclick="resetZoom()">⟲ Reset</button>
             </div>
             <div class="mermaid" id="diagram-full">
-{flowchart_full_code}
+graph TD
+
+    classDef formItem fill:#e3f2fd,stroke:#1976d2,stroke-width:2px,color:#000,min-width:400px
+    classDef todoItem fill:#f1f8e9,stroke:#689f38,stroke-width:2px,color:#000,min-width:400px
+    classDef docItem fill:#fff3e0,stroke:#f57c00,stroke-width:2px,color:#000,min-width:400px
+
+    ITEM_1{"<b>1 - Submit Registration of Interest</b><br/>---<br/>Type: Form<br/>Status: Required<br/>Form: Registration of Interest<br/>Statuses: Pending, Admitted, Place offered<br/>---<br/><b>Conditions:</b><br/>HS Students 2024-2025 Does not<br/>equal Yes AND REE 2025-2026 Does<br/>not equal Yes"}:::formItem
+    ITEM_3{"<b>3 - Submit Form for Learning Support (IB / Montessori)</b><br/>---<br/>Type: Form<br/>Status: Required<br/>Form: Learning Support form (IB / Mo<br/>Statuses: Pending, Admitted, Place offered<br/>---<br/><b>Conditions:</b><br/>IB Programme Y/N Equals Yes AND REE<br/>2025-2026 Does not equal Yes<br/>MONT Programme Y/N Equals Yes AND<br/>REE 2025-2026 Does not equal Yes"}:::formItem
+    ITEM_4{"<b>4 - Submit Form for Learning Support (Waldorf)</b><br/>---<br/>Type: Form<br/>Status: Required<br/>Form: Learning Support form (Waldorf<br/>Statuses: Pending, Admitted, Place offered<br/>---<br/><b>Conditions:</b><br/>WF Programme Y/N Equals Yes AND REE<br/>2025-2026 Does not equal Yes"}:::formItem
+    ITEM_8["<b>8 - Receive Invitation for Trial Week</b><br/>---<br/>Type: To Do<br/>Status: Required<br/>Statuses: Pending, Admitted, Place offered<br/>---<br/><b>Conditions:</b><br/>Completed Checklist Equals Submit<br/>Form for Learning Support (Waldorf)<br/>AND WF Programme Y/N Equals Yes<br/>Completed Checklist Equals Submit<br/>Form for Learning Support (IB /<br/>Montessori) AND MONT Programme Y/N<br/>Equals Yes"]:::todoItem
+    ITEM_9["<b>9 - Receive Decision from Admission Team</b><br/>---<br/>Type: To Do<br/>Status: Required<br/>Statuses: Pending, Admitted, Place offered<br/>---<br/><b>Conditions:</b><br/>Completed Checklist Equals Submit<br/>Form for Learning Support (IB /<br/>Montessori)<br/>Completed Checklist Equals Submit<br/>Form for Learning Support (Waldorf)"]:::todoItem
+    ITEM_11{"<b>11 - Submit Enrolment Form for Academic Year 2025-2026</b><br/>---<br/>Type: Form<br/>Status: Required<br/>Form: Enrolment Form (2025-2026)<br/>Statuses: Pending, Admitted, Place offered +1<br/>---<br/><b>Conditions:</b><br/>Completed Checklist Equals Receive<br/>Decision from Admission Team AND<br/>Enrollment Year Equals 2025-2026<br/>Academic Year"}:::formItem
+    ITEM_14["<b>14 - E-Sign Your Enrolment / Re-Enrolment Form 2025-202</b><br/>---<br/>Type: To Do<br/>Status: Required<br/>Statuses: Pending, Admitted, Place offered +1<br/>---<br/><b>Conditions:</b><br/>Completed Checklist Equals Submit<br/>Enrolment Form for Academic Year<br/>2025-2026<br/>REE 2025-2026 Equals Yes"]:::todoItem
+    ITEM_15["<b>15 - School Received E-Signature for 2025-2026 Enrolmen</b><br/>---<br/>Type: To Do<br/>Status: Required<br/>Statuses: Pending, Admitted, Place offered +1<br/>---<br/><b>Conditions:</b><br/>Completed Checklist Equals Submit<br/>Enrolment Form for Academic Year<br/>2025-2026<br/>REE 2025-2026 Equals Yes"]:::todoItem
+    ITEM_16{"<b>16 - Submit Participation of Students in Excursions and</b><br/>---<br/>Type: Form<br/>Status: Required<br/>Form: Participation of Students in E<br/>Statuses: Pending, Admitted, Place offered +1"}:::formItem
+    ITEM_17[["<b>17 - Submit Child's Birth Certificate</b><br/>---<br/>Type: Document Submission<br/>Status: Required<br/>Statuses: Pending, Admitted, Place offered +1<br/>Categories: General, Legal, Wellbeing<br/>---<br/><b>Conditions:</b><br/>Completed Checklist Equals Receive<br/>Decision from Admission Team<br/>HS Students 2024-2025 Equals Yes<br/>Enrollment Year Equals 2023-2024<br/>Academic Year<br/>REE 2025-2026 Equals Yes AND REE<br/>Missing Checklist Items Contains<br/>Submit Child's Birth Certificate"]]:::docItem
+    ITEM_18[["<b>18 - Submit Child’s Passport or ID Card</b><br/>---<br/>Type: Document Submission<br/>Status: Required<br/>Statuses: Pending, Admitted, Place offered +1<br/>Categories: General, Legal<br/>---<br/><b>Conditions:</b><br/>Completed Checklist Equals Receive<br/>Decision from Admission Team<br/>HS Students 2024-2025 Equals Yes<br/>Enrollment Year Equals 2023-2024<br/>Academic Year<br/>REE 2025-2026 Equals Yes AND REE<br/>Missing Checklist Items Contains<br/>Submit Child’s Passport or ID Card"]]:::docItem
+    ITEM_19[["<b>19 - Submit Parents'/Guardians' Passports or ID Cards</b><br/>---<br/>Type: Document Submission<br/>Status: Required<br/>Statuses: Pending, Admitted, Place offered +1<br/>Categories: General, Legal<br/>---<br/><b>Conditions:</b><br/>Completed Checklist Equals Receive<br/>Decision from Admission Team<br/>HS Students 2024-2025 Equals Yes<br/>Enrollment Year Equals 2023-2024<br/>Academic Year<br/>REE 2025-2026 Equals Yes AND REE<br/>Missing Checklist Items Contains<br/>Submit Parents'/Guardians'<br/>Passports or ID Cards"]]:::docItem
+    ITEM_20[["<b>20 - Submit Proof of Residence</b><br/>---<br/>Type: Document Submission<br/>Status: Required<br/>Statuses: Pending, Admitted, Place offered +1<br/>Categories: General<br/>---<br/><b>Conditions:</b><br/>Completed Checklist Equals Receive<br/>Decision from Admission Team<br/>HS Students 2024-2025 Equals Yes<br/>Enrollment Year Equals 2023-2024<br/>Academic Year<br/>REE 2025-2026 Equals Yes AND REE<br/>Missing Checklist Items Contains<br/>Submit Proof of Residence"]]:::docItem
+    ITEM_21[["<b>21 - Submit Child's Health Certificate</b><br/>---<br/>Type: Document Submission<br/>Status: Required<br/>Statuses: Pending, Admitted, Place offered +1<br/>Categories: General, Medical<br/>---<br/><b>Conditions:</b><br/>Completed Checklist Equals Receive<br/>Decision from Admission Team<br/>HS Students 2024-2025 Equals Yes<br/>Enrollment Year Equals 2023-2024<br/>Academic Year<br/>REE 2025-2026 Equals Yes AND REE<br/>Missing Checklist Items Contains<br/>Submit Child's Health Certificate"]]:::docItem
+    ITEM_22[["<b>22 - Submit Vaccination Coverage Certificate or Vaccina</b><br/>---<br/>Type: Document Submission<br/>Status: Required<br/>Statuses: Pending, Admitted, Place offered +1<br/>Categories: General, Medical<br/>---<br/><b>Conditions:</b><br/>Completed Checklist Equals Receive<br/>Decision from Admission Team<br/>HS Students 2024-2025 Equals Yes<br/>Enrollment Year Equals 2023-2024<br/>Academic Year<br/>REE 2025-2026 Equals Yes AND REE<br/>Missing Checklist Items Contains<br/>Submit Vaccination Coverage<br/>Certificate or Vaccination Refusal"]]:::docItem
+    ITEM_23[["<b>23 - Submit Medical Report</b><br/>---<br/>Type: Document Submission<br/>Status: Required<br/>Statuses: Pending, Admitted, Place offered +1<br/>Categories: General, Learning Support, Medical<br/>---<br/><b>Conditions:</b><br/>Completed Checklist Equals Submit<br/>Enrolment Form (2024-2025) AND<br/>Special Educational Needs Y/N<br/>Equals Yes<br/>Completed Checklist Equals Submit<br/>Enrolment Form for Academic Year<br/>2025-2026 AND Special Educational<br/>Needs Y/N Equals Yes<br/>HS Students 2024-2025 Equals Yes<br/>AND Special Educational Needs Y/N<br/>Equals Yes<br/>Enrollment Year Equals 2023-2024<br/>Academic Year AND Special<br/>Educational Needs Y/N Equals Yes<br/>REE 2025-2026 Equals Yes AND REE<br/>Missing Checklist Items Contains<br/>Submit Medical Report AND Special<br/>Educational Needs Y/N Equals Yes"]]:::docItem
+    ITEM_24[["<b>24 - Submit Student's Photo</b><br/>---<br/>Type: Document Submission<br/>Status: Required<br/>Statuses: Pending, Admitted, Place offered +1<br/>Categories: General, Academic<br/>---<br/><b>Conditions:</b><br/>Completed Checklist Equals Receive<br/>Decision from Admission Team<br/>HS Students 2024-2025 Equals Yes<br/>Enrollment Year Equals 2023-2024<br/>Academic Year<br/>REE 2025-2026 Equals Yes AND REE<br/>Missing Checklist Items Contains<br/>Submit Student's Photo"]]:::docItem
+    ITEM_25["<b>25 - Receive Invoice from Accounting Team</b><br/>---<br/>Type: To Do<br/>Status: Required<br/>Statuses: Admitted, Place offered, Enrolled<br/>---<br/><b>Conditions:</b><br/>Completed Checklist Equals Receive<br/>Decision from Admission Team<br/>HS Students 2024-2025 Equals Yes<br/>Enrollment Year Equals 2023-2024<br/>Academic Year<br/>REE 2025-2026 Equals Yes"]:::todoItem
+
+    ITEM_4 --> ITEM_8
+    ITEM_3 --> ITEM_8
+    ITEM_3 --> ITEM_9
+    ITEM_4 --> ITEM_9
+    ITEM_9 --> ITEM_11
+    ITEM_11 --> ITEM_14
+    ITEM_11 --> ITEM_15
+    ITEM_9 --> ITEM_17
+    ITEM_9 --> ITEM_18
+    ITEM_9 --> ITEM_19
+    ITEM_9 --> ITEM_20
+    ITEM_9 --> ITEM_21
+    ITEM_9 --> ITEM_22
+    ITEM_11 --> ITEM_23
+    ITEM_9 --> ITEM_24
+    ITEM_9 --> ITEM_25
             </div>
         </div>
 
