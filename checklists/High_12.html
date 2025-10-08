@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>High_12 - Checklist Report</title>
+    <title>High 12 - Checklist Report</title>
     <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.1/dist/svg-pan-zoom.min.js"></script>
     <style>
@@ -17,6 +17,9 @@
             line-height: 1.6;
             color: #333;
             background: #f5f5f5;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
         .header {
             background: white;
@@ -52,10 +55,53 @@
             margin-right: 2rem;
             color: #666;
         }
-        .container {
-            max-width: 1400px;
-            margin: 2rem auto;
-            padding: 0 2rem;
+        .main-content {
+            display: flex;
+            flex: 1;
+            max-width: 1800px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        .sidebar {
+            width: 280px;
+            background: white;
+            border-right: 1px solid #e0e0e0;
+            padding: 2rem 0;
+            overflow-y: auto;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+        }
+        .sidebar h3 {
+            padding: 0 1.5rem;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .sidebar-item {
+            padding: 0.75rem 1.5rem;
+            color: #333;
+            text-decoration: none;
+            display: block;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+        }
+        .sidebar-item:hover {
+            background: #f5f5f5;
+            color: #1976d2;
+        }
+        .sidebar-item.active {
+            background: #e3f2fd;
+            border-left-color: #1976d2;
+            color: #1976d2;
+            font-weight: 500;
+        }
+        .content {
+            flex: 1;
+            padding: 2rem;
+            overflow-x: hidden;
         }
         .diagram {
             background: white;
@@ -64,7 +110,7 @@
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
             overflow: hidden;
             position: relative;
-            min-height: 600px;
+            min-height: 800px;
         }
         .mermaid {
             display: flex;
@@ -119,18 +165,37 @@
             flex-wrap: wrap;
         }
         .badge {
-            background: #ffe8db;
-            color: #ff7733;
+            background: #e3f2fd;
+            color: #1976d2;
             padding: 0.25rem 0.5rem;
             border-radius: 4px;
             font-size: 0.85rem;
+            font-weight: 500;
+        }
+        .description {
+            margin-top: 0.75rem;
+            padding: 0.75rem;
+            background: #f5f5f5;
+            border-left: 3px solid #666;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        .description strong {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
         }
         .conditions {
             margin-top: 0.75rem;
             padding: 0.75rem;
-            background: #fff9f0;
-            border-left: 3px solid #FF8C42;
+            background: #fff3e0;
+            border-left: 3px solid #f57c00;
             font-size: 0.9rem;
+        }
+        .conditions strong {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
         }
         footer {
             text-align: center;
@@ -142,7 +207,7 @@
 </head>
 <body>
     <div class="header">
-        <h1>High_12</h1>
+        <h1>High 12</h1>
         <div class="nav">
             <a href="index.html">← Dashboard</a>
             <a href="https://theislandprivateschool.openapply.com/admin/checklist/14785" target="_blank">View in OpenApply</a>
@@ -156,60 +221,37 @@
         <span class="metadata-item">📅 Extracted: 2025-10-08T19:39:19.515149</span>
     </div>
 
-    <div class="container">
-        <div class="diagram">
+    <div class="main-content">
+        <div class="sidebar">
+            <h3>Checklists</h3>
+            <a href="Waldorf_Family_Club.html" class="sidebar-item">Waldorf Family Club</a>
+            <a href="Pre-Primary_3yo.html" class="sidebar-item">Pre-Primary 3yo</a>
+            <a href="Pre-Primary_4yo.html" class="sidebar-item">Pre-Primary 4yo</a>
+            <a href="Pre-Primary_5yo.html" class="sidebar-item">Pre-Primary 5yo</a>
+            <a href="Primary_1.html" class="sidebar-item">Primary 1</a>
+            <a href="Primary_2.html" class="sidebar-item">Primary 2</a>
+            <a href="Primary_3.html" class="sidebar-item">Primary 3</a>
+            <a href="Primary_4.html" class="sidebar-item">Primary 4</a>
+            <a href="Primary_5.html" class="sidebar-item">Primary 5</a>
+            <a href="Middle_6.html" class="sidebar-item">Middle 6</a>
+            <a href="Middle_7.html" class="sidebar-item">Middle 7</a>
+            <a href="Middle_8.html" class="sidebar-item">Middle 8</a>
+            <a href="Middle_9.html" class="sidebar-item">Middle 9</a>
+            <a href="Middle_10.html" class="sidebar-item">Middle 10</a>
+            <a href="High_11.html" class="sidebar-item">High 11</a>
+            <a href="High_12.html" class="sidebar-item active">High 12</a>
+            <a href="Disabled_programme.html" class="sidebar-item">Disabled Programme</a>
+
+        </div>
+        <div class="content">
+            <div class="diagram">
             <div class="zoom-controls">
                 <button class="zoom-btn" onclick="zoomIn()">🔍+</button>
                 <button class="zoom-btn" onclick="zoomOut()">🔍−</button>
                 <button class="zoom-btn" onclick="resetZoom()">⟲ Reset</button>
             </div>
             <div class="mermaid" id="diagram-full">
-graph TD
-
-    classDef formItem fill:#ffe8db,stroke:#ff7733,stroke-width:2px,color:#000,min-width:400px
-    classDef todoItem fill:#fff4e6,stroke:#ff9559,stroke-width:2px,color:#000,min-width:400px
-    classDef docItem fill:#fff9f0,stroke:#FF8C42,stroke-width:2px,color:#000,min-width:400px
-
-    ITEM_1{"<b>1 - Submit Registration of Interest</b><br/>---<br/>Type: Form<br/>Status: Required<br/>Form: Registration of Interest<br/>Statuses: Pending"}:::formItem
-    ITEM_2["<b>2 - Receive Places Availability & Pay Admission Fee</b><br/>---<br/>Type: To Do<br/>Status: Required<br/>Statuses: Pending"]:::todoItem
-    ITEM_3[["<b>3 - Submit Student's Photo</b><br/>---<br/>Type: Document Submission<br/>Status: Required<br/>Statuses: Pending, Admitted, Place offered +1<br/>Categories: General<br/>---<br/><b>Conditions:</b><br/>Completed Checklist Equals Receive<br/>Places Availability & Pay Admission<br/>Fee"]]:::docItem
-    ITEM_4[["<b>4 - Submit Child's Birth Certificate</b><br/>---<br/>Type: Document Submission<br/>Status: Required<br/>Statuses: Pending, Admitted, Place offered +1<br/>Categories: General, Legal, Medical<br/>---<br/><b>Conditions:</b><br/>Completed Checklist Equals Receive<br/>Places Availability & Pay Admission<br/>Fee"]]:::docItem
-    ITEM_5[["<b>5 - Submit Child’s Passport or ID Card</b><br/>---<br/>Type: Document Submission<br/>Status: Required<br/>Statuses: Pending, Admitted, Place offered +1<br/>Categories: General, Legal, Medical<br/>---<br/><b>Conditions:</b><br/>Completed Checklist Equals Receive<br/>Places Availability & Pay Admission<br/>Fee"]]:::docItem
-    ITEM_6[["<b>6 - Submit Parents'/Guardians' Passports or ID Cards</b><br/>---<br/>Type: Document Submission<br/>Status: Required<br/>Statuses: Pending, Admitted, Place offered +1<br/>Categories: General, Legal<br/>---<br/><b>Conditions:</b><br/>Completed Checklist Equals Receive<br/>Places Availability & Pay Admission<br/>Fee"]]:::docItem
-    ITEM_7[["<b>7 - Submit Last School’s Report</b><br/>---<br/>Type: Document Submission<br/>Status: Required<br/>Statuses: Pending, Admitted, Place offered +1<br/>Categories: General, Academic<br/>---<br/><b>Conditions:</b><br/>Completed Checklist Equals Receive<br/>Places Availability & Pay Admission<br/>Fee"]]:::docItem
-    ITEM_8[["<b>8 - Submit Child's Health Certificate</b><br/>---<br/>Type: Document Submission<br/>Status: Required<br/>Statuses: Pending, Admitted, Place offered +1<br/>Categories: General, Medical<br/>---<br/><b>Conditions:</b><br/>Completed Checklist Equals Receive<br/>Places Availability & Pay Admission<br/>Fee"]]:::docItem
-    ITEM_9[["<b>9 - Submit Proof of Residence</b><br/>---<br/>Type: Document Submission<br/>Status: Required<br/>Statuses: Pending, Admitted, Place offered +1<br/>Categories: General, Legal<br/>---<br/><b>Conditions:</b><br/>Completed Checklist Equals Receive<br/>Places Availability & Pay Admission<br/>Fee"]]:::docItem
-    ITEM_10{"<b>10 - Submit Learning Support Form</b><br/>---<br/>Type: Form<br/>Status: Required<br/>Form: Learning Support form (IB / Mo<br/>Statuses: Pending, Admitted, Place offered +1<br/>---<br/><b>Conditions:</b><br/>Completed Checklist Equals Receive<br/>Places Availability & Pay Admission<br/>Fee"}:::formItem
-    ITEM_11[["<b>11 - Submit Medical Report</b><br/>---<br/>Type: Document Submission<br/>Status: Required<br/>Statuses: Pending, Admitted, Place offered +1<br/>Categories: General, Learning Support, Medical<br/>---<br/><b>Conditions:</b><br/>Completed Checklist Equals Receive<br/>Places Availability & Pay Admission<br/>Fee AND Special Educational Needs<br/>Y/N Equals Yes"]]:::docItem
-    ITEM_12[["<b>12 - Submit Vaccination Certificate</b><br/>---<br/>Type: Document Submission<br/>Status: Required<br/>Statuses: Pending, Admitted, Place offered +1<br/>Categories: General, Medical<br/>---<br/><b>Conditions:</b><br/>Completed Checklist Equals Receive<br/>Places Availability & Pay Admission<br/>Fee"]]:::docItem
-    ITEM_13["<b>13 - Assessment Invitation</b><br/>---<br/>Type: To Do<br/>Status: Required<br/>Statuses: Pending, Admitted, Place offered<br/>---<br/><b>Conditions:</b><br/>Completed Checklist Equals Receive<br/>Places Availability & Pay Admission<br/>Fee"]:::todoItem
-    ITEM_14["<b>14 - Receive Admissions Decision</b><br/>---<br/>Type: To Do<br/>Status: Required<br/>Statuses: Pending, Admitted, Place offered<br/>---<br/><b>Conditions:</b><br/>Completed Checklist Equals Receive<br/>Places Availability & Pay Admission<br/>Fee"]:::todoItem
-    ITEM_15{"<b>15 - Submit Application Form (2025–2026)</b><br/>---<br/>Type: Form<br/>Status: Required<br/>Form: Enrolment Form (2025-2026)<br/>Statuses: Pending, Admitted, Place offered +1<br/>---<br/><b>Conditions:</b><br/>Completed Checklist Equals Receive<br/>Admissions Decision AND Enrollment<br/>Year Equals 2025-2026 Academic Year"}:::formItem
-    ITEM_16["<b>16 - Receive Contract to Sign</b><br/>---<br/>Type: To Do<br/>Status: Required<br/>Statuses: Admitted, Place offered, Enrolled<br/>---<br/><b>Conditions:</b><br/>Completed Checklist Equals Receive<br/>Admissions Decision"]:::todoItem
-    ITEM_17["<b>17 - Receive Invoice from Accounting Team</b><br/>---<br/>Type: To Do<br/>Status: Required<br/>Statuses: Admitted, Place offered, Enrolled<br/>---<br/><b>Conditions:</b><br/>Completed Checklist Equals Receive<br/>Admissions Decision"]:::todoItem
-    ITEM_18["<b>18 - Receive Payment Confirmation</b><br/>---<br/>Type: To Do<br/>Status: Required<br/>Statuses: Pending, Admitted, Place offered +1<br/>---<br/><b>Conditions:</b><br/>Completed Checklist Equals Receive<br/>Admissions Decision"]:::todoItem
-    ITEM_19["<b>19 - Onboarding Email</b><br/>---<br/>Type: To Do<br/>Status: Required<br/>Statuses: Admitted, Place offered, Enrolled<br/>---<br/><b>Conditions:</b><br/>Completed Checklist Equals Receive<br/>Payment Confirmation"]:::todoItem
-    ITEM_20["<b>20 - Receive First Day Information</b><br/>---<br/>Type: To Do<br/>Status: Required<br/>Statuses: Admitted, Place offered, Enrolled<br/>---<br/><b>Conditions:</b><br/>Completed Checklist Equals Receive<br/>Payment Confirmation"]:::todoItem
-    ITEM_21{"<b>21 - Submit Participation of Students in Excursions and</b><br/>---<br/>Type: Form<br/>Status: Required<br/>Form: Participation of Students in E<br/>Statuses: Pending, Admitted, Place offered +1"}:::formItem
-
-    ITEM_2 --> ITEM_3
-    ITEM_2 --> ITEM_4
-    ITEM_2 --> ITEM_5
-    ITEM_2 --> ITEM_6
-    ITEM_2 --> ITEM_7
-    ITEM_2 --> ITEM_8
-    ITEM_2 --> ITEM_9
-    ITEM_2 --> ITEM_10
-    ITEM_2 --> ITEM_11
-    ITEM_2 --> ITEM_12
-    ITEM_2 --> ITEM_13
-    ITEM_2 --> ITEM_14
-    ITEM_14 --> ITEM_15
-    ITEM_14 --> ITEM_16
-    ITEM_14 --> ITEM_17
-    ITEM_14 --> ITEM_18
-    ITEM_18 --> ITEM_19
-    ITEM_18 --> ITEM_20
+{flowchart_full_code}
             </div>
         </div>
 
@@ -224,7 +266,10 @@ graph TD
                     <span class="badge">Form: Registration of Interest</span>
                     <span class="badge">Statuses: Pending</span>
                 </div>
-                <div style="margin-top: 0.75rem; font-size: 0.95rem; line-height: 1.5;">Fill in the online form expressing your interest in enrolling your child(ren). The form requires basic child information and parent/guardian contact details.</div>
+                <div class="description">
+                    <strong>Description:</strong>
+                    Fill in the online form expressing your interest in enrolling your child(ren). The form requires basic child information and parent/guardian contact details.
+                </div>
             </div>
 
             <div class="item">
@@ -234,7 +279,10 @@ graph TD
                     <span class="badge">Status: Required</span>
                     <span class="badge">Statuses: Pending</span>
                 </div>
-                <div style="margin-top: 0.75rem; font-size: 0.95rem; line-height: 1.5;">The admissions team will review program availability and inform you by email. If a place is available, you will be asked to pay the non-refundable admission fee.</div>
+                <div class="description">
+                    <strong>Description:</strong>
+                    The admissions team will review program availability and inform you by email. If a place is available, you will be asked to pay the non-refundable admission fee.
+                </div>
             </div>
 
             <div class="item">
@@ -245,9 +293,12 @@ graph TD
                     <span class="badge">Statuses: Pending, Admitted, Place offered, Enrolled</span>
                     <span class="badge">Categories: General</span>
                 </div>
-                <div style="margin-top: 0.75rem; font-size: 0.95rem; line-height: 1.5;">Upload a recent portrait photo of your child in PNG, JPEG, or GIF format (minimum 300x300 px).</div>
+                <div class="description">
+                    <strong>Description:</strong>
+                    Upload a recent portrait photo of your child in PNG, JPEG, or GIF format (minimum 300x300 px).
+                </div>
                 <div class="conditions">
-                    <strong>Conditions:</strong><br>
+                    <strong>Conditions:</strong>
                     Completed Checklist Equals Receive Places Availability & Pay Admission Fee<br>
                 </div>
             </div>
@@ -260,9 +311,12 @@ graph TD
                     <span class="badge">Statuses: Pending, Admitted, Place offered, Enrolled</span>
                     <span class="badge">Categories: General, Legal, Medical</span>
                 </div>
-                <div style="margin-top: 0.75rem; font-size: 0.95rem; line-height: 1.5;">Upload a scanned copy of your child’s birth certificate.</div>
+                <div class="description">
+                    <strong>Description:</strong>
+                    Upload a scanned copy of your child’s birth certificate.
+                </div>
                 <div class="conditions">
-                    <strong>Conditions:</strong><br>
+                    <strong>Conditions:</strong>
                     Completed Checklist Equals Receive Places Availability & Pay Admission Fee<br>
                 </div>
             </div>
@@ -275,9 +329,12 @@ graph TD
                     <span class="badge">Statuses: Pending, Admitted, Place offered, Enrolled</span>
                     <span class="badge">Categories: General, Legal, Medical</span>
                 </div>
-                <div style="margin-top: 0.75rem; font-size: 0.95rem; line-height: 1.5;">For non-Cypriot citizens - Passport only, for Cypriot citizens - Passport or ID Card. <b>A residence permit is not accepted as a substitute.</b></div>
+                <div class="description">
+                    <strong>Description:</strong>
+                    For non-Cypriot citizens - Passport only, for Cypriot citizens - Passport or ID Card. <b>A residence permit is not accepted as a substitute.</b>
+                </div>
                 <div class="conditions">
-                    <strong>Conditions:</strong><br>
+                    <strong>Conditions:</strong>
                     Completed Checklist Equals Receive Places Availability & Pay Admission Fee<br>
                 </div>
             </div>
@@ -290,9 +347,12 @@ graph TD
                     <span class="badge">Statuses: Pending, Admitted, Place offered, Enrolled</span>
                     <span class="badge">Categories: General, Legal</span>
                 </div>
-                <div style="margin-top: 0.75rem; font-size: 0.95rem; line-height: 1.5;">Upload scanned copies of both parents’/guardians’ passports or IDs.</div>
+                <div class="description">
+                    <strong>Description:</strong>
+                    Upload scanned copies of both parents’/guardians’ passports or IDs.
+                </div>
                 <div class="conditions">
-                    <strong>Conditions:</strong><br>
+                    <strong>Conditions:</strong>
                     Completed Checklist Equals Receive Places Availability & Pay Admission Fee<br>
                 </div>
             </div>
@@ -305,9 +365,12 @@ graph TD
                     <span class="badge">Statuses: Pending, Admitted, Place offered, Enrolled</span>
                     <span class="badge">Categories: General, Academic</span>
                 </div>
-                <div style="margin-top: 0.75rem; font-size: 0.95rem; line-height: 1.5;">Upload your child’s most recent school report.</div>
+                <div class="description">
+                    <strong>Description:</strong>
+                    Upload your child’s most recent school report.
+                </div>
                 <div class="conditions">
-                    <strong>Conditions:</strong><br>
+                    <strong>Conditions:</strong>
                     Completed Checklist Equals Receive Places Availability & Pay Admission Fee<br>
                 </div>
             </div>
@@ -320,9 +383,12 @@ graph TD
                     <span class="badge">Statuses: Pending, Admitted, Place offered, Enrolled</span>
                     <span class="badge">Categories: General, Medical</span>
                 </div>
-                <div style="margin-top: 0.75rem; font-size: 0.95rem; line-height: 1.5;">Upload a medical certificate confirming your child’s fitness for school and any relevant medical details.</div>
+                <div class="description">
+                    <strong>Description:</strong>
+                    Upload a medical certificate confirming your child’s fitness for school and any relevant medical details.
+                </div>
                 <div class="conditions">
-                    <strong>Conditions:</strong><br>
+                    <strong>Conditions:</strong>
                     Completed Checklist Equals Receive Places Availability & Pay Admission Fee<br>
                 </div>
             </div>
@@ -335,9 +401,12 @@ graph TD
                     <span class="badge">Statuses: Pending, Admitted, Place offered, Enrolled</span>
                     <span class="badge">Categories: General, Legal</span>
                 </div>
-                <div style="margin-top: 0.75rem; font-size: 0.95rem; line-height: 1.5;">Provide documentation verifying your current residential address.</div>
+                <div class="description">
+                    <strong>Description:</strong>
+                    Provide documentation verifying your current residential address.
+                </div>
                 <div class="conditions">
-                    <strong>Conditions:</strong><br>
+                    <strong>Conditions:</strong>
                     Completed Checklist Equals Receive Places Availability & Pay Admission Fee<br>
                 </div>
             </div>
@@ -350,9 +419,12 @@ graph TD
                     <span class="badge">Form: Learning Support form (IB / Montessori)</span>
                     <span class="badge">Statuses: Pending, Admitted, Place offered, Enrolled</span>
                 </div>
-                <div style="margin-top: 0.75rem; font-size: 0.95rem; line-height: 1.5;">Complete the form that gathers details about your child’s background, preferences, and any special requirements.</div>
+                <div class="description">
+                    <strong>Description:</strong>
+                    Complete the form that gathers details about your child’s background, preferences, and any special requirements.
+                </div>
                 <div class="conditions">
-                    <strong>Conditions:</strong><br>
+                    <strong>Conditions:</strong>
                     Completed Checklist Equals Receive Places Availability & Pay Admission Fee<br>
                 </div>
             </div>
@@ -365,9 +437,12 @@ graph TD
                     <span class="badge">Statuses: Pending, Admitted, Place offered, Enrolled</span>
                     <span class="badge">Categories: General, Learning Support, Medical</span>
                 </div>
-                <div style="margin-top: 0.75rem; font-size: 0.95rem; line-height: 1.5;">Provide an official report confirming any special educational needs.</div>
+                <div class="description">
+                    <strong>Description:</strong>
+                    Provide an official report confirming any special educational needs.
+                </div>
                 <div class="conditions">
-                    <strong>Conditions:</strong><br>
+                    <strong>Conditions:</strong>
                     Completed Checklist Equals Receive Places Availability & Pay Admission Fee AND Special Educational Needs Y/N Equals Yes<br>
                 </div>
             </div>
@@ -380,9 +455,12 @@ graph TD
                     <span class="badge">Statuses: Pending, Admitted, Place offered, Enrolled</span>
                     <span class="badge">Categories: General, Medical</span>
                 </div>
-                <div style="margin-top: 0.75rem; font-size: 0.95rem; line-height: 1.5;">Please upload the vaccination certificate, or download <a href="https://drive.google.com/file/d/16P4Z10J-sawY-yGhtnGQ7EubMHFtasJF/view?usp=sharing" target="_blank" rel="noopener noreferrer">the local vaccination certificate</a> and have it signed by your doctor.</div>
+                <div class="description">
+                    <strong>Description:</strong>
+                    Please upload the vaccination certificate, or download <a href="https://drive.google.com/file/d/16P4Z10J-sawY-yGhtnGQ7EubMHFtasJF/view?usp=sharing" target="_blank" rel="noopener noreferrer">the local vaccination certificate</a> and have it signed by your doctor.
+                </div>
                 <div class="conditions">
-                    <strong>Conditions:</strong><br>
+                    <strong>Conditions:</strong>
                     Completed Checklist Equals Receive Places Availability & Pay Admission Fee<br>
                 </div>
             </div>
@@ -394,9 +472,12 @@ graph TD
                     <span class="badge">Status: Required</span>
                     <span class="badge">Statuses: Pending, Admitted, Place offered</span>
                 </div>
-                <div style="margin-top: 0.75rem; font-size: 0.95rem; line-height: 1.5;">Wait for an invitation to an assessment (held every Tuesday). After the assessment, you will be invited for an interview.</div>
+                <div class="description">
+                    <strong>Description:</strong>
+                    Wait for an invitation to an assessment (held every Tuesday). After the assessment, you will be invited for an interview.
+                </div>
                 <div class="conditions">
-                    <strong>Conditions:</strong><br>
+                    <strong>Conditions:</strong>
                     Completed Checklist Equals Receive Places Availability & Pay Admission Fee<br>
                 </div>
             </div>
@@ -408,9 +489,12 @@ graph TD
                     <span class="badge">Status: Required</span>
                     <span class="badge">Statuses: Pending, Admitted, Place offered</span>
                 </div>
-                <div style="margin-top: 0.75rem; font-size: 0.95rem; line-height: 1.5;">The admissions team will notify you by email of the decision regarding your child’s enrollment.</div>
+                <div class="description">
+                    <strong>Description:</strong>
+                    The admissions team will notify you by email of the decision regarding your child’s enrollment.
+                </div>
                 <div class="conditions">
-                    <strong>Conditions:</strong><br>
+                    <strong>Conditions:</strong>
                     Completed Checklist Equals Receive Places Availability & Pay Admission Fee<br>
                 </div>
             </div>
@@ -424,7 +508,7 @@ graph TD
                     <span class="badge">Statuses: Pending, Admitted, Place offered, Enrolled</span>
                 </div>
                 <div class="conditions">
-                    <strong>Conditions:</strong><br>
+                    <strong>Conditions:</strong>
                     Completed Checklist Equals Receive Admissions Decision AND Enrollment Year Equals 2025-2026 Academic Year<br>
                 </div>
             </div>
@@ -436,9 +520,12 @@ graph TD
                     <span class="badge">Status: Required</span>
                     <span class="badge">Statuses: Admitted, Place offered, Enrolled</span>
                 </div>
-                <div style="margin-top: 0.75rem; font-size: 0.95rem; line-height: 1.5;">After submitting the application form, you will receive the official contract by email. Review carefully and e-sign it. The contract is invalid without your signature.</div>
+                <div class="description">
+                    <strong>Description:</strong>
+                    After submitting the application form, you will receive the official contract by email. Review carefully and e-sign it. The contract is invalid without your signature.
+                </div>
                 <div class="conditions">
-                    <strong>Conditions:</strong><br>
+                    <strong>Conditions:</strong>
                     Completed Checklist Equals Receive Admissions Decision<br>
                 </div>
             </div>
@@ -450,9 +537,12 @@ graph TD
                     <span class="badge">Status: Required</span>
                     <span class="badge">Statuses: Admitted, Place offered, Enrolled</span>
                 </div>
-                <div style="margin-top: 0.75rem; font-size: 0.95rem; line-height: 1.5;">Once enrollment is confirmed, the accounting team will issue an invoice for tuition fees and charges. Timely payment is required to secure your child’s place. Late payment may delay your child’s start date.</div>
+                <div class="description">
+                    <strong>Description:</strong>
+                    Once enrollment is confirmed, the accounting team will issue an invoice for tuition fees and charges. Timely payment is required to secure your child’s place. Late payment may delay your child’s start date.
+                </div>
                 <div class="conditions">
-                    <strong>Conditions:</strong><br>
+                    <strong>Conditions:</strong>
                     Completed Checklist Equals Receive Admissions Decision<br>
                 </div>
             </div>
@@ -464,9 +554,12 @@ graph TD
                     <span class="badge">Status: Required</span>
                     <span class="badge">Statuses: Pending, Admitted, Place offered, Enrolled</span>
                 </div>
-                <div style="margin-top: 0.75rem; font-size: 0.95rem; line-height: 1.5;">The admissions team will confirm receipt of payment. This finalizes your child’s enrollment.</div>
+                <div class="description">
+                    <strong>Description:</strong>
+                    The admissions team will confirm receipt of payment. This finalizes your child’s enrollment.
+                </div>
                 <div class="conditions">
-                    <strong>Conditions:</strong><br>
+                    <strong>Conditions:</strong>
                     Completed Checklist Equals Receive Admissions Decision<br>
                 </div>
             </div>
@@ -478,9 +571,12 @@ graph TD
                     <span class="badge">Status: Required</span>
                     <span class="badge">Statuses: Admitted, Place offered, Enrolled</span>
                 </div>
-                <div style="margin-top: 0.75rem; font-size: 0.95rem; line-height: 1.5;">‌Expect to receive an onboarding email with details about afternoon activities, bus service, meals, and other important information.</div>
+                <div class="description">
+                    <strong>Description:</strong>
+                    ‌Expect to receive an onboarding email with details about afternoon activities, bus service, meals, and other important information.
+                </div>
                 <div class="conditions">
-                    <strong>Conditions:</strong><br>
+                    <strong>Conditions:</strong>
                     Completed Checklist Equals Receive Payment Confirmation<br>
                 </div>
             </div>
@@ -492,9 +588,12 @@ graph TD
                     <span class="badge">Status: Required</span>
                     <span class="badge">Statuses: Admitted, Place offered, Enrolled</span>
                 </div>
-                <div style="margin-top: 0.75rem; font-size: 0.95rem; line-height: 1.5;">The admissions team will confirm your child’s official start date and provide any final instructions.</div>
+                <div class="description">
+                    <strong>Description:</strong>
+                    The admissions team will confirm your child’s official start date and provide any final instructions.
+                </div>
                 <div class="conditions">
-                    <strong>Conditions:</strong><br>
+                    <strong>Conditions:</strong>
                     Completed Checklist Equals Receive Payment Confirmation<br>
                 </div>
             </div>
@@ -509,6 +608,7 @@ graph TD
                 </div>
             </div>
 
+            </div>
         </div>
     </div>
 
