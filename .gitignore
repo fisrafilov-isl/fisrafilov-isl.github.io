@@ -29,6 +29,12 @@
 !checklists/
 !checklists/**
 
+# Explicitly include the 'checklists' directory and all its contents
+# Similar logic as above.
+!wellbeing_app_prototype/
+!wellbeing_app_prototype/index.html
+!wellbeing_app_prototype/README.md
+
 # Re-ignore common files that might be present even within explicitly included directories
 # These rules apply globally and override any previous '!' inclusions for these specific patterns.
 
