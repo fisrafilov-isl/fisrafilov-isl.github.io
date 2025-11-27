@@ -729,7 +729,7 @@
                                 React.createElement(StatCard, { key: 'tw', title: "Total Withdrawals", value: filteredTotalWithdrawals.toLocaleString(), subtitle: "Selected period", color: COLORS.danger }),
                             ]),
                             React.createElement(ResponsiveContainer, { key: 'c', width: "100%", height: 350 },
-                                React.createElement(BarChart, { data: allChurnRateData }, [
+                                React.createElement(ComposedChart, { data: allChurnRateData }, [
                                     React.createElement(CartesianGrid, { key: 'g', strokeDasharray: "3 3" }),
                                     React.createElement(XAxis, { key: 'x', dataKey: "month", angle: -45, textAnchor: "end", height: 70, tick: { fontSize: 10 } }),
                                     React.createElement(YAxis, { key: 'y1', yAxisId: "left", orientation: "left", label: { value: 'Withdrawals', angle: -90, position: 'insideLeft', style: { fontSize: 10 } } }),
