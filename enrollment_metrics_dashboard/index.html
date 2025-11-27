@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enrollment Metrics Dashboard - ISL 2026-2027 Forecast</title>
+    <script src="https://unpkg.com/react@18.2.0/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/react-is@18.2.0/umd/react-is.production.min.js"></script>
+    <script src="https://unpkg.com/prop-types@15.8.1/prop-types.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone@7.23.5/babel.min.js"></script>
+    <script src="https://unpkg.com/recharts@1.8.5/umd/Recharts.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { margin: 0; padding: 0; }
+        #loading { padding: 20px; font-family: sans-serif; }
+        .data-table { font-size: 12px; }
+        .data-table th, .data-table td { padding: 4px 8px; text-align: left; border-bottom: 1px solid #e5e7eb; }
+        .data-table th { background: #f9fafb; font-weight: 600; position: sticky; top: 0; }
+        .data-table tr:hover { background: #f3f4f6; }
+        .filter-btn { transition: all 0.2s; }
+        .filter-btn.active { background: #3b82f6; color: white; }
+        .filter-btn:not(.active) { background: #f3f4f6; color: #374151; }
+        .filter-btn:hover:not(.active) { background: #e5e7eb; }
+    </style>
+</head>
+<body>
+    <div id="root"><div id="loading">Loading visualization...</div></div>
+
+    <script type="text/babel">
+        window.addEventListener('load', function() {
+            if (typeof React === 'undefined' || typeof ReactDOM === 'undefined' || typeof Recharts === 'undefined') {
+                document.getElementById('root').innerHTML = '<div style="padding:20px">Error: Libraries failed to load</div>';
+                return;
+            }
+
+            const { useState, useMemo, useCallback } = React;
+            const {
+                AreaChart, Area, BarChart, Bar, LineChart, Line, PieChart, Pie, Cell,
+                XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
+                ReferenceLine, Label, ComposedChart, Brush, FunnelChart, Funnel, LabelList
+            } = Recharts;
+
+            // =====================================================
+            // RAW DATA - Full Historical
+            // =====================================================
+
+            const RAW_DATA = {
+                // Monthly funnel data (full history)
+                funnelByMonth: [
+                    { month: '2023-02', ROI: 2, Applied: 2, Admitted: 1, Enrolled: 1 },
+                    { month: '2023-04', ROI: 2, Applied: 2, Admitted: 2, Enrolled: 2 },
+                    { month: '2023-09', ROI: 738, Applied: 689, Admitted: 689, Enrolled: 686 },
+                    { month: '2023-10', ROI: 19, Applied: 16, Admitted: 16, Enrolled: 19 },
+                    { month: '2023-11', ROI: 44, Applied: 41, Admitted: 41, Enrolled: 40 },
+                    { month: '2023-12', ROI: 7, Applied: 7, Admitted: 7, Enrolled: 9 },
+                    { month: '2024-01', ROI: 14, Applied: 12, Admitted: 12, Enrolled: 18 },
+                    { month: '2024-02', ROI: 15, Applied: 13, Admitted: 15, Enrolled: 14 },
+                    { month: '2024-03', ROI: 9, Applied: 10, Admitted: 10, Enrolled: 10 },
+                    { month: '2024-04', ROI: 7, Applied: 7, Admitted: 7, Enrolled: 7 },
+                    { month: '2024-05', ROI: 1, Applied: 1, Admitted: 1, Enrolled: 1 },
+                    { month: '2024-06', ROI: 141, Applied: 1, Admitted: 1, Enrolled: 1 },
+                    { month: '2024-07', ROI: 83, Applied: 142, Admitted: 1, Enrolled: 2 },
+                    { month: '2024-08', ROI: 59, Applied: 58, Admitted: 196, Enrolled: 126 },
+                    { month: '2024-09', ROI: 82, Applied: 38, Admitted: 34, Enrolled: 82 },
+                    { month: '2024-10', ROI: 65, Applied: 12, Admitted: 9, Enrolled: 13 },
+                    { month: '2024-11', ROI: 55, Applied: 8, Admitted: 8, Enrolled: 7 },
+                    { month: '2024-12', ROI: 54, Applied: 7, Admitted: 6, Enrolled: 1 },
+                    { month: '2025-01', ROI: 90, Applied: 10, Admitted: 10, Enrolled: 16 },
+                    { month: '2025-02', ROI: 173, Applied: 56, Admitted: 11, Enrolled: 10 },
+                    { month: '2025-03', ROI: 53, Applied: 48, Admitted: 3, Enrolled: 8 },
+                    { month: '2025-04', ROI: 40, Applied: 18, Admitted: 2, Enrolled: 1 },
+                    { month: '2025-05', ROI: 44, Applied: 47, Admitted: 2, Enrolled: 3 },
+                    { month: '2025-06', ROI: 44, Applied: 20, Admitted: 0, Enrolled: 0 },
+                    { month: '2025-07', ROI: 50, Applied: 11, Admitted: 0, Enrolled: 0 },
+                    { month: '2025-08', ROI: 26, Applied: 87, Admitted: 35, Enrolled: 93 },
+                    { month: '2025-09', ROI: 17, Applied: 19, Admitted: 55, Enrolled: 51 },
+                    { month: '2025-10', ROI: 13, Applied: 4, Admitted: 5, Enrolled: 5 },
+                    { month: '2025-11', ROI: 32, Applied: 8, Admitted: 9, Enrolled: 3 },
+                ],
+
+                // Monthly headcount by programme
+                headcountByProgramme: [
+                    { month: '2023-Oct', IB: 515, Waldorf: 169, Montessori: 25, Unknown: 29, total: 738 },
+                    { month: '2023-Nov', IB: 520, Waldorf: 173, Montessori: 28, Unknown: 25, total: 746 },
+                    { month: '2023-Dec', IB: 528, Waldorf: 179, Montessori: 32, Unknown: 23, total: 762 },
+                    { month: '2024-Jan', IB: 530, Waldorf: 176, Montessori: 33, Unknown: 22, total: 761 },
+                    { month: '2024-Feb', IB: 540, Waldorf: 181, Montessori: 33, Unknown: 20, total: 774 },
+                    { month: '2024-Mar', IB: 539, Waldorf: 185, Montessori: 31, Unknown: 19, total: 774 },
+                    { month: '2024-Apr', IB: 538, Waldorf: 183, Montessori: 34, Unknown: 19, total: 774 },
+                    { month: '2024-May', IB: 542, Waldorf: 183, Montessori: 35, Unknown: 19, total: 779 },
+                    { month: '2024-Jun', IB: 541, Waldorf: 183, Montessori: 34, Unknown: 19, total: 777 },
+                    { month: '2024-Jul', IB: 499, Waldorf: 166, Montessori: 31, Unknown: 10, total: 706 },
+                    { month: '2024-Aug', IB: 492, Waldorf: 161, Montessori: 28, Unknown: 7, total: 688 },
+                    { month: '2024-Sep', IB: 576, Waldorf: 184, Montessori: 35, Unknown: 3, total: 798 },
+                    { month: '2024-Oct', IB: 625, Waldorf: 203, Montessori: 37, Unknown: 0, total: 865 },
+                    { month: '2024-Nov', IB: 625, Waldorf: 206, Montessori: 39, Unknown: 0, total: 870 },
+                    { month: '2024-Dec', IB: 625, Waldorf: 209, Montessori: 40, Unknown: 0, total: 874 },
+                    { month: '2025-Jan', IB: 615, Waldorf: 208, Montessori: 40, Unknown: 0, total: 863 },
+                    { month: '2025-Feb', IB: 620, Waldorf: 210, Montessori: 44, Unknown: 0, total: 874 },
+                    { month: '2025-Mar', IB: 627, Waldorf: 209, Montessori: 44, Unknown: 0, total: 880 },
+                    { month: '2025-Apr', IB: 626, Waldorf: 215, Montessori: 44, Unknown: 0, total: 885 },
+                    { month: '2025-May', IB: 621, Waldorf: 215, Montessori: 43, Unknown: 0, total: 879 },
+                    { month: '2025-Jun', IB: 620, Waldorf: 216, Montessori: 42, Unknown: 0, total: 878 },
+                    { month: '2025-Jul', IB: 620, Waldorf: 216, Montessori: 42, Unknown: 0, total: 878 },
+                    { month: '2025-Aug', IB: 530, Waldorf: 189, Montessori: 38, Unknown: 0, total: 757 },
+                    { month: '2025-Sep', IB: 580, Waldorf: 206, Montessori: 43, Unknown: 0, total: 829 },
+                    { month: '2025-Oct', IB: 604, Waldorf: 209, Montessori: 42, Unknown: 0, total: 855 },
+                    { month: '2025-Nov', IB: 601, Waldorf: 209, Montessori: 42, Unknown: 0, total: 852 },
+                ],
+
+                // Churn by month
+                churnByMonth: [
+                    { month: '2023-Aug', withdrawals: 38 },
+                    { month: '2023-Sep', withdrawals: 20 },
+                    { month: '2023-Oct', withdrawals: 18 },
+                    { month: '2023-Nov', withdrawals: 22 },
+                    { month: '2023-Dec', withdrawals: 10 },
+                    { month: '2024-Jan', withdrawals: 7 },
+                    { month: '2024-Feb', withdrawals: 10 },
+                    { month: '2024-Mar', withdrawals: 13 },
+                    { month: '2024-Apr', withdrawals: 3 },
+                    { month: '2024-May', withdrawals: 3 },
+                    { month: '2024-Jun', withdrawals: 75 },
+                    { month: '2024-Jul', withdrawals: 29 },
+                    { month: '2024-Aug', withdrawals: 21 },
+                    { month: '2024-Sep', withdrawals: 17 },
+                    { month: '2024-Oct', withdrawals: 8 },
+                    { month: '2024-Nov', withdrawals: 3 },
+                    { month: '2024-Dec', withdrawals: 13 },
+                    { month: '2025-Jan', withdrawals: 5 },
+                    { month: '2025-Feb', withdrawals: 7 },
+                    { month: '2025-Mar', withdrawals: 15 },
+                    { month: '2025-Apr', withdrawals: 10 },
+                    { month: '2025-May', withdrawals: 9 },
+                    { month: '2025-Jun', withdrawals: 5 },
+                    { month: '2025-Jul', withdrawals: 118 },
+                    { month: '2025-Aug', withdrawals: 19 },
+                    { month: '2025-Sep', withdrawals: 28 },
+                    { month: '2025-Oct', withdrawals: 7 },
+                    { month: '2025-Nov', withdrawals: 6 },
+                ],
+
+                // Conversion speed by transition (all data)
+                conversionSpeed: {
+                    'ROI_Applied': { '1-14 days': 79, '15-30 days': 76, '31-45 days': 35, '46-60 days': 21, '>60 days': 92 },
+                    'ROI_Admitted': { '1-14 days': 65, '15-30 days': 58, '31-45 days': 28, '46-60 days': 18, '>60 days': 85 },
+                    'ROI_Enrolled': { '1-14 days': 28, '15-30 days': 30, '31-45 days': 9, '46-60 days': 12, '>60 days': 72 },
+                    'Applied_Admitted': { '1-14 days': 100, '15-30 days': 1, '31-45 days': 1, '46-60 days': 5, '>60 days': 39 },
+                    'Applied_Enrolled': { '1-14 days': 126, '15-30 days': 7, '31-45 days': 4, '46-60 days': 9, '>60 days': 39 },
+                    'Admitted_Enrolled': { '1-14 days': 116, '15-30 days': 6, '31-45 days': 2, '46-60 days': 4, '>60 days': 2 },
+                },
+
+                // Tenure before withdrawal
+                tenureData: [
+                    { bucket: '<6 months', count: 206, color: '#ef4444' },
+                    { bucket: '6mo-1yr', count: 107, color: '#f59e0b' },
+                    { bucket: '1-2 years', count: 173, color: '#3b82f6' },
+                    { bucket: '>2 years', count: 10, color: '#10b981' },
+                ],
+
+                // Data quality metrics
+                dataQuality: {
+                    tenureMissing: { total: 245, available: 203, pct: 17 },
+                    conversionSpeedMissing: { total: 259, available: 185, pct: 28 },
+                },
+
+                // Conversion by programme and grade (Anna's period)
+                conversionByProgrammeGrade: [
+                    { programme: 'IB', grade: 'Pre', applications: 89, enrolled: 61 },
+                    { programme: 'IB', grade: 'Grade 1', applications: 16, enrolled: 10 },
+                    { programme: 'IB', grade: 'Grade 2', applications: 8, enrolled: 3 },
+                    { programme: 'IB', grade: 'Grade 3', applications: 14, enrolled: 8 },
+                    { programme: 'IB', grade: 'Grade 4', applications: 16, enrolled: 8 },
+                    { programme: 'IB', grade: 'Grade 5', applications: 7, enrolled: 6 },
+                    { programme: 'IB', grade: 'Grade 6', applications: 14, enrolled: 10 },
+                    { programme: 'IB', grade: 'Grade 7', applications: 18, enrolled: 13 },
+                    { programme: 'IB', grade: 'Grade 8', applications: 13, enrolled: 9 },
+                    { programme: 'IB', grade: 'Grade 9', applications: 21, enrolled: 19 },
+                    { programme: 'IB', grade: 'Grade 10', applications: 18, enrolled: 16 },
+                    { programme: 'IB', grade: 'Grade 11', applications: 17, enrolled: 14 },
+                    { programme: 'IB', grade: 'Grade 12', applications: 2, enrolled: 2 },
+                    { programme: 'Waldorf', grade: 'Pre', applications: 41, enrolled: 32 },
+                    { programme: 'Waldorf', grade: 'Grade 1', applications: 3, enrolled: 2 },
+                    { programme: 'Waldorf', grade: 'Grade 2', applications: 6, enrolled: 5 },
+                    { programme: 'Waldorf', grade: 'Grade 3', applications: 6, enrolled: 5 },
+                    { programme: 'Waldorf', grade: 'Grade 4', applications: 3, enrolled: 1 },
+                    { programme: 'Waldorf', grade: 'Grade 5', applications: 4, enrolled: 4 },
+                    { programme: 'Waldorf', grade: 'Grade 6', applications: 1, enrolled: 1 },
+                    { programme: 'Waldorf', grade: 'Grade 7', applications: 6, enrolled: 5 },
+                    { programme: 'Waldorf', grade: 'WFC', applications: 12, enrolled: 11 },
+                    { programme: 'Montessori', grade: 'Pre', applications: 17, enrolled: 10 },
+                    { programme: 'Montessori', grade: 'Grade 1', applications: 5, enrolled: 3 },
+                    { programme: 'Montessori', grade: 'Grade 2', applications: 1, enrolled: 0 },
+                    { programme: 'Montessori', grade: 'Grade 3', applications: 1, enrolled: 1 },
+                    { programme: 'Montessori', grade: 'Grade 4', applications: 1, enrolled: 1 },
+                ],
+            };
+
+            const STAGES = ['ROI', 'Applied', 'Admitted', 'Enrolled'];
+            const COLORS = {
+                ROI: '#94a3b8',
+                Applied: '#3b82f6',
+                Admitted: '#8b5cf6',
+                Enrolled: '#10b981',
+                IB: '#3b82f6',
+                Waldorf: '#10b981',
+                Montessori: '#8b5cf6',
+                Unknown: '#94a3b8',
+                primary: '#3b82f6',
+                success: '#10b981',
+                warning: '#f59e0b',
+                danger: '#ef4444',
+            };
+
+            const EnrollmentMetricsDashboard = () => {
+                const [activeTab, setActiveTab] = useState('overview');
+                const [showHelp, setShowHelp] = useState(false);
+
+                // Filters - default to "All Data"
+                const [dateRange, setDateRange] = useState({ start: '2023-02', end: '2025-11' });
+                const [fromStage, setFromStage] = useState('Applied');
+                const [toStage, setToStage] = useState('Enrolled');
+
+                // Toggle states for charts
+                const [visibleStages, setVisibleStages] = useState({ ROI: true, Applied: true, Admitted: true, Enrolled: true });
+                const [visibleProgrammes, setVisibleProgrammes] = useState({ IB: true, Waldorf: true, Montessori: true, Unknown: true });
+                const [visibleChurnSeries, setVisibleChurnSeries] = useState({ Withdrawals: true, 'Churn Rate': true });
+                const [visibleConversionSeries, setVisibleConversionSeries] = useState({ 'ROI': true, 'Applied': true, 'Admitted': true, 'Enrolled': true });
+
+                // Helper to convert month formats for comparison
+                const normalizeMonth = (m) => {
+                    // Convert "2024-Jan" to "2024-01", "2023-Oct" to "2023-10" etc.
+                    const months = { 'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06',
+                                     'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12' };
+                    if (m.includes('-') && m.length > 7) {
+                        const [year, mon] = m.split('-');
+                        return `${year}-${months[mon] || mon}`;
+                    }
+                    return m;
+                };
+
+                // Always show ALL data in charts, use brush for zooming
+                const allFunnelData = RAW_DATA.funnelByMonth;
+                const allHeadcountData = RAW_DATA.headcountByProgramme;
+                const allChurnData = RAW_DATA.churnByMonth;
+
+                // Pre-compute churn rate data for all months (stable reference for brush)
+                const allChurnRateData = useMemo(() => {
+                    return allChurnData.map(d => {
+                        const monthNorm = normalizeMonth(d.month);
+                        const headcountEntry = RAW_DATA.headcountByProgramme.find(h => normalizeMonth(h.month) === monthNorm);
+                        const headcount = headcountEntry?.total || 0;
+                        const churnRate = headcount > 0 ? (d.withdrawals / headcount * 100) : 0;
+                        return {
+                            month: d.month,
+                            withdrawals: d.withdrawals,
+                            headcount: headcount,
+                            churnRate: churnRate
+                        };
+                    });
+                }, []);
+
+                // Calculate brush indices from date range
+                const funnelBrushIndices = useMemo(() => {
+                    const startIdx = allFunnelData.findIndex(d => d.month >= dateRange.start);
+                    const endIdx = allFunnelData.findIndex(d => d.month > dateRange.end);
+                    return {
+                        start: startIdx >= 0 ? startIdx : 0,
+                        end: endIdx >= 0 ? endIdx - 1 : allFunnelData.length - 1
+                    };
+                }, [dateRange]);
+
+                const headcountBrushIndices = useMemo(() => {
+                    const startIdx = allHeadcountData.findIndex(d => normalizeMonth(d.month) >= dateRange.start);
+                    const endIdx = allHeadcountData.findIndex(d => normalizeMonth(d.month) > dateRange.end);
+                    return {
+                        start: startIdx >= 0 ? startIdx : 0,
+                        end: endIdx >= 0 ? endIdx - 1 : allHeadcountData.length - 1
+                    };
+                }, [dateRange]);
+
+                const churnBrushIndices = useMemo(() => {
+                    const startIdx = allChurnData.findIndex(d => normalizeMonth(d.month) >= dateRange.start);
+                    const endIdx = allChurnData.findIndex(d => normalizeMonth(d.month) > dateRange.end);
+                    return {
+                        start: startIdx >= 0 ? startIdx : 0,
+                        end: endIdx >= 0 ? endIdx - 1 : allChurnData.length - 1
+                    };
+                }, [dateRange]);
+
+                // Handlers to update date range when brush changes
+                const handleFunnelBrushChange = useCallback((brushState) => {
+                    if (brushState && brushState.startIndex !== undefined && brushState.endIndex !== undefined) {
+                        const startMonth = allFunnelData[brushState.startIndex]?.month;
+                        const endMonth = allFunnelData[brushState.endIndex]?.month;
+                        if (startMonth && endMonth) {
+                            setDateRange({ start: startMonth, end: endMonth });
+                        }
+                    }
+                }, []);
+
+                const handleHeadcountBrushChange = useCallback((brushState) => {
+                    if (brushState && brushState.startIndex !== undefined && brushState.endIndex !== undefined) {
+                        const startMonth = normalizeMonth(allHeadcountData[brushState.startIndex]?.month || '');
+                        const endMonth = normalizeMonth(allHeadcountData[brushState.endIndex]?.month || '');
+                        if (startMonth && endMonth) {
+                            setDateRange({ start: startMonth, end: endMonth });
+                        }
+                    }
+                }, []);
+
+                const handleChurnBrushChange = useCallback((brushState) => {
+                    if (brushState && brushState.startIndex !== undefined && brushState.endIndex !== undefined) {
+                        const startMonth = normalizeMonth(allChurnData[brushState.startIndex]?.month || '');
+                        const endMonth = normalizeMonth(allChurnData[brushState.endIndex]?.month || '');
+                        if (startMonth && endMonth) {
+                            setDateRange({ start: startMonth, end: endMonth });
+                        }
+                    }
+                }, []);
+
+                // Filter data by date range (for calculations that need filtered data)
+                const filteredFunnelData = useMemo(() => {
+                    return RAW_DATA.funnelByMonth.filter(d => d.month >= dateRange.start && d.month <= dateRange.end);
+                }, [dateRange]);
+
+                // Filter headcount data by date range
+                const filteredHeadcountData = useMemo(() => {
+                    return RAW_DATA.headcountByProgramme.filter(d => {
+                        const normalized = normalizeMonth(d.month);
+                        return normalized >= dateRange.start && normalized <= dateRange.end;
+                    });
+                }, [dateRange]);
+
+                // Filter churn data by date range
+                const filteredChurnData = useMemo(() => {
+                    return RAW_DATA.churnByMonth.filter(d => {
+                        const normalized = normalizeMonth(d.month);
+                        return normalized >= dateRange.start && normalized <= dateRange.end;
+                    });
+                }, [dateRange]);
+
+                // Calculate transition metrics from filtered data
+                const transitionMetrics = useMemo(() => {
+                    const stageTotals = {};
+                    filteredFunnelData.forEach(d => {
+                        STAGES.forEach(stage => {
+                            stageTotals[stage] = (stageTotals[stage] || 0) + (d[stage] || 0);
+                        });
+                    });
+
+                    const results = [];
+                    for (let i = 0; i < STAGES.length; i++) {
+                        for (let j = i + 1; j < STAGES.length; j++) {
+                            const from = STAGES[i];
+                            const to = STAGES[j];
+                            const fromCount = stageTotals[from] || 0;
+                            const toCount = stageTotals[to] || 0;
+                            results.push({
+                                from, to, fromCount, toCount: Math.min(toCount, fromCount),
+                                rate: fromCount > 0 ? Math.min((toCount / fromCount) * 100, 100) : 0
+                            });
+                        }
+                    }
+                    return { totals: stageTotals, transitions: results };
+                }, [filteredFunnelData]);
+
+                // Get specific transition
+                const getTransition = useCallback((from, to) => {
+                    return transitionMetrics.transitions.find(t => t.from === from && t.to === to) || { fromCount: 0, toCount: 0, rate: 0 };
+                }, [transitionMetrics]);
+
+                // Summary stats
+                const summaryStats = useMemo(() => {
+                    const currentHeadcount = RAW_DATA.headcountByProgramme[RAW_DATA.headcountByProgramme.length - 1]?.total || 0;
+                    const totalWithdrawals = RAW_DATA.churnByMonth.reduce((s, d) => s + d.withdrawals, 0);
+                    return { ...transitionMetrics.totals, currentHeadcount, totalWithdrawals };
+                }, [transitionMetrics]);
+
+                // Conversion speed for selected transition (responds to stage buttons)
+                const selectedSpeedData = useMemo(() => {
+                    const key = `${fromStage}_${toStage}`;
+                    const data = RAW_DATA.conversionSpeed[key] || {};
+                    const buckets = ['1-14 days', '15-30 days', '31-45 days', '46-60 days', '>60 days'];
+                    const colors = ['#10b981', '#3b82f6', '#8b5cf6', '#f59e0b', '#ef4444'];
+                    return buckets.map((bucket, i) => ({ bucket, count: data[bucket] || 0, color: colors[i] }));
+                }, [fromStage, toStage]);
+
+
+                const handleStageToggle = (stage) => setVisibleStages(prev => ({ ...prev, [stage]: !prev[stage] }));
+                const handleProgrammeToggle = (prog) => setVisibleProgrammes(prev => ({ ...prev, [prog]: !prev[prog] }));
+                const handleChurnSeriesToggle = (series) => setVisibleChurnSeries(prev => ({ ...prev, [series]: !prev[series] }));
+                const handleConversionSeriesToggle = (series) => setVisibleConversionSeries(prev => ({ ...prev, [series]: !prev[series] }));
+
+                const CustomTooltip = ({ active, payload, label }) => {
+                    if (active && payload && payload.length) {
+                        return React.createElement('div', { className: "bg-white p-3 border-2 border-gray-200 rounded-lg shadow-lg" }, [
+                            React.createElement('p', { key: 'l', className: "font-bold text-gray-800 mb-1" }, label),
+                            ...payload.map((e, i) => React.createElement('p', { key: i, style: { color: e.color || e.fill }, className: "text-sm" },
+                                `${e.name}: ${typeof e.value === 'number' ? e.value.toLocaleString() : e.value}`))
+                        ]);
+                    }
+                    return null;
+                };
+
+                // Custom tooltip for headcount that shows total
+                const HeadcountTooltip = ({ active, payload, label }) => {
+                    if (active && payload && payload.length) {
+                        const total = payload.reduce((sum, e) => sum + (e.value || 0), 0);
+                        return React.createElement('div', { className: "bg-white p-3 border-2 border-gray-200 rounded-lg shadow-lg" }, [
+                            React.createElement('p', { key: 'l', className: "font-bold text-gray-800 mb-1" }, label),
+                            ...payload.map((e, i) => React.createElement('p', { key: i, style: { color: e.color || e.fill }, className: "text-sm" },
+                                `${e.name}: ${typeof e.value === 'number' ? e.value.toLocaleString() : e.value}`)),
+                            React.createElement('p', { key: 'total', className: "text-sm font-semibold text-gray-800 mt-1 pt-1 border-t border-gray-200" },
+                                `Total: ${total.toLocaleString()}`)
+                        ]);
+                    }
+                    return null;
+                };
+
+                const StatCard = ({ title, value, subtitle, color }) => (
+                    React.createElement('div', { className: "bg-white rounded-xl shadow-lg p-5 border-l-4", style: { borderLeftColor: color } }, [
+                        React.createElement('div', { key: 't', className: "text-sm text-gray-500 mb-1" }, title),
+                        React.createElement('div', { key: 'v', className: "text-2xl font-bold", style: { color } }, value),
+                        subtitle && React.createElement('div', { key: 's', className: "text-xs text-gray-400 mt-1" }, subtitle)
+                    ])
+                );
+
+                const TabButton = ({ label, active, onClick }) => (
+                    React.createElement('button', {
+                        onClick,
+                        className: `px-5 py-2 font-medium rounded-lg transition-all text-sm ${active ? 'bg-blue-600 text-white shadow-lg' : 'bg-white text-gray-600 hover:bg-gray-100'}`
+                    }, label)
+                );
+
+                const FilterButton = ({ label, active, onClick, disabled }) => (
+                    React.createElement('button', {
+                        onClick: disabled ? undefined : onClick,
+                        className: `filter-btn px-3 py-1 rounded text-sm font-medium ${active ? 'active' : ''} ${disabled ? 'opacity-40 cursor-not-allowed' : ''}`
+                    }, label)
+                );
+
+
+                // ==================== SHARED FUNNEL CONFIGURATION ====================
+                const renderFunnelConfig = () => (
+                    React.createElement('div', { key: 'filters', className: "bg-white rounded-xl shadow-lg p-5 mb-6" }, [
+                        React.createElement('h3', { key: 't', className: "text-lg font-semibold text-gray-800 mb-4" }, 'Filters'),
+                        React.createElement('div', { key: 'c', className: "grid md:grid-cols-4 gap-6" }, [
+                            // Date range (2/4 width)
+                            React.createElement('div', { key: 'date', className: "md:col-span-2" }, [
+                                React.createElement('label', { key: 'l', className: "block text-sm font-medium text-gray-700 mb-2" }, 'Date Range'),
+                                React.createElement('div', { key: 'inputs', className: "flex gap-2 items-center" }, [
+                                    React.createElement('input', { key: 'start', type: 'month',
+                                        value: dateRange.start,
+                                        onChange: (e) => {
+                                            const val = e.target.value;
+                                            if (val) setDateRange(prev => ({ ...prev, start: val }));
+                                        },
+                                        className: "flex-1 px-3 py-2 border rounded-lg text-sm cursor-pointer" }),
+                                    React.createElement('span', { key: 'sep', className: "text-gray-400 font-medium" }, 'to'),
+                                    React.createElement('input', { key: 'end', type: 'month',
+                                        value: dateRange.end,
+                                        onChange: (e) => {
+                                            const val = e.target.value;
+                                            if (val) setDateRange(prev => ({ ...prev, end: val }));
+                                        },
+                                        className: "flex-1 px-3 py-2 border rounded-lg text-sm cursor-pointer" })
+                                ])
+                            ]),
+                            // From stage (1/4 width)
+                            React.createElement('div', { key: 'from' }, [
+                                React.createElement('label', { key: 'l', className: "block text-sm font-medium text-gray-700 mb-2" }, 'From Stage'),
+                                React.createElement('div', { key: 'btns', className: "flex flex-wrap gap-2" },
+                                    STAGES.slice(0, -1).map(s =>
+                                        React.createElement(FilterButton, { key: s, label: s, active: fromStage === s, onClick: () => { setFromStage(s); if (STAGES.indexOf(toStage) <= STAGES.indexOf(s)) setToStage(STAGES[STAGES.indexOf(s) + 1]); } })
+                                    )
+                                )
+                            ]),
+                            // To stage (1/4 width)
+                            React.createElement('div', { key: 'to' }, [
+                                React.createElement('label', { key: 'l', className: "block text-sm font-medium text-gray-700 mb-2" }, 'To Stage'),
+                                React.createElement('div', { key: 'btns', className: "flex flex-wrap gap-2" },
+                                    STAGES.slice(1).map(s =>
+                                        React.createElement(FilterButton, { key: s, label: s, active: toStage === s, disabled: STAGES.indexOf(s) <= STAGES.indexOf(fromStage),
+                                            onClick: () => setToStage(s) })
+                                    )
+                                )
+                            ])
+                        ])
+                    ])
+                );
+
+                // ==================== OVERVIEW TAB ====================
+                const renderOverviewTab = () => {
+                    const transition = getTransition(fromStage, toStage);
+
+                    return React.createElement('div', { className: "space-y-6" }, [
+                        // Key metrics
+                        React.createElement('div', { key: 'metrics', className: "grid md:grid-cols-5 gap-4" }, [
+                            React.createElement(StatCard, { key: 'roi', title: 'ROI (Inquiries)', value: (summaryStats.ROI || 0).toLocaleString(), subtitle: 'Registration of Interest', color: COLORS.ROI }),
+                            React.createElement(StatCard, { key: 'app', title: 'Applied', value: (summaryStats.Applied || 0).toLocaleString(), subtitle: 'Completed Applications', color: COLORS.Applied }),
+                            React.createElement(StatCard, { key: 'adm', title: 'Admitted', value: (summaryStats.Admitted || 0).toLocaleString(), subtitle: 'Admission Offered', color: COLORS.Admitted }),
+                            React.createElement(StatCard, { key: 'enr', title: 'Enrolled', value: (summaryStats.Enrolled || 0).toLocaleString(), subtitle: 'Signed Contract', color: COLORS.Enrolled }),
+                            React.createElement(StatCard, { key: 'rate', title: `${fromStage} → ${toStage}`, value: `${transition.rate.toFixed(1)}%`, subtitle: `${transition.toCount} of ${transition.fromCount}`, color: COLORS.primary })
+                        ]),
+
+                        // Charts row
+                        React.createElement('div', { key: 'charts', className: "grid md:grid-cols-2 gap-6" }, [
+                            // Stage counts over time
+                            React.createElement('div', { key: 'funnel-time', className: "bg-white rounded-xl shadow-lg p-5" }, [
+                                React.createElement('h3', { key: 't', className: "text-lg font-semibold text-gray-800 mb-2" }, 'Funnel Stages Over Time'),
+                                React.createElement('p', { key: 'd', className: "text-xs text-gray-500 mb-3" }, 'Click legend to toggle. Drag brush to zoom (synced with date filter).'),
+                                React.createElement(ResponsiveContainer, { key: 'c', width: "100%", height: 320 },
+                                    React.createElement(AreaChart, { data: allFunnelData }, [
+                                        React.createElement(CartesianGrid, { key: 'g', strokeDasharray: "3 3" }),
+                                        React.createElement(XAxis, { key: 'x', dataKey: "month", angle: -45, textAnchor: "end", height: 60, tick: { fontSize: 10 } }),
+                                        React.createElement(YAxis, { key: 'y' }),
+                                        React.createElement(Tooltip, { key: 'tip', content: React.createElement(CustomTooltip) }),
+                                        React.createElement(Legend, { key: 'leg', wrapperStyle: { cursor: 'pointer', fontSize: '12px' },
+                                            onClick: (e) => handleStageToggle(e.value),
+                                            formatter: (v) => React.createElement('span', { style: { opacity: visibleStages[v] ? 1 : 0.4, textDecoration: visibleStages[v] ? 'none' : 'line-through' } }, v)
+                                        }),
+                                        ...STAGES.map(s => React.createElement(Area, { key: s, type: "monotone", dataKey: s, stroke: COLORS[s], fill: COLORS[s], fillOpacity: 0.3, strokeWidth: 2, hide: !visibleStages[s] })),
+                                        React.createElement(Brush, { key: 'br', dataKey: "month", height: 30, stroke: "#3b82f6", fill: "#eff6ff",
+                                            startIndex: funnelBrushIndices.start, endIndex: funnelBrushIndices.end, onChange: handleFunnelBrushChange })
+                                    ])
+                                )
+                            ]),
+                            // Conversion speed
+                            React.createElement('div', { key: 'speed', className: "bg-white rounded-xl shadow-lg p-5" }, [
+                                React.createElement('h3', { key: 't', className: "text-lg font-semibold text-gray-800 mb-2" }, `Time to Convert: ${fromStage} → ${toStage}`),
+                                React.createElement('p', { key: 'd', className: "text-xs text-gray-500 mb-2" }, 'Days from entering first stage to reaching second stage (all-time data)'),
+                                React.createElement('div', { key: 'note', className: "bg-blue-50 border border-blue-200 rounded-lg p-2 mb-3 text-xs text-blue-800" },
+                                    'ℹ️ Conversion speed shows all-time aggregate data. Date range filter does not affect this chart.'
+                                ),
+                                fromStage === 'Applied' && toStage === 'Enrolled' && React.createElement('div', { key: 'warn', className: "bg-amber-50 border border-amber-200 rounded-lg p-2 mb-3 text-xs text-amber-800" },
+                                    `⚠️ Data quality note: Conversion speed data available for ${RAW_DATA.dataQuality.conversionSpeedMissing.available} of ${RAW_DATA.dataQuality.conversionSpeedMissing.total} enrolled students (${100 - RAW_DATA.dataQuality.conversionSpeedMissing.pct}%). ${RAW_DATA.dataQuality.conversionSpeedMissing.pct}% missing applied_date or enrolled_date.`
+                                ),
+                                selectedSpeedData.some(d => d.count > 0) ?
+                                    React.createElement(ResponsiveContainer, { key: 'c', width: "100%", height: 280 },
+                                        React.createElement(BarChart, { data: selectedSpeedData, layout: "vertical" }, [
+                                            React.createElement(CartesianGrid, { key: 'g', strokeDasharray: "3 3" }),
+                                            React.createElement(XAxis, { key: 'x', type: "number" }),
+                                            React.createElement(YAxis, { key: 'y', dataKey: "bucket", type: "category", width: 90, tick: { fontSize: 11 } }),
+                                            React.createElement(Tooltip, { key: 'tip' }),
+                                            React.createElement(Bar, { key: 'bar', dataKey: "count", name: "Students" },
+                                                selectedSpeedData.map((e, i) => React.createElement(Cell, { key: i, fill: e.color }))
+                                            )
+                                        ])
+                                    )
+                                : React.createElement('div', { key: 'none', className: "text-gray-400 text-center py-20" }, 'No speed data for this transition')
+                            ])
+                        ]),
+
+                        // All transitions table
+                        React.createElement('div', { key: 'table', className: "bg-white rounded-xl shadow-lg p-5" }, [
+                            React.createElement('h3', { key: 't', className: "text-lg font-semibold text-gray-800 mb-4" }, 'All Conversion Rates (Selected Period)'),
+                            React.createElement('div', { key: 'scroll', className: "overflow-x-auto" },
+                                React.createElement('table', { className: "data-table w-full" }, [
+                                    React.createElement('thead', { key: 'h' },
+                                        React.createElement('tr', null, ['From', 'To', 'From Count', 'To Count', 'Rate'].map(h =>
+                                            React.createElement('th', { key: h }, h)
+                                        ))
+                                    ),
+                                    React.createElement('tbody', { key: 'b' },
+                                        transitionMetrics.transitions.map((t, i) =>
+                                            React.createElement('tr', { key: i, className: t.from === fromStage && t.to === toStage ? 'bg-blue-50' : '' }, [
+                                                React.createElement('td', { key: 'f', style: { color: COLORS[t.from] } }, t.from),
+                                                React.createElement('td', { key: 't', style: { color: COLORS[t.to] } }, t.to),
+                                                React.createElement('td', { key: 'fc' }, t.fromCount.toLocaleString()),
+                                                React.createElement('td', { key: 'tc' }, t.toCount.toLocaleString()),
+                                                React.createElement('td', { key: 'r', className: "font-semibold", style: { color: t.rate >= 80 ? '#10b981' : t.rate >= 50 ? '#f59e0b' : '#ef4444' } }, `${t.rate.toFixed(1)}%`),
+                                            ])
+                                        )
+                                    )
+                                ])
+                            )
+                        ])
+                    ]);
+                };
+
+                // ==================== CONVERSION TAB ====================
+                const renderConversionTab = () => {
+                    return React.createElement('div', { className: "space-y-6" }, [
+                        React.createElement('div', { key: 'chart', className: "bg-white rounded-xl shadow-lg p-5" }, [
+                            React.createElement('h3', { key: 't', className: "text-lg font-semibold text-gray-800 mb-2" }, 'Funnel Stages by Month'),
+                            React.createElement('p', { key: 'd', className: "text-xs text-gray-500 mb-3" }, 'Shows when students reached each stage. Click legend to toggle. Drag brush to zoom (synced with date filter).'),
+                            React.createElement(ResponsiveContainer, { key: 'c', width: "100%", height: 380 },
+                                React.createElement(BarChart, { data: allFunnelData }, [
+                                    React.createElement(CartesianGrid, { key: 'g', strokeDasharray: "3 3" }),
+                                    React.createElement(XAxis, { key: 'x', dataKey: "month", angle: -45, textAnchor: "end", height: 70, tick: { fontSize: 10 } }),
+                                    React.createElement(YAxis, { key: 'y' }),
+                                    React.createElement(Tooltip, { key: 'tip', content: React.createElement(CustomTooltip) }),
+                                    React.createElement(Legend, { key: 'leg', wrapperStyle: { cursor: 'pointer', fontSize: '12px' },
+                                        onClick: (e) => handleConversionSeriesToggle(e.value),
+                                        formatter: (v) => React.createElement('span', { style: { opacity: visibleConversionSeries[v] ? 1 : 0.4, textDecoration: visibleConversionSeries[v] ? 'none' : 'line-through' } }, v)
+                                    }),
+                                    React.createElement(Bar, { key: 'b0', dataKey: "ROI", fill: COLORS.ROI, name: "ROI", hide: !visibleConversionSeries['ROI'] }),
+                                    React.createElement(Bar, { key: 'b1', dataKey: "Applied", fill: COLORS.Applied, name: "Applied", hide: !visibleConversionSeries['Applied'] }),
+                                    React.createElement(Bar, { key: 'b2', dataKey: "Admitted", fill: COLORS.Admitted, name: "Admitted", hide: !visibleConversionSeries['Admitted'] }),
+                                    React.createElement(Bar, { key: 'b3', dataKey: "Enrolled", fill: COLORS.Enrolled, name: "Enrolled", hide: !visibleConversionSeries['Enrolled'] }),
+                                    React.createElement(Brush, { key: 'br', dataKey: "month", height: 30, stroke: "#3b82f6", fill: "#eff6ff",
+                                        startIndex: funnelBrushIndices.start, endIndex: funnelBrushIndices.end, onChange: handleFunnelBrushChange })
+                                ])
+                            )
+                        ]),
+                        React.createElement('div', { key: 'table', className: "bg-white rounded-xl shadow-lg p-5" }, [
+                            React.createElement('h3', { key: 't', className: "text-lg font-semibold text-gray-800 mb-4" }, "Conversion by Programme & Grade (Last 12 Months)"),
+                            React.createElement('div', { key: 'scroll', className: "overflow-x-auto max-h-72 overflow-y-auto" },
+                                React.createElement('table', { className: "data-table w-full" }, [
+                                    React.createElement('thead', { key: 'h' },
+                                        React.createElement('tr', null, ['Programme', 'Grade', 'Applications', 'Enrolled', 'Rate'].map(h => React.createElement('th', { key: h }, h)))
+                                    ),
+                                    React.createElement('tbody', { key: 'b' },
+                                        RAW_DATA.conversionByProgrammeGrade.map((r, i) => {
+                                            const rate = r.applications > 0 ? (r.enrolled / r.applications * 100) : 0;
+                                            return React.createElement('tr', { key: i }, [
+                                                React.createElement('td', { key: 'p', style: { color: COLORS[r.programme] } }, r.programme),
+                                                React.createElement('td', { key: 'g' }, r.grade),
+                                                React.createElement('td', { key: 'a' }, r.applications),
+                                                React.createElement('td', { key: 'e' }, r.enrolled),
+                                                React.createElement('td', { key: 'r', className: "font-semibold", style: { color: rate >= 75 ? '#10b981' : rate >= 50 ? '#f59e0b' : '#ef4444' } }, `${rate.toFixed(1)}%`),
+                                            ]);
+                                        })
+                                    )
+                                ])
+                            )
+                        ])
+                    ]);
+                };
+
+                // ==================== HEADCOUNT TAB ====================
+                const renderHeadcountTab = () => {
+                    // Get latest headcount from filtered data
+                    const latestHeadcount = filteredHeadcountData.length > 0 ? filteredHeadcountData[filteredHeadcountData.length - 1] : null;
+                    const latestTotal = latestHeadcount?.total || 0;
+                    const latestIB = latestHeadcount?.IB || 0;
+                    const latestWaldorf = latestHeadcount?.Waldorf || 0;
+                    const latestMontessori = latestHeadcount?.Montessori || 0;
+
+                    return React.createElement('div', { className: "space-y-6" }, [
+                        React.createElement('div', { key: 'chart', className: "bg-white rounded-xl shadow-lg p-5" }, [
+                            React.createElement('h3', { key: 't', className: "text-lg font-semibold text-gray-800 mb-2" }, 'Monthly Enrolled Headcount by Programme'),
+                            React.createElement('p', { key: 'd', className: "text-xs text-gray-500 mb-3" }, 'Click legend to toggle. Drag brush to zoom (synced with date filter).'),
+                            React.createElement(ResponsiveContainer, { key: 'c', width: "100%", height: 420 },
+                                React.createElement(AreaChart, { data: allHeadcountData }, [
+                                    React.createElement('defs', { key: 'defs' },
+                                        ['IB', 'Waldorf', 'Montessori'].map(p =>
+                                            React.createElement('linearGradient', { key: p, id: `color${p}`, x1: "0", y1: "0", x2: "0", y2: "1" }, [
+                                                React.createElement('stop', { key: '1', offset: "5%", stopColor: COLORS[p], stopOpacity: 0.8 }),
+                                                React.createElement('stop', { key: '2', offset: "95%", stopColor: COLORS[p], stopOpacity: 0.3 })
+                                            ])
+                                        )
+                                    ),
+                                    React.createElement(CartesianGrid, { key: 'g', strokeDasharray: "3 3" }),
+                                    React.createElement(XAxis, { key: 'x', dataKey: "month", angle: -45, textAnchor: "end", height: 70, tick: { fontSize: 10 } }),
+                                    React.createElement(YAxis, { key: 'y' }),
+                                    React.createElement(Tooltip, { key: 'tip', content: React.createElement(HeadcountTooltip) }),
+                                    React.createElement(Legend, { key: 'leg', wrapperStyle: { cursor: 'pointer', fontSize: '12px' },
+                                        onClick: (e) => handleProgrammeToggle(e.value),
+                                        formatter: (v) => React.createElement('span', { style: { opacity: visibleProgrammes[v] ? 1 : 0.4, textDecoration: visibleProgrammes[v] ? 'none' : 'line-through' } }, v)
+                                    }),
+                                    ['IB', 'Waldorf', 'Montessori'].map(p =>
+                                        React.createElement(Area, { key: p, type: "monotone", dataKey: p, stackId: "1", stroke: COLORS[p], fill: `url(#color${p})`, strokeWidth: 2, hide: !visibleProgrammes[p] })
+                                    ),
+                                    React.createElement(Brush, { key: 'br', dataKey: "month", height: 35, stroke: "#3b82f6", fill: "#eff6ff",
+                                        startIndex: headcountBrushIndices.start, endIndex: headcountBrushIndices.end, onChange: handleHeadcountBrushChange })
+                                ])
+                            )
+                        ]),
+                        React.createElement('div', { key: 'cards', className: "grid md:grid-cols-4 gap-4" }, [
+                            React.createElement(StatCard, { key: 'c', title: "Period End Headcount", value: latestTotal.toLocaleString(), subtitle: latestHeadcount?.month || 'N/A', color: COLORS.primary }),
+                            React.createElement(StatCard, { key: 'ib', title: "IB Programme", value: latestIB.toLocaleString(), subtitle: latestTotal > 0 ? `${(latestIB/latestTotal*100).toFixed(1)}% of total` : '', color: COLORS.IB }),
+                            React.createElement(StatCard, { key: 'w', title: "Waldorf", value: latestWaldorf.toLocaleString(), subtitle: latestTotal > 0 ? `${(latestWaldorf/latestTotal*100).toFixed(1)}% of total` : '', color: COLORS.Waldorf }),
+                            React.createElement(StatCard, { key: 'm', title: "Montessori", value: latestMontessori.toLocaleString(), subtitle: latestTotal > 0 ? `${(latestMontessori/latestTotal*100).toFixed(1)}% of total` : '', color: COLORS.Montessori }),
+                        ])
+                    ]);
+                };
+
+                // Churn rate data - computed at component level (hooks rules)
+                const churnRateData = useMemo(() => {
+                    const headcountMap = {};
+                    RAW_DATA.headcountByProgramme.forEach(h => {
+                        headcountMap[normalizeMonth(h.month)] = h.total;
+                    });
+
+                    return filteredChurnData.map(d => {
+                        const monthNorm = normalizeMonth(d.month);
+                        const headcount = headcountMap[monthNorm] || 0;
+                        const churnRate = headcount > 0 ? (d.withdrawals / headcount * 100) : 0;
+                        return {
+                            month: d.month,
+                            withdrawals: d.withdrawals,
+                            headcount: headcount,
+                            churnRate: churnRate
+                        };
+                    });
+                }, [filteredChurnData]);
+
+                // ==================== CHURN TAB ====================
+                const renderChurnTab = () => {
+                    // Calculate total withdrawals for filtered period
+                    const filteredTotalWithdrawals = filteredChurnData.reduce((s, d) => s + d.withdrawals, 0);
+
+                    // Find peak months in filtered data
+                    const sortedChurn = [...filteredChurnData].sort((a, b) => b.withdrawals - a.withdrawals);
+                    const topMonths = sortedChurn.slice(0, 3);
+
+                    // Calculate average churn rate for period
+                    const avgChurnRate = churnRateData.length > 0
+                        ? churnRateData.reduce((s, d) => s + d.churnRate, 0) / churnRateData.length
+                        : 0;
+
+                    // Calculate period churn rate: Total Withdrawals / Average Headcount
+                    const avgHeadcount = churnRateData.length > 0
+                        ? churnRateData.reduce((s, d) => s + d.headcount, 0) / churnRateData.length
+                        : 0;
+                    const periodChurnRate = avgHeadcount > 0 ? (filteredTotalWithdrawals / avgHeadcount * 100) : 0;
+
+                    return React.createElement('div', { className: "space-y-6" }, [
+                        // Churn Rate Card
+                        React.createElement('div', { key: 'churn-rate', className: "bg-white rounded-xl shadow-lg p-5" }, [
+                            React.createElement('h3', { key: 't', className: "text-lg font-semibold text-gray-800 mb-2" }, 'Churn Rate Analysis'),
+                            React.createElement('p', { key: 'd', className: "text-xs text-gray-500 mb-4" }, 'Churn Rate = Withdrawals / Beginning-of-Month Headcount × 100%. Click legend to toggle. Drag brush to zoom.'),
+                            React.createElement('div', { key: 'cards', className: "grid md:grid-cols-3 gap-4 mb-4" }, [
+                                React.createElement(StatCard, { key: 'avg', title: "Avg Monthly Churn Rate", value: `${avgChurnRate.toFixed(2)}%`, subtitle: "Selected period average", color: COLORS.warning }),
+                                React.createElement(StatCard, { key: 'period', title: "Period Churn Rate", value: `${periodChurnRate.toFixed(1)}%`, subtitle: `${filteredTotalWithdrawals} withdrawals / ${Math.round(avgHeadcount)} avg headcount`, color: COLORS.danger }),
+                                React.createElement(StatCard, { key: 'tw', title: "Total Withdrawals", value: filteredTotalWithdrawals.toLocaleString(), subtitle: "Selected period", color: COLORS.danger }),
+                            ]),
+                            React.createElement(ResponsiveContainer, { key: 'c', width: "100%", height: 350 },
+                                React.createElement(BarChart, { data: allChurnRateData }, [
+                                    React.createElement(CartesianGrid, { key: 'g', strokeDasharray: "3 3" }),
+                                    React.createElement(XAxis, { key: 'x', dataKey: "month", angle: -45, textAnchor: "end", height: 70, tick: { fontSize: 10 } }),
+                                    React.createElement(YAxis, { key: 'y1', yAxisId: "left", orientation: "left", label: { value: 'Withdrawals', angle: -90, position: 'insideLeft', style: { fontSize: 10 } } }),
+                                    React.createElement(YAxis, { key: 'y2', yAxisId: "right", orientation: "right", label: { value: 'Churn Rate %', angle: 90, position: 'insideRight', style: { fontSize: 10 } } }),
+                                    React.createElement(Tooltip, { key: 'tip', formatter: (value, name) => name === 'Churn Rate' ? `${value.toFixed(2)}%` : value }),
+                                    React.createElement(Legend, { key: 'leg', wrapperStyle: { cursor: 'pointer', fontSize: '12px' },
+                                        onClick: (e) => handleChurnSeriesToggle(e.value),
+                                        formatter: (v) => React.createElement('span', { style: { opacity: visibleChurnSeries[v] ? 1 : 0.4, textDecoration: visibleChurnSeries[v] ? 'none' : 'line-through' } }, v)
+                                    }),
+                                    React.createElement(Bar, { key: 'b', yAxisId: "left", dataKey: "withdrawals", fill: "#ef4444", name: "Withdrawals", opacity: 0.7, hide: !visibleChurnSeries['Withdrawals'] }),
+                                    React.createElement(Line, { key: 'l', yAxisId: "right", type: "monotone", dataKey: "churnRate", stroke: "#f59e0b", strokeWidth: 2, name: "Churn Rate", dot: false, hide: !visibleChurnSeries['Churn Rate'] }),
+                                    React.createElement(Brush, { key: 'br', dataKey: "month", height: 30, stroke: "#ef4444", fill: "#fef2f2",
+                                        startIndex: churnBrushIndices.start, endIndex: churnBrushIndices.end, onChange: handleChurnBrushChange })
+                                ])
+                            ),
+                            React.createElement('div', { key: 'table-wrap', className: "mt-4 overflow-x-auto max-h-48 overflow-y-auto" },
+                                React.createElement('table', { className: "data-table w-full text-xs" }, [
+                                    React.createElement('thead', { key: 'h' },
+                                        React.createElement('tr', null, ['Month', 'Headcount', 'Withdrawals', 'Churn Rate'].map(h => React.createElement('th', { key: h }, h)))
+                                    ),
+                                    React.createElement('tbody', { key: 'b' },
+                                        churnRateData.map((r, i) =>
+                                            React.createElement('tr', { key: i }, [
+                                                React.createElement('td', { key: 'm' }, r.month),
+                                                React.createElement('td', { key: 'h' }, r.headcount.toLocaleString()),
+                                                React.createElement('td', { key: 'w' }, r.withdrawals),
+                                                React.createElement('td', { key: 'r', className: "font-semibold", style: { color: r.churnRate > 5 ? '#ef4444' : r.churnRate > 2 ? '#f59e0b' : '#10b981' } }, `${r.churnRate.toFixed(2)}%`),
+                                            ])
+                                        )
+                                    )
+                                ])
+                            )
+                        ]),
+                        React.createElement('div', { key: 'tenure', className: "grid md:grid-cols-2 gap-6" }, [
+                            React.createElement('div', { key: 'tc', className: "bg-white rounded-xl shadow-lg p-5" }, [
+                                React.createElement('h3', { key: 't', className: "text-lg font-semibold text-gray-800 mb-2" }, 'Student Tenure Before Withdrawal'),
+                                React.createElement('div', { key: 'warn', className: "bg-amber-50 border border-amber-200 rounded-lg p-2 mb-3 text-xs text-amber-800" },
+                                    `⚠️ Data quality note: Tenure data available for ${RAW_DATA.dataQuality.tenureMissing.available} of ${RAW_DATA.dataQuality.tenureMissing.total} withdrawals (${100 - RAW_DATA.dataQuality.tenureMissing.pct}%). ${RAW_DATA.dataQuality.tenureMissing.pct}% missing enrollment_start_date.`
+                                ),
+                                React.createElement(ResponsiveContainer, { key: 'c', width: "100%", height: 220 },
+                                    React.createElement(BarChart, { data: RAW_DATA.tenureData, layout: "vertical" }, [
+                                        React.createElement(CartesianGrid, { key: 'g', strokeDasharray: "3 3" }),
+                                        React.createElement(XAxis, { key: 'x', type: "number" }),
+                                        React.createElement(YAxis, { key: 'y', dataKey: "bucket", type: "category", width: 90, tick: { fontSize: 11 } }),
+                                        React.createElement(Tooltip, { key: 'tip' }),
+                                        React.createElement(Bar, { key: 'bar', dataKey: "count", name: "Students" },
+                                            RAW_DATA.tenureData.map((e, i) => React.createElement(Cell, { key: i, fill: e.color }))
+                                        )
+                                    ])
+                                )
+                            ]),
+                            React.createElement('div', { key: 'stats', className: "space-y-4" }, [
+                                React.createElement(StatCard, { key: 'avg', title: "Avg Monthly Withdrawals", value: filteredChurnData.length > 0 ? Math.round(filteredTotalWithdrawals / filteredChurnData.length).toLocaleString() : '0', subtitle: "In selected period", color: COLORS.warning }),
+                                React.createElement('div', { key: 'peaks', className: "bg-white rounded-xl shadow-lg p-4" }, [
+                                    React.createElement('div', { key: 't', className: "text-sm text-gray-500 mb-2" }, 'Peak Withdrawal Months (Selected Period)'),
+                                    React.createElement('div', { key: 'c', className: "text-sm text-gray-700 space-y-1" },
+                                        topMonths.map((m, i) => React.createElement('p', { key: i }, `${m.month}: ${m.withdrawals}`))
+                                    )
+                                ]),
+                                React.createElement('div', { key: 'note', className: "bg-blue-50 border border-blue-200 rounded-lg p-3 text-xs text-blue-800" }, [
+                                    React.createElement('p', { key: 'p1', className: "font-semibold mb-1" }, '📊 About July 2025 spike (118 withdrawals)'),
+                                    React.createElement('p', { key: 'p2' }, 'This spike represents an admissions data cleanup in anticipation of the new academic year, not actual student attrition. Consider excluding July from trend analysis.')
+                                ])
+                            ])
+                        ])
+                    ]);
+                };
+
+                // Main render
+                return React.createElement('div', { className: "w-full min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 p-6" },
+                    React.createElement('div', { className: "max-w-7xl mx-auto" }, [
+                        // Header
+                        React.createElement('div', { key: 'header', className: "bg-white rounded-xl shadow-lg p-5 mb-5" }, [
+                            React.createElement('div', { key: 'c', className: "flex justify-between items-start" }, [
+                                React.createElement('div', { key: 'title' }, [
+                                    React.createElement('h1', { key: 'h1', className: "text-2xl font-bold text-gray-800 mb-1" }, 'Enrollment Metrics Dashboard'),
+                                    React.createElement('p', { key: 'p1', className: "text-gray-600 text-sm" }, 'ISL 2026-2027 Forecast Data Analysis'),
+                                    React.createElement('p', { key: 'p2', className: "text-xs text-gray-400 mt-1" }, `Generated: ${new Date().toLocaleDateString()}`)
+                                ]),
+                                React.createElement('button', { key: 'help', onClick: () => setShowHelp(!showHelp),
+                                    className: "px-3 py-1 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm" }, showHelp ? 'Hide Help' : 'Help')
+                            ]),
+                            showHelp && React.createElement('div', { key: 'help', className: "mt-4 p-3 bg-blue-50 rounded-lg border border-blue-200 text-sm" }, [
+                                React.createElement('h3', { key: 't', className: "font-semibold text-blue-900 mb-2" }, 'How to Use:'),
+                                React.createElement('ul', { key: 'l', className: "text-blue-800 space-y-1" }, [
+                                    React.createElement('li', { key: '1' }, '• Overview: Configure date range and funnel stages'),
+                                    React.createElement('li', { key: '2' }, '• Click legend items to show/hide series'),
+                                    React.createElement('li', { key: '3' }, '• Drag brush slider to zoom'),
+                                    React.createElement('li', { key: '4' }, '• Hover for detailed values'),
+                                ])
+                            ])
+                        ]),
+                        // Tabs
+                        React.createElement('div', { key: 'tabs', className: "flex flex-wrap gap-2 mb-5" }, [
+                            React.createElement(TabButton, { key: 't1', label: 'Overview', active: activeTab === 'overview', onClick: () => setActiveTab('overview') }),
+                            React.createElement(TabButton, { key: 't2', label: 'Conversion Metrics', active: activeTab === 'conversion', onClick: () => setActiveTab('conversion') }),
+                            React.createElement(TabButton, { key: 't3', label: 'Headcount', active: activeTab === 'headcount', onClick: () => setActiveTab('headcount') }),
+                            React.createElement(TabButton, { key: 't4', label: 'Churn Analysis', active: activeTab === 'churn', onClick: () => setActiveTab('churn') }),
+                        ]),
+                        // Shared Funnel Configuration (shown on all tabs)
+                        renderFunnelConfig(),
+                        // Content
+                        activeTab === 'overview' && renderOverviewTab(),
+                        activeTab === 'conversion' && renderConversionTab(),
+                        activeTab === 'headcount' && renderHeadcountTab(),
+                        activeTab === 'churn' && renderChurnTab(),
+                    ])
+                );
+            };
+
+            try {
+                const root = ReactDOM.createRoot(document.getElementById('root'));
+                root.render(React.createElement(EnrollmentMetricsDashboard));
+            } catch (error) {
+                document.getElementById('root').innerHTML = `<div style="padding:20px;"><h2 style="color:red;">Error</h2><p>${error.message}</p></div>`;
+            }
+        });
+    </script>
+</body>
+</html>

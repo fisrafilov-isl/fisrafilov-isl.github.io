@@ -35,6 +35,10 @@
 !wellbeing_app_prototype/index.html
 !wellbeing_app_prototype/README.md
 
+# Explicitly include the 'enrollment_metrics_dashboard' directory and all its contents
+!enrollment_metrics_dashboard/
+!enrollment_metrics_dashboard/**
+
 # Re-ignore common files that might be present even within explicitly included directories
 # These rules apply globally and override any previous '!' inclusions for these specific patterns.
 
