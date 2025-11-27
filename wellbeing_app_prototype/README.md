@@ -1,67 +1,73 @@
-# Wellbeing Mentor Tracker - Prototype
+# React + TypeScript + Vite
 
-A drag-and-drop interface for managing student wellbeing mentor assignments at The Island Private School of Limassol.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## Features
+Currently, two official plugins are available:
 
-- **Drag & Drop Interface**: Easily reassign students between houses and mentor groups
-- **Multi-Filter System**: Filter by programme (MYP, DP, Waldorf) and grade levels (6-12)
-- **Pending Changes Tracking**: Review all changes before syncing
-- **Visual Indicators**: Color-coded grades and programme badges
-- **Sync Simulation**: Mock ManageBac integration workflow
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Demo Data
+## React Compiler
 
-The prototype uses sample student data for demonstration purposes:
-- 48 students across grades 6-12
-- 3 houses: Stormrider, Seadragon, Wavecrest
-- 6 mentor groups with assigned tutors
-- Sample new students awaiting assignment
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-## Usage
+## Expanding the ESLint configuration
 
-### Local Testing
-Simply open `index.html` in any modern web browser.
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
-### GitHub Pages Deployment
-Once committed and pushed to the repository, the prototype will be available at:
-```
-https://fisrafilov-isl.github.io/wellbeing_app_prototype/
-```
+```js
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
 
-### Sharing
-Share the direct link with your team:
-```
-https://fisrafilov-isl.github.io/wellbeing_app_prototype/index.html
-```
+      // Remove tseslint.configs.recommended and replace with this
+      tseslint.configs.recommendedTypeChecked,
+      // Alternatively, use this for stricter rules
+      tseslint.configs.strictTypeChecked,
+      // Optionally, add this for stylistic rules
+      tseslint.configs.stylisticTypeChecked,
 
-## How It Works
-
-1. **Filtering**: Use the programme and grade filters to view specific student groups
-2. **Reassigning**: Drag students from one mentor group cell to another
-3. **Review**: Check the pending changes banner for all modifications
-4. **Sync**: Click "Sync to ManageBac" to simulate saving changes
-
-## Technical Details
-
-- **React 18** - UI framework
-- **Tailwind CSS** - Styling via CDN
-- **Lucide Icons** - Icon library
-- **Babel Standalone** - JSX transformation in browser
-- **No Build Process** - Everything runs client-side
-
-## File Structure
-
-```
-wellbeing_app_prototype/
-├── index.html              # Standalone all-in-one demo
-├── README.md              # This file
-└── wellbeing-mentor-demo.tsx  # Original React component source
+      // Other configs...
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
 ```
 
-## Notes
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-- This is a prototype/demo with sample data only
-- All "sync" operations are simulated (no actual backend integration)
-- Changes are not persisted (refresh resets to initial state)
-- Optimized for desktop browsers (drag & drop works best on desktop)
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
+
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+      // Enable lint rules for React
+      reactX.configs['recommended-typescript'],
+      // Enable lint rules for React DOM
+      reactDom.configs.recommended,
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+```
