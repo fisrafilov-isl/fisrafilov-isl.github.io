@@ -237,7 +237,6 @@
 }
 
 .grade-calculator--light .date-input {
-  max-width: 300px;
   border: 1px solid #e0e0e0;
   font-size: 1rem;
 }
@@ -248,7 +247,7 @@
 }
 
 .grade-calculator--light .grade-results {
-  max-width: 500px;
+  width: 100%;
 }
 
 .grade-calculator--light .grade-results th,
@@ -266,16 +265,14 @@
   color: #ea5f00 !important;
   background-color: transparent !important;
   border-bottom: 1px solid #ea5f00;
-  padding: 2px 0;
-  border-radius: 0;
+  padding: 2px 6px;
+  border-radius: 4px;
 }
 
 .grade-calculator--light .program-link:hover {
   color: #ffffff !important;
   background-color: #ea5f00 !important;
   border-bottom-color: transparent;
-  padding: 2px 6px;
-  border-radius: 4px;
 }
 
 /* ===== Responsive Design ===== */
