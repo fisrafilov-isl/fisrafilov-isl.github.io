@@ -213,20 +213,89 @@
     background: rgba(0, 0, 0, 0.1);
 }
 
+/* ===== Light Background Variant ===== */
+.grade-calculator--light {
+  --primary-color: #545454;
+  --accent-color: #ea5f00;
+
+  padding: 20px 0;
+  color: var(--primary-color);
+  border-radius: 0;
+}
+
+.grade-calculator--light .grade-calculator__container {
+  text-align: left;
+}
+
+.grade-calculator--light .grade-calculator__form {
+  text-align: left;
+}
+
+.grade-calculator--light .date-input-label {
+  color: var(--primary-color);
+  margin-bottom: 12px;
+}
+
+.grade-calculator--light .date-input {
+  max-width: 300px;
+  border: 1px solid #e0e0e0;
+  font-size: 1rem;
+}
+
+.grade-calculator--light .date-input:focus {
+  outline: none;
+  border-color: var(--accent-color);
+}
+
+.grade-calculator--light .grade-results {
+  max-width: 500px;
+}
+
+.grade-calculator--light .grade-results th,
+.grade-calculator--light .grade-results td {
+  text-align: left;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.grade-calculator--light .grade-results th {
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+.grade-calculator--light .program-link {
+  color: #ea5f00 !important;
+  background-color: transparent !important;
+  border-bottom: 1px solid #ea5f00;
+  padding: 2px 0;
+  border-radius: 0;
+}
+
+.grade-calculator--light .program-link:hover {
+  color: #ffffff !important;
+  background-color: #ea5f00 !important;
+  border-bottom-color: transparent;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
 /* ===== Responsive Design ===== */
 @media (max-width: 480px) {
   .grade-calculator {
     padding: 30px 20px;
   }
-  
+
+  .grade-calculator--light {
+    padding: 15px 0;
+  }
+
   .grade-calculator__heading {
     font-size: 1.5rem;
   }
-  
+
   .grade-calculator__description {
     font-size: 1rem;
   }
-  
+
   .date-input {
     padding: 10px 35px 10px 15px;
   }
