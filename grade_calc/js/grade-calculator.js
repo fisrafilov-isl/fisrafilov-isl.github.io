@@ -16,19 +16,14 @@
 
   // Academic Year Configuration
   const academicConfig = {
-    2024: {
-      cutoffMonth: 8,
-      exceptions: {
-        2014: { afterMonth: 10, grade: 4 },
-        2015: { afterMonth: 8, grade: 3 }
-      },
-      maxGrade: 11
-    },
     2025: {
       cutoffMonth: 8,
-      exceptions: {
-        2014: { afterMonth: 8, grade: 5 }
-      },
+      exceptions: {},
+      maxGrade: 12
+    },
+    2026: {
+      cutoffMonth: 8,
+      exceptions: {},
       maxGrade: 12
     }
   };
@@ -37,10 +32,10 @@
   const programRules = {
     'Pre-Primary': ['IB', 'Waldorf', 'Montessori'],
     '1-3': ['IB', 'Waldorf', 'Montessori'],
-    '4': year => ['IB', 'Waldorf'],
+    '4': year => year === 2026 ? ['IB', 'Waldorf', 'Montessori'] : ['IB', 'Waldorf'],
     '5-7': year => ['IB', 'Waldorf'],
-    '8': year => year === 2024 ? ['IB'] : ['IB', 'Waldorf'],
-    '9-10': year => year === 2024 ? ['IB'] : ['IB', 'IB E&T'],
+    '8': year => ['IB', 'Waldorf'],
+    '9-10': year => ['IB', 'IB E&T'],
     '11': year => ['IB DP'],
     '12': year => ['IB CP']
   };
@@ -95,7 +90,7 @@
         : programRules[programKey]) 
       : null;
 
-    if (targetYear === 2025 && gradeNum >= 11) {
+    if (gradeNum >= 11) {
       return ['IB DP', 'IB CP'].join(', ');
     }
 
@@ -130,7 +125,7 @@
     
     const birthDate = new Date(dob.value);
     
-    [2024, 2025].forEach(year => {
+    [2025, 2026].forEach(year => {
       const grade = calculateGrade(birthDate, year);
       const programs = getPrograms(grade, year);
       

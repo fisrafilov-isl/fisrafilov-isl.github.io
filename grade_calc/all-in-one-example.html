@@ -241,7 +241,7 @@
       <h2 class="grade-calculator__heading">GRADES AND PROGRAMS</h2>
       <p class="grade-calculator__description">
         What grade will your child enter in the<br>
-        Academic Years 2024-2025 &amp; 2025-2026?
+        Academic Years 2025-2026 &amp; 2026-2027?
       </p>
     </header>
 
@@ -258,8 +258,8 @@
                    class="date-input t-input"
                    autocomplete="off"
                    min="2007-01-01"
-                   max="2022-12-31"
-                   value="2007-01-01">
+                   max="2023-12-31"
+                   value="2008-09-01">
           </div>
         </div>
       </div>
@@ -276,14 +276,14 @@
         </thead>
         <tbody>
           <tr>
-            <td>2024-2025</td>
-            <td id="grade2024">—</td>
-            <td id="program2024">—</td>
-          </tr>
-          <tr>
             <td>2025-2026</td>
             <td id="grade2025">—</td>
             <td id="program2025">—</td>
+          </tr>
+          <tr>
+            <td>2026-2027</td>
+            <td id="grade2026">—</td>
+            <td id="program2026">—</td>
           </tr>
         </tbody>
       </table>
@@ -319,19 +319,14 @@
 
   // Academic Year Configuration
   const academicConfig = {
-    2024: {
-      cutoffMonth: 8,
-      exceptions: {
-        2014: { afterMonth: 10, grade: 4 },
-        2015: { afterMonth: 8, grade: 3 }
-      },
-      maxGrade: 11
-    },
     2025: {
       cutoffMonth: 8,
-      exceptions: {
-        2014: { afterMonth: 8, grade: 5 }
-      },
+      exceptions: {},
+      maxGrade: 12
+    },
+    2026: {
+      cutoffMonth: 8,
+      exceptions: {},
       maxGrade: 12
     }
   };
@@ -340,10 +335,10 @@
   const programRules = {
     'Pre-Primary': ['IB', 'Waldorf', 'Montessori'],
     '1-3': ['IB', 'Waldorf', 'Montessori'],
-    '4': year => ['IB', 'Waldorf'],
+    '4': year => year === 2026 ? ['IB', 'Waldorf', 'Montessori'] : ['IB', 'Waldorf'],
     '5-7': year => ['IB', 'Waldorf'],
-    '8': year => year === 2024 ? ['IB'] : ['IB', 'Waldorf'],
-    '9-10': year => year === 2024 ? ['IB'] : ['IB', 'IB E&T'],
+    '8': year => ['IB', 'Waldorf'],
+    '9-10': year => ['IB', 'IB E&T'],
     '11': year => ['IB DP'],
     '12': year => ['IB CP']
   };
@@ -398,7 +393,7 @@
         : programRules[programKey]) 
       : null;
 
-    if (targetYear === 2025 && gradeNum >= 11) {
+    if (gradeNum >= 11) {
       return ['IB DP', 'IB CP'].join(', ');
     }
 
@@ -433,7 +428,7 @@
     
     const birthDate = new Date(dob.value);
     
-    [2024, 2025].forEach(year => {
+    [2025, 2026].forEach(year => {
       const grade = calculateGrade(birthDate, year);
       const programs = getPrograms(grade, year);
       
