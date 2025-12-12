@@ -144,9 +144,12 @@
       if (e.target.closest('a[href="#popup:gradecalc"]')) {
         const mainDob = document.querySelector('input[name="DOB"]');
         const gradeInput = document.getElementById('gradecalc-dob');
-        
+
         if (mainDob && gradeInput) {
           gradeInput.value = convertToISO(mainDob.value);
+          if (gradeInput._flatpickr) {
+            gradeInput._flatpickr.setDate(gradeInput.value);
+          }
           updateGrades();
         }
       }
@@ -155,7 +158,24 @@
     // Handle date input changes
     const dobInput = document.getElementById('gradecalc-dob');
     if (dobInput) {
-      dobInput.addEventListener('change', updateGrades);
+      // Initialize Flatpickr if available
+      if (typeof flatpickr !== 'undefined') {
+        flatpickr(dobInput, {
+          dateFormat: 'Y-m-d',
+          altInput: true,
+          altFormat: 'd / m / Y',
+          minDate: '2007-01-01',
+          maxDate: '2023-12-31',
+          defaultDate: dobInput.value || '2008-09-01',
+          disableMobile: false,
+          onChange: function() {
+            updateGrades();
+          }
+        });
+      } else {
+        // Fallback to native date input
+        dobInput.addEventListener('change', updateGrades);
+      }
       updateGrades();
     }
   }
