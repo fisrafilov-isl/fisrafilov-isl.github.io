@@ -230,12 +230,15 @@
 
 .grade-calculator--light .grade-calculator__form {
   text-align: left;
+  max-width: 100%;
+  overflow: hidden;
 }
 
 .grade-calculator--light .date-input-label {
   color: #000000;
   margin-bottom: 12px;
   font-weight: 700;
+  font-size: 18px;
 }
 
 .grade-calculator--light .date-input {
@@ -396,5 +399,17 @@ span.flatpickr-weekday {
 
   .date-input {
     padding: 10px 35px 10px 15px;
+  }
+
+  .grade-calculator--light .date-input-label {
+    font-size: 16px;
+  }
+
+  /* Fix for iOS Safari input overflow */
+  .grade-calculator--light .date-input,
+  .grade-calculator--light .flatpickr-input,
+  .grade-calculator--light input.flatpickr-mobile {
+    max-width: 100%;
+    font-size: 16px; /* Prevents iOS zoom on focus */
   }
 } 
