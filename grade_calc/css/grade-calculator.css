@@ -233,13 +233,16 @@
 }
 
 .grade-calculator--light .date-input-label {
-  color: var(--primary-color);
+  color: #000000;
   margin-bottom: 12px;
+  font-weight: 700;
 }
 
 .grade-calculator--light .date-input {
-  border: 1px solid #e0e0e0;
+  background-color: #F1F3F6;
+  border: 1px solid #F1F3F6;
   font-size: 1rem;
+  color: #000000;
 }
 
 .grade-calculator--light .date-input:focus {
@@ -255,25 +258,27 @@
 .grade-calculator--light .grade-results td {
   text-align: left;
   border-bottom: 1px solid #f0f0f0;
+  color: #000000;
+  font-weight: 500;
 }
 
 .grade-calculator--light .grade-results th {
-  font-weight: 600;
-  color: var(--primary-color);
+  font-weight: 700;
 }
 
 .grade-calculator--light .program-link {
   color: #ea5f00 !important;
   background-color: transparent !important;
-  border-bottom: 1px solid #ea5f00;
-  padding: 2px 6px;
+  border: 1px solid #ea5f00;
+  padding: 4px 10px;
   border-radius: 4px;
+  font-weight: 500;
 }
 
 .grade-calculator--light .program-link:hover {
   color: #ffffff !important;
   background-color: #ea5f00 !important;
-  border-bottom-color: transparent;
+  border-color: #ea5f00;
 }
 
 /* ===== Flatpickr Custom Theme ===== */
