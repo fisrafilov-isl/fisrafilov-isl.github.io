@@ -167,7 +167,7 @@
           minDate: '2007-01-01',
           maxDate: '2023-12-31',
           defaultDate: dobInput.value || '2008-09-01',
-          disableMobile: false,
+          disableMobile: true,
           onChange: function() {
             updateGrades();
           }
