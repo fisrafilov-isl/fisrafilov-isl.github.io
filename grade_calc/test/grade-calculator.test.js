@@ -91,6 +91,20 @@ test('every programme has a real link', () => {
   }
 });
 
+test('each programme links to its own page', () => {
+  const href = (grade, name) => calc.programmeLink(name, grade);
+  assert.equal(href('Grade 3', 'IB PYP'), '/ibpyp');
+  assert.equal(href('Grade 7', 'IB MYP'), '/ibmyp');
+  assert.equal(href('Grade 11', 'IB DP'), '/ibdp');
+  assert.equal(href('Grade 11', 'IB CP'), '/ibcp');
+  assert.equal(href('Grade 9', 'IB E&T'), '/entprogramme');
+  assert.equal(href('Grade 10', 'TLF'), '/techscholarship');
+  assert.equal(href('Grade 4', 'Montessori'), '/montessori');
+  assert.equal(href('Grade 4', 'Waldorf'), '/waldorf');
+  assert.equal(href('Pre-Primary (4 y.o.)', 'Waldorf'), '/waldorfpreprimary');
+  assert.equal(href('Pre-Primary (4 y.o.)', 'IB PYP'), '/ibpyp');
+});
+
 test('convertToISO handles Tilda formats and leaves ISO alone', () => {
   assert.equal(calc.convertToISO('01-09-2015'), '2015-09-01');
   assert.equal(calc.convertToISO('1/9/2015'), '2015-09-01');

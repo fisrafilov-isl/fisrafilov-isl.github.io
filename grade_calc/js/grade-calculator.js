@@ -44,14 +44,19 @@
   const ADMISSIONS_EMAIL = 'admission@isl.cy';
 
   const PROGRAMME_LINKS = {
-    'IB PYP': '/ib',
-    'IB MYP': '/ib',
-    'IB DP': '/ib',
-    'IB CP': '/ib',
+    'IB PYP': '/ibpyp',
+    'IB MYP': '/ibmyp',
+    'IB DP': '/ibdp',
+    'IB CP': '/ibcp',
     'IB E&T': '/entprogramme',
     'TLF': '/techscholarship',
     'Waldorf': '/waldorf',
     'Montessori': '/montessori'
+  };
+
+  // Waldorf has a separate kindergarten page for ages 3-6
+  const PRE_PRIMARY_LINKS = {
+    'Waldorf': '/waldorfpreprimary'
   };
 
   // Tilda's DOB field gives dd-mm-yyyy (or with / or .). Already-ISO input passes through.
@@ -107,12 +112,17 @@
     };
   }
 
-  function addProgramLinks(programString) {
+  function programmeLink(name, grade) {
+    const prePrimary = grade.startsWith('Pre-Primary') && PRE_PRIMARY_LINKS[name];
+    return prePrimary || PROGRAMME_LINKS[name] || '#';
+  }
+
+  function addProgramLinks(programString, grade) {
     if (programString === '—') return '—';
 
     const links = programString.split(/\s*,\s*/)
       .map(name => {
-        const link = PROGRAMME_LINKS[name] || '#';
+        const link = programmeLink(name, grade);
         return `<a href="${link}" class="program-link" target="_blank" rel="noopener">${name}</a>`;
       })
       .join('');
@@ -159,7 +169,7 @@
       const programElement = document.getElementById(`program${year}`);
 
       if (gradeElement) gradeElement.textContent = grade;
-      if (programElement) programElement.innerHTML = addProgramLinks(programs);
+      if (programElement) programElement.innerHTML = addProgramLinks(programs, grade);
     });
   }
 
@@ -218,6 +228,7 @@
       convertToISO,
       calculateGrade,
       getPrograms,
+      programmeLink,
       dateBounds
     };
     return;
