@@ -110,12 +110,13 @@
   function addProgramLinks(programString) {
     if (programString === '—') return '—';
 
-    return programString.split(/\s*,\s*/)
+    const links = programString.split(/\s*,\s*/)
       .map(name => {
         const link = PROGRAMME_LINKS[name] || '#';
         return `<a href="${link}" class="program-link" target="_blank" rel="noopener">${name}</a>`;
       })
-      .join(' ');
+      .join('');
+    return `<span class="program-list">${links}</span>`;
   }
 
   // Replace whatever year rows the page shipped with, so a stale Tilda block can't

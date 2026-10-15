@@ -286,6 +286,31 @@
   border-color: #ea5f00;
 }
 
+/* Chips wrap with even spacing instead of stacking flush on top of each other */
+.program-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.program-list .program-link {
+  margin: 0;
+}
+
+/* Year and Grade shrink to their content so Programmes gets the rest of the width */
+@media (min-width: 601px) {
+  .grade-calculator--light .grade-results th:nth-child(-n+2),
+  .grade-calculator--light .grade-results td:nth-child(-n+2) {
+    width: 1%;
+    white-space: nowrap;
+    padding-right: 32px;
+  }
+
+  .grade-calculator--light .grade-results td:last-child {
+    width: auto;
+  }
+}
+
 .grade-results__note {
   margin: 16px 0 0;
   font-size: 0.95rem;
