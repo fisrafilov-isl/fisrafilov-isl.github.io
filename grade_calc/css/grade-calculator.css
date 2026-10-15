@@ -286,6 +286,21 @@
   border-color: #ea5f00;
 }
 
+.grade-results__note {
+  margin: 16px 0 0;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.grade-results__note a {
+  color: #ea5f00;
+}
+
+.grade-calculator--light .grade-results__note {
+  color: #000000;
+  font-size: 16px;
+}
+
 /* ===== Flatpickr Custom Theme ===== */
 .flatpickr-calendar {
   font-family: 'Quicksand', Arial, sans-serif;

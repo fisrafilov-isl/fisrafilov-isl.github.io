@@ -44,7 +44,7 @@ Add this to your T123 block:
       <h2 class="grade-calculator__heading">GRADES AND PROGRAMS</h2>
       <p class="grade-calculator__description">
         What grade will your child enter in the<br>
-        Academic Years 2024-2025 &amp; 2025-2026?
+        Academic Years 2026-2027 &amp; 2027-2028?
       </p>
     </header>
 
@@ -60,9 +60,8 @@ Add this to your T123 block:
                    id="gradecalc-dob"
                    class="date-input t-input"
                    autocomplete="off"
-                   min="2007-01-01"
-                   max="2022-12-31"
-                   value="2007-01-01">
+                   min="2008-09-01"
+                   max="2024-08-31">
           </div>
         </div>
       </div>
@@ -78,16 +77,7 @@ Add this to your T123 block:
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>2024-2025</td>
-            <td id="grade2024">—</td>
-            <td id="program2024">—</td>
-          </tr>
-          <tr>
-            <td>2025-2026</td>
-            <td id="grade2025">—</td>
-            <td id="program2025">—</td>
-          </tr>
+          <!-- Rows are rendered by grade-calculator.js -->
         </tbody>
       </table>
     </div>
@@ -119,42 +109,19 @@ Copy all CSS, HTML, and JavaScript from `all-in-one-example.html` into a single 
 
 ## 🔧 Customization
 
-### Update Academic Years
+### Yearly update
 
-The calculator currently supports 2024-2025 and 2025-2026 academic years. To update for future years, edit the `academicConfig` object in `js/grade-calculator.js`:
+The programme offer comes from the "Grade Calc Configuration" Google Sheet that Admissions signs off. To roll the calculator forward:
 
-```javascript
-const academicConfig = {
-  2025: { cutoffMonth: 8, exceptions: {...}, maxGrade: 12 },
-  2026: { cutoffMonth: 8, exceptions: {...}, maxGrade: 12 },
-  // Add new years as needed
-};
-```
+1. Export the sheet's `grades_by_year` tab as CSV into `test/fixtures/` and point the test at it.
+2. In `js/grade-calculator.js`, update `ACADEMIC_YEARS` and `PROGRAMMES_BY_YEAR` (and `PROGRAMME_LINKS` if a programme is added).
+3. Run `node --test grade_calc/test/grade-calculator.test.js` until it passes. It checks every sheet row on the first and last day of each month.
+4. Re-minify: `npx terser@5.36.0 js/grade-calculator.js -c -m -o js/grade-calculator.min.js`.
+5. Commit and push. GitHub Pages serves the new file within about 10 minutes.
 
-**Note**: You'll also need to update the HTML table structure to display the new academic years.
+The result rows are rendered by the script from `ACADEMIC_YEARS`, so the Tilda block on isl.cy/admission never needs editing for a year change.
 
-### Modify Program Rules
-
-Update `programRules` in `js/grade-calculator.js`:
-
-```javascript
-const programRules = {
-  '4': year => ['IB', 'Waldorf'], // No Montessori for grade 4
-  // ... other grades
-};
-```
-
-### Change Program Links
-
-Update `programLinks` in `js/grade-calculator.js`:
-
-```javascript
-const programLinks = {
-  'IB': '/ib-program',
-  'Waldorf': '/waldorf-program',
-  'Montessori': '/montessori-program'
-};
-```
+Current offer (2026-2027 and 2027-2028): Forest School is deliberately absent (Admissions, 14 Oct 2026). It is part of the Primary curriculum, not a programme families choose.
 
 ## 🎨 Styling
 
@@ -199,6 +166,7 @@ The component will automatically:
 - **v1.0**: Initial release with 2024-2025 and 2025-2026 academic years
 - **v1.1**: Added minified files for production use
 - **v1.2**: Enhanced program rules and links functionality
+- **v2.0**: 2026-2027 and 2027-2028; IB pathways split (PYP, MYP, DP, CP, E&T), TLF added, Forest School removed; rows rendered from config; birth dates parsed timezone-safe; tests against the Admissions sheet
 
 ## 🚀 Performance
 

@@ -43,32 +43,56 @@
 # These rules apply globally and override any previous '!' inclusions for these specific patterns.
 
 # System Files (macOS, Windows, general)
-.DS_Store           # macOS directory service store
-._*                 # macOS resource forks
-.Spotlight-V100     # macOS Spotlight index
-.Trashes            # macOS Trashes
-ehthumbs.db         # Windows media cache
-Thumbs.db           # Windows thumbnail cache
+# macOS directory service store
+.DS_Store
+# macOS resource forks
+._*
+# macOS Spotlight index
+.Spotlight-V100
+# macOS Trashes
+.Trashes
+# Windows media cache
+ehthumbs.db
+# Windows thumbnail cache
+Thumbs.db
 
 # IDE / Editor Files
-.vscode/            # Visual Studio Code settings
-.idea/              # IntelliJ IDEA project files
-*.swp               # Vim swap files
-*.swo               # Vim swap files
-*~                  # Backup files created by many editors
+# Visual Studio Code settings
+.vscode/
+# IntelliJ IDEA project files
+.idea/
+# Vim swap files
+*.swp
+# Vim swap files
+*.swo
+# Backup files created by many editors
+*~
 
 # Logs
-logs/               # Directory for logs
-*.log               # All files ending with .log
-npm-debug.log*      # npm debug logs (including rotated ones like .log.1)
-yarn-debug.log*     # Yarn debug logs
-yarn-error.log*     # Yarn error logs
+# Directory for logs
+logs/
+# All files ending with .log
+*.log
+# npm debug logs (including rotated ones like .log.1)
+npm-debug.log*
+# Yarn debug logs
+yarn-debug.log*
+# Yarn error logs
+yarn-error.log*
 
 # Node modules / Build outputs / Cache
-node_modules/       # Node.js dependencies
-dist/               # Common build output directory
-.cache/             # Common cache directory
+# Node.js dependencies
+node_modules/
+# Common build output directory
+dist/
+# Common cache directory
+.cache/
 
 # Temporary files
-*.tmp               # Temporary files
-*.temp              # Temporary files
+# Temporary files
+*.tmp
+# Temporary files
+*.temp
+
+# Scratch folders: working files, admissions workbooks, never published
+_temp/
