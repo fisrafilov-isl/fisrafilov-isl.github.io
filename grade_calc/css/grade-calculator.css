@@ -35,13 +35,22 @@
   --primary-color: #ffffff;
   --accent-color: #ea5f00;
   --border-radius: 100px;
-  --font-stack: 'Quicksand', 'Font', Arial, sans-serif;
+  /* Tilda's site fonts (Site Settings > Fonts), so the block matches the page around it */
+  --font-stack: var(--t-text-font, 'Nunito', Arial, sans-serif);
   
   padding: 40px 45px;
   color: var(--primary-color);
   border-radius: var(--border-radius);
   overflow: hidden;
   font-family: var(--font-stack);
+}
+
+/* Form controls and Tilda's own block styles don't inherit by default */
+.grade-calculator input,
+.grade-calculator table,
+.grade-calculator p,
+.grade-calculator a {
+  font-family: inherit;
 }
 
 /* ===== Container & Layout ===== */
@@ -263,7 +272,7 @@
   text-align: left;
   border-bottom: 1px solid #f0f0f0;
   color: #000000;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 18px;
 }
 
@@ -323,12 +332,19 @@
 
 .grade-calculator--light .grade-results__note {
   color: #000000;
-  font-size: 16px;
+  font-size: 18px;
+  line-height: 1.45; /* Tilda's t-descr_xxl */
+}
+
+@media (max-width: 480px) {
+  .grade-calculator--light .grade-results__note {
+    font-size: 16px;
+  }
 }
 
 /* ===== Flatpickr Custom Theme ===== */
 .flatpickr-calendar {
-  font-family: 'Quicksand', Arial, sans-serif;
+  font-family: var(--t-text-font, 'Nunito', Arial, sans-serif);
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
   border: none;
@@ -350,7 +366,7 @@
 
 .flatpickr-current-month .flatpickr-monthDropdown-months,
 .flatpickr-current-month input.cur-year {
-  font-family: 'Quicksand', Arial, sans-serif;
+  font-family: var(--t-text-font, 'Nunito', Arial, sans-serif);
   font-weight: 600;
 }
 
