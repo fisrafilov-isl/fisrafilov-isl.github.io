@@ -9,7 +9,9 @@ const path = require('node:path');
 const calc = require('../js/grade-calculator.js');
 
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-const REMOVED_PROGRAMMES = ['Forest School'];
+// Admissions decisions made after the sheet was signed off
+const REMOVED_PROGRAMMES = ['Forest School']; // Carmen, 14 Oct 2026
+const REMOVED_AT_GRADE = { 'Grade 6': ['Montessori'] }; // Carmen, 19 Oct 2026: Montessori up to Grade 5
 
 function parseCsv(text) {
   return text.trim().split(/\r?\n/).map(line =>
@@ -25,9 +27,10 @@ const [header, ...rows] = parseCsv(
 // Columns: Birth Year, Birth Month, then (Grade, Programs) per academic year
 const sheetYears = header.slice(2).filter((_, i) => i % 2 === 0).map(h => Number(h.slice(0, 4)));
 
-function expectedProgrammes(cell) {
+function expectedProgrammes(cell, grade) {
   if (cell === '—') return '—';
-  return cell.split(/\s*,\s*/).filter(p => !REMOVED_PROGRAMMES.includes(p)).join(', ');
+  const removed = REMOVED_PROGRAMMES.concat(REMOVED_AT_GRADE[grade] || []);
+  return cell.split(/\s*,\s*/).filter(p => !removed.includes(p)).join(', ');
 }
 
 function lastDayOfMonth(year, month) {
@@ -56,7 +59,7 @@ test('every sheet row matches the calculator, first and last day of the month', 
         const grade = calc.calculateGrade(iso, year);
         const label = `${iso} in ${year}-${year + 1}`;
         assert.equal(grade, row[2 + i * 2], `grade for ${label}`);
-        assert.equal(calc.getPrograms(grade, year), expectedProgrammes(row[3 + i * 2]), `programmes for ${label}`);
+        assert.equal(calc.getPrograms(grade, year), expectedProgrammes(row[3 + i * 2], row[2 + i * 2]), `programmes for ${label}`);
       });
     }
   }
@@ -67,6 +70,15 @@ test('Forest School is never offered', () => {
     for (const grade of ['Pre-Primary (3 y.o.)', ...Array.from({ length: 12 }, (_, i) => `Grade ${i + 1}`)]) {
       assert.ok(!calc.getPrograms(grade, year).includes('Forest'), `${grade} ${year}`);
     }
+  }
+});
+
+test('Montessori stops at Grade 5, Waldorf at Grade 9', () => {
+  for (const year of calc.ACADEMIC_YEARS) {
+    assert.ok(calc.getPrograms('Grade 5', year).includes('Montessori'));
+    assert.ok(!calc.getPrograms('Grade 6', year).includes('Montessori'));
+    assert.ok(calc.getPrograms('Grade 9', year).includes('Waldorf'));
+    assert.ok(!calc.getPrograms('Grade 10', year).includes('Waldorf'));
   }
 });
 

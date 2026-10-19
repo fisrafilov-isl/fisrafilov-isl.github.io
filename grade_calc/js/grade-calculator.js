@@ -26,7 +26,7 @@
     3: PRIMARY,
     4: PRIMARY,
     5: PRIMARY,
-    6: ['IB MYP', 'Waldorf', 'Montessori'],
+    6: ['IB MYP', 'Waldorf'], // Montessori runs to Grade 5 (Admissions, 19 Oct 2026)
     7: ['IB MYP', 'Waldorf'],
     8: ['IB MYP', 'Waldorf'],
     9: ['IB MYP', 'IB E&T', 'Waldorf', 'TLF'],
@@ -143,8 +143,8 @@
       </tr>`).join('');
   }
 
-  // Admissions (Sep 2026): the calculator signals the 1 September rule, but they
-  // still consider edge cases, so say so instead of letting a dash end the conversation
+  // Wording from Whitney Retzer (Director of Admissions), 19 Oct 2026. The calculator
+  // signals the cut-off; admissions still consider edge cases, so say so.
   function renderNote() {
     const table = document.getElementById('resultTable');
     if (!table || document.getElementById('gradeCalcNote')) return;
@@ -152,8 +152,10 @@
     const note = document.createElement('p');
     note.id = 'gradeCalcNote';
     note.className = 'grade-results__note';
-    note.innerHTML = 'Born close to 1 September or have unusual circumstances? ' +
-      `Contact <a href="mailto:${ADMISSIONS_EMAIL}">${ADMISSIONS_EMAIL}</a> and we'll advise.`;
+    note.innerHTML = 'Children must be 3 years old on or before 31 August of the year they start School. ' +
+      'As an example, if your child turns 3 years old from 1 September or later, they must start ' +
+      'the following academic year. For international transfers or special circumstances, please email ' +
+      `<a href="mailto:${ADMISSIONS_EMAIL}">${ADMISSIONS_EMAIL}</a>, and we'll be happy to advise.`;
     table.insertAdjacentElement('afterend', note);
   }
 
